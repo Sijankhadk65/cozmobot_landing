@@ -24,11 +24,10 @@ export function CTAButton({
     "inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium text-sm transition-all duration-200 cursor-pointer";
   const styles = {
     primary:
-      "bg-[#1a5fb4] text-white hover:bg-[#1550a0] shadow-sm hover:shadow-md",
+      "bg-accent text-ink hover:bg-[#bcdd4d] shadow-sm hover:shadow-md",
     secondary:
-      "bg-white text-[#1a5fb4] border border-[#1a5fb4]/30 hover:border-[#1a5fb4] hover:bg-[#e8f0fb]",
-    ghost:
-      "text-gray-600 hover:text-gray-900 hover:bg-gray-100",
+      "bg-transparent text-accent border border-accent/40 hover:border-accent hover:bg-accent/10",
+    ghost: "text-mute hover:text-offwhite hover:bg-steel/40",
   };
 
   const content = (

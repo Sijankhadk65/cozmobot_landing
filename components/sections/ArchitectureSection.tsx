@@ -4,151 +4,193 @@ import { SectionWrapper } from "../SectionWrapper";
 import { MotionReveal } from "../MotionReveal";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Camera, BrainCircuit, Navigation, Bot, RefreshCcw } from "lucide-react";
+import {
+  Eye,
+  Radio,
+  Move3d,
+  Wrench,
+  Plus,
+  BrainCircuit,
+  Mic,
+} from "lucide-react";
 
-const pipeline = [
-  {
-    id: "vision",
-    icon: Camera,
-    label: "Vision",
-    sub: "3D Scan & Seam Detection",
-    color: "#3584e4",
-    bg: "#e8f0fb",
-  },
-  {
-    id: "ai",
-    icon: BrainCircuit,
-    label: "AI Analysis",
-    sub: "Parameter Prediction",
-    color: "#1a5fb4",
-    bg: "#dbeafe",
-  },
-  {
-    id: "planning",
-    icon: Navigation,
-    label: "Motion Planning",
-    sub: "Trajectory Generation",
-    color: "#7c3aed",
-    bg: "#ede9fe",
-  },
-  {
-    id: "robot",
-    icon: Bot,
-    label: "Robot Execution",
-    sub: "Autonomous Operation",
-    color: "#059669",
-    bg: "#d1fae5",
-  },
-  {
-    id: "feedback",
-    icon: RefreshCcw,
-    label: "Feedback Loop",
-    sub: "Real-Time Adaptation",
-    color: "#e66100",
-    bg: "#fff7ed",
-  },
+const tools = [
+  { icon: Eye, label: "Vision", sub: "Detection", color: "#add037" },
+  { icon: Radio, label: "Sensors", sub: "Integration", color: "#add037" },
+  { icon: Move3d, label: "Motion", sub: "IK & control", color: "#add037" },
+  { icon: Wrench, label: "Tooling", sub: "End-effector", color: "#add037" },
+  { icon: Plus, label: "New tool", sub: "Extensible", color: "#8c8c89", dashed: true },
 ];
 
-function Arrow({ delay }: { delay: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-40px" });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, scaleX: 0 }}
-      animate={isInView ? { opacity: 1, scaleX: 1 } : {}}
-      transition={{ duration: 0.4, delay }}
-      className="hidden md:flex items-center flex-1 max-w-10 origin-left"
-    >
-      <div className="flex-1 h-px bg-gradient-to-r from-gray-300 to-gray-200" />
-      <div className="w-0 h-0 border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent border-l-[7px] border-l-gray-300" />
-    </motion.div>
-  );
-}
+const bodies = [
+  { label: "Collaborative arm", proven: true },
+  { label: "Humanoid", proven: false },
+  { label: "AMR", proven: false },
+  { label: "Fleet", proven: false },
+];
 
 export function ArchitectureSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <SectionWrapper id="architecture" className="bg-gray-50">
+    <SectionWrapper id="architecture" className="bg-graphite">
       <MotionReveal>
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs font-semibold tracking-widest uppercase text-gray-400">
+          <span className="text-xs font-semibold tracking-widest uppercase text-mute">
             System Architecture
           </span>
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
-            A closed-loop autonomous pipeline
+          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-offwhite tracking-tight">
+            Interfaces, not fixed
+            <br />
+            implementations
           </h2>
-          <p className="mt-4 text-gray-500">
-            Each stage feeds the next. The system doesn&apos;t just execute — it
-            learns and corrects.
+          <p className="mt-4 text-mute">
+            The brain calls modular tools. The tools drive any body. Swap a
+            detector, add an end-effector, register a robot — the platform
+            compounds instead of being rebuilt.
           </p>
         </div>
       </MotionReveal>
 
-      {/* Pipeline diagram */}
-      <div ref={ref} className="bg-white rounded-2xl border border-gray-200 p-8 md:p-12">
-        {/* Horizontal pipeline */}
-        <div className="flex flex-col md:flex-row items-center gap-4 md:gap-2 justify-center">
-          {pipeline.map((node, i) => (
-            <div key={node.id} className="flex flex-col md:flex-row items-center gap-2 md:gap-2">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="flex flex-col items-center text-center w-36"
-              >
-                <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center mb-3 border"
-                  style={{ backgroundColor: node.bg, borderColor: `${node.color}30` }}
-                >
-                  <node.icon size={22} style={{ color: node.color }} />
-                </div>
-                <p className="font-semibold text-sm text-gray-900">{node.label}</p>
-                <p className="text-xs text-gray-400 mt-0.5 leading-tight">{node.sub}</p>
-              </motion.div>
-              {i < pipeline.length - 1 && <Arrow delay={i * 0.1 + 0.3} />}
+      {/* Diagram */}
+      <div
+        ref={ref}
+        className="bg-carbon rounded-2xl border border-steel p-6 md:p-12"
+      >
+        {/* Human ↔ brain */}
+        <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.5 }}
+            className="flex items-center gap-3 rounded-xl border border-steel bg-graphite px-4 py-3"
+          >
+            <Mic size={16} className="text-mute" />
+            <div>
+              <p className="text-sm font-semibold text-offwhite">Human goal</p>
+              <p className="text-xs text-mute">Plain language</p>
             </div>
-          ))}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="flex items-center gap-1 text-steel"
+          >
+            <span className="text-[10px] font-mono text-mute">voice</span>
+            <div className="w-8 h-px bg-steel md:w-12" />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="flex items-center gap-3 rounded-xl bg-accent px-5 py-3.5 shadow-md"
+          >
+            <BrainCircuit size={18} className="text-ink" />
+            <div>
+              <p className="text-sm font-semibold text-ink">nex-ON</p>
+              <p className="text-xs text-ink/80">The reasoning brain</p>
+            </div>
+          </motion.div>
         </div>
 
-        {/* Feedback arc */}
-        <div className="mt-10 pt-8 border-t border-gray-100">
-          <div className="flex items-center justify-center gap-3">
+        {/* Fan-out connector */}
+        <div className="flex justify-center py-6">
+          <motion.div
+            initial={{ scaleY: 0 }}
+            animate={isInView ? { scaleY: 1 } : {}}
+            transition={{ duration: 0.4, delay: 0.45 }}
+            className="w-px h-8 bg-steel origin-top"
+          />
+        </div>
+
+        <p className="text-center text-[10px] font-mono uppercase tracking-widest text-mute mb-5">
+          calls modular tools
+        </p>
+
+        {/* Tools row */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
+          {tools.map((tool, i) => (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.8, duration: 0.5 }}
-              className="flex items-center gap-2 text-xs text-gray-400 bg-gray-50 rounded-full px-4 py-2 border border-gray-200"
+              key={tool.label}
+              initial={{ opacity: 0, y: 16 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.4, delay: 0.5 + i * 0.08 }}
+              className={`flex flex-col items-center text-center rounded-xl p-4 border ${
+                tool.dashed
+                  ? "border-dashed border-steel bg-graphite/50"
+                  : "border-steel bg-graphite"
+              }`}
             >
-              <RefreshCcw size={12} className="text-orange-500" />
-              <span>
-                Feedback loop continuously refines parameters across all stages
-              </span>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Specs */}
-        <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            { label: "Scan Latency", value: "<50ms" },
-            { label: "Prediction Time", value: "<200ms" },
-            { label: "Planning Time", value: "<2s" },
-            { label: "Correction Rate", value: "100Hz" },
-          ].map((spec) => (
-            <MotionReveal key={spec.label}>
-              <div className="text-center p-4 bg-gray-50 rounded-xl border border-gray-100">
-                <p className="text-xl font-bold text-gray-900 font-mono">
-                  {spec.value}
-                </p>
-                <p className="text-xs text-gray-400 mt-1">{spec.label}</p>
+              <div
+                className="w-11 h-11 rounded-xl flex items-center justify-center mb-2.5 border"
+                style={{
+                  backgroundColor: `${tool.color}14`,
+                  borderColor: `${tool.color}33`,
+                }}
+              >
+                <tool.icon size={18} style={{ color: tool.color }} />
               </div>
-            </MotionReveal>
+              <p className="font-semibold text-sm text-offwhite">{tool.label}</p>
+              <p className="text-xs text-mute mt-0.5">{tool.sub}</p>
+            </motion.div>
           ))}
         </div>
+
+        {/* Converge connector */}
+        <div className="flex justify-center pb-6">
+          <motion.div
+            initial={{ scaleY: 0 }}
+            animate={isInView ? { scaleY: 1 } : {}}
+            transition={{ duration: 0.4, delay: 0.9 }}
+            className="w-px h-8 bg-steel origin-top"
+          />
+        </div>
+
+        {/* Bodies */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 1 }}
+          className="rounded-xl border border-steel bg-graphite px-5 py-5"
+        >
+          <p className="text-center text-[10px] font-mono uppercase tracking-widest text-mute mb-4">
+            any body
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-2.5">
+            {bodies.map((body) => (
+              <div
+                key={body.label}
+                className={`flex items-center gap-2 rounded-full px-3.5 py-1.5 border text-sm ${
+                  body.proven
+                    ? "bg-carbon border-accent/40 text-offwhite"
+                    : "bg-carbon/50 border-dashed border-steel text-mute"
+                }`}
+              >
+                <span
+                  className={`w-1.5 h-1.5 rounded-full ${
+                    body.proven ? "bg-accent" : "bg-steel"
+                  }`}
+                />
+                {body.label}
+              </div>
+            ))}
+          </div>
+          <p className="text-center text-xs text-mute mt-4">
+            <span className="inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
+              Proven today
+            </span>
+            <span className="mx-3 text-mute">·</span>
+            <span className="inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-steel inline-block" />
+              Architected, on the roadmap
+            </span>
+          </p>
+        </motion.div>
       </div>
     </SectionWrapper>
   );

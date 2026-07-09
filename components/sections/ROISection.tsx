@@ -6,274 +6,209 @@ import { SectionWrapper } from "../SectionWrapper";
 import { MotionReveal } from "../MotionReveal";
 import { CTAButton } from "../CTAButton";
 import {
-  AlertCircle,
-  CheckCircle2,
-  Timer,
-  TrendingUp,
-  Layers,
+  MessagesSquare,
   Repeat,
-  Wrench,
-  BarChart2,
+  ShieldCheck,
+  Layers,
+  UserCheck,
+  Blocks,
+  X,
 } from "lucide-react";
 
-// ── Workflow comparison data ───────────────────────────────────────────────────
-const comparisons = [
-  {
-    challenge: "Long training cycles before welders are production-ready",
-    improvement: "Faster deployment — system configures from part scan",
-  },
-  {
-    challenge: "Weld quality varies between operators and across shifts",
-    improvement: "Repeatable execution on every pass, every part",
-  },
-  {
-    challenge: "Manual robot programming slows changeovers",
-    improvement: "Zero-code workflow — no offline programming required",
-  },
-  {
-    challenge: "Staffing limitations reduce operational continuity",
-    improvement: "Higher operational continuity independent of shift constraints",
-  },
-  {
-    challenge: "Rework and correction overhead increases production cost",
-    improvement: "Optimised seam execution reduces defect-driven rework",
-  },
-  {
-    challenge: "Scaling production requires additional specialised labour",
-    improvement: "Easier replication across lines without proportional headcount",
-  },
+const BRAND = "#add037";
+
+// ── The deployment path, before and after ─────────────────────────────────────
+const before = [
+  "Hire a specialist",
+  "Model the part",
+  "Write the program",
+  "Jog the waypoints",
+  "Test the cell",
+  "Reprogram on change",
 ];
 
-// ── Operational benefit cards ──────────────────────────────────────────────────
-const benefits = [
-  {
-    icon: Timer,
-    title: "Faster Task Deployment",
-    body: "Parts are scanned, planned, and ready for execution without manual teach-in. Changeover time drops significantly.",
-  },
-  {
-    icon: Repeat,
-    title: "Reduced Weld Variability",
-    body: "AI-predicted parameters and real-time seam tracking produce consistent results across operators, shifts, and part batches.",
-  },
-  {
-    icon: Wrench,
-    title: "Lower Programming Overhead",
-    body: "Eliminates the need for specialist robot programmers during deployment or part changeovers.",
-  },
-  {
-    icon: BarChart2,
-    title: "Improved Operational Uptime",
-    body: "Reduced reliance on highly specialised welding availability means fewer production interruptions.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Scalable Across Lines",
-    body: "The same intelligence layer can be replicated to additional cells or expanded to other industrial processes.",
-  },
-  {
-    icon: Layers,
-    title: "Operational Investment, Not Overhead",
-    body: "A single deployment accumulates savings through reduced downtime, lower rework, and simplified ongoing operation.",
-  },
+const after = ["Describe the goal", "Rehearse dry", "Arm and run"];
+
+// ── Outcomes ──────────────────────────────────────────────────────────────────
+const outcomes = [
+  { icon: MessagesSquare, title: "No programming step" },
+  { icon: UserCheck, title: "No specialist required" },
+  { icon: Repeat, title: "Adapts to the real scene" },
+  { icon: ShieldCheck, title: "Rehearse before you commit" },
+  { icon: Blocks, title: "Low integration cost" },
+  { icon: Layers, title: "Every tool compounds" },
 ];
 
-// ── Timeline ──────────────────────────────────────────────────────────────────
-const timeline = [
-  {
-    phase: "Deployment",
-    period: "Days 1–14",
-    description: "System installed, calibrated, and scanning live parts. No programming specialists required.",
-    color: "#1a5fb4",
-  },
-  {
-    phase: "Stabilisation",
-    period: "Month 1–3",
-    description: "Changeover times reduce. Teams adapt to zero-code workflow. Rework rates begin to fall.",
-    color: "#3584e4",
-  },
-  {
-    phase: "Efficiency Gains",
-    period: "Month 3–12",
-    description: "Operational continuity improves. Quality consistency becomes measurable. Programming overhead eliminated.",
-    color: "#059669",
-  },
-  {
-    phase: "Scale",
-    period: "Month 12+",
-    description: "Same system replicates to additional lines or tasks. Operational savings accumulate at scale.",
-    color: "#7c3aed",
-  },
-];
-
-// ── Comparison row ─────────────────────────────────────────────────────────────
-function ComparisonRow({
-  row,
+// ── Step chip ─────────────────────────────────────────────────────────────────
+function Chip({
+  label,
+  struck,
   index,
+  inView,
 }: {
-  row: (typeof comparisons)[0];
+  label: string;
+  struck?: boolean;
   index: number;
+  inView: boolean;
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-30px" }}
-      transition={{ duration: 0.4, delay: index * 0.06 }}
-      className="grid grid-cols-1 md:grid-cols-2 border-b border-gray-100 last:border-b-0"
+      initial={{ opacity: 0, y: 8 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.35, delay: index * 0.07 }}
+      className="flex items-center gap-1.5"
     >
-      <div className="px-6 py-4 flex items-start gap-3">
-        <AlertCircle size={14} className="text-gray-400 flex-shrink-0 mt-0.5" />
-        <p className="text-sm text-gray-500 leading-relaxed">{row.challenge}</p>
-      </div>
-      <div className="px-6 py-4 flex items-start gap-3 bg-[#f8fbff] border-t md:border-t-0 md:border-l border-gray-100">
-        <CheckCircle2 size={14} className="text-[#1a5fb4] flex-shrink-0 mt-0.5" />
-        <p className="text-sm text-gray-700 leading-relaxed">{row.improvement}</p>
+      <div
+        className={`relative flex items-center gap-2 rounded-lg border px-3 py-2 text-xs whitespace-nowrap ${
+          struck
+            ? "border-dashed border-steel bg-carbon text-mute"
+            : "border-accent/40 bg-accent/10 text-accent font-medium"
+        }`}
+      >
+        {struck && <X size={11} className="text-mute flex-shrink-0" />}
+        <span className={struck ? "line-through decoration-steel" : ""}>
+          {label}
+        </span>
       </div>
     </motion.div>
   );
 }
 
-// ── Main section ──────────────────────────────────────────────────────────────
-export function ROISection() {
-  const timelineRef = useRef(null);
-  const timelineInView = useInView(timelineRef, { once: true, margin: "-60px" });
+function Track({
+  heading,
+  steps,
+  struck,
+  count,
+  note,
+}: {
+  heading: string;
+  steps: string[];
+  struck?: boolean;
+  count: number;
+  note: string;
+}) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <SectionWrapper id="roi" className="bg-gray-50">
-
-      {/* 1. Headline */}
-      <MotionReveal>
-        <div className="max-w-2xl mb-16">
-          <span className="text-xs font-semibold tracking-widest uppercase text-gray-400">
-            Operational Efficiency
+    <div ref={ref} className="flex-1">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <span
+            className={`w-2 h-2 rounded-full ${
+              struck ? "bg-steel" : "bg-accent"
+            }`}
+          />
+          <span
+            className={`text-xs font-semibold tracking-widest uppercase ${
+              struck ? "text-mute" : "text-accent"
+            }`}
+          >
+            {heading}
           </span>
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight leading-tight">
-            Built for real
+        </div>
+        <span
+          className={`text-xs ${struck ? "text-mute" : "text-accent"}`}
+        >
+          {note}
+        </span>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        {steps.map((s, i) => (
+          <Chip key={s} label={s} struck={struck} index={i} inView={inView} />
+        ))}
+      </div>
+
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ delay: 0.5 }}
+        className="mt-5 flex items-baseline gap-2"
+      >
+        <span
+          className={`text-4xl font-bold ${
+            struck ? "text-mute" : "text-accent"
+          }`}
+        >
+          {count}
+        </span>
+        <span className="text-xs text-mute">steps to deploy</span>
+      </motion.p>
+    </div>
+  );
+}
+
+export function ROISection() {
+  return (
+    <SectionWrapper id="operations">
+      {/* Headline */}
+      <MotionReveal>
+        <div className="max-w-xl mb-14">
+          <span className="text-xs font-semibold tracking-widest uppercase text-mute">
+            Operations
+          </span>
+          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-offwhite tracking-tight leading-tight">
+            What actually changes
             <br />
-            manufacturing constraints.
+            on the floor.
           </h2>
-          <p className="mt-4 text-gray-500 text-lg leading-relaxed">
-            Traditional welding operations are difficult to scale due to training
-            requirements, inconsistent quality, downtime, and manual programming
-            overhead. The autonomous system reduces operational complexity while
-            maintaining repeatable performance.
+          <p className="mt-4 text-mute text-lg leading-relaxed">
+            Steps disappear from the deployment path.
           </p>
         </div>
       </MotionReveal>
 
-      {/* 2. Workflow comparison */}
+      {/* The two tracks */}
       <MotionReveal>
-        <div className="mb-16 rounded-2xl border border-gray-200 overflow-hidden bg-white">
-          {/* Table header */}
-          <div className="grid grid-cols-1 md:grid-cols-2 bg-gray-50 border-b border-gray-200">
-            <div className="px-6 py-4 flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-gray-400" />
-              <span className="text-xs font-semibold tracking-widest uppercase text-gray-500">
-                Traditional Workflow
-              </span>
-            </div>
-            <div className="px-6 py-4 flex items-center gap-2 border-t md:border-t-0 md:border-l border-gray-200 bg-[#f8fbff]">
-              <div className="w-2 h-2 rounded-full bg-[#1a5fb4]" />
-              <span className="text-xs font-semibold tracking-widest uppercase text-[#1a5fb4]">
-                Autonomous Workflow
-              </span>
-            </div>
+        <div className="rounded-2xl border border-steel bg-graphite p-6 md:p-10 mb-6">
+          <div className="flex flex-col lg:flex-row gap-10 lg:gap-12">
+            <Track
+              heading="Program the robot"
+              steps={before}
+              struck
+              count={before.length}
+              note="Specialist required"
+            />
+            <div className="hidden lg:block w-px bg-steel" />
+            <Track
+              heading="Talk to the robot"
+              steps={after}
+              count={after.length}
+              note="Any operator"
+            />
           </div>
-
-          {comparisons.map((row, i) => (
-            <ComparisonRow key={i} row={row} index={i} />
-          ))}
         </div>
       </MotionReveal>
 
-      {/* 3. Operational improvement timeline */}
-      <div ref={timelineRef} className="mb-16">
-        <MotionReveal>
-          <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-10">
-            Operational improvement over time
-          </p>
-        </MotionReveal>
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-0 md:gap-0 relative">
-          {/* Connecting bar (desktop) */}
-          <div className="absolute top-5 left-[12.5%] right-[12.5%] h-px bg-gray-200 hidden md:block" />
-
-          {timeline.map((t, i) => (
+      {/* Outcomes strip */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-16">
+        {outcomes.map((o, i) => (
+          <MotionReveal key={o.title} delay={i * 0.06}>
             <motion.div
-              key={t.phase}
-              initial={{ opacity: 0, y: 20 }}
-              animate={timelineInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.12 }}
-              className="relative flex flex-col items-center md:items-start text-center md:text-left px-4 md:px-5 pb-8 md:pb-0"
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.18 }}
+              className="h-full flex flex-col items-center text-center gap-3 rounded-xl border border-steel bg-graphite px-3 py-5 hover:border-accent/40 transition-all"
             >
-              {/* Node */}
-              <div
-                className="w-10 h-10 rounded-full flex items-center justify-center z-10 mb-4 border-2 border-white shadow-sm"
-                style={{ backgroundColor: t.color }}
-              >
-                <span className="text-white text-xs font-bold">{i + 1}</span>
+              <div className="w-9 h-9 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center">
+                <o.icon size={16} style={{ color: BRAND }} />
               </div>
-              {/* Content */}
-              <div>
-                <p className="text-xs font-mono text-gray-400 mb-0.5">{t.period}</p>
-                <p className="text-sm font-semibold text-gray-900 mb-1.5">{t.phase}</p>
-                <p className="text-xs text-gray-500 leading-relaxed">{t.description}</p>
-              </div>
-              {/* Vertical connector (mobile) */}
-              {i < timeline.length - 1 && (
-                <div className="md:hidden absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-6 bg-gray-200" />
-              )}
+              <p className="text-xs font-medium text-offwhite leading-snug">
+                {o.title}
+              </p>
             </motion.div>
-          ))}
-        </div>
+          </MotionReveal>
+        ))}
       </div>
 
-      {/* 4. Operational benefits cards */}
-      <div className="mb-16">
-        <MotionReveal>
-          <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-8">
-            Factory-floor improvements
-          </p>
-        </MotionReveal>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {benefits.map((b, i) => (
-            <MotionReveal key={b.title} delay={i * 0.07}>
-              <motion.div
-                whileHover={{ y: -3 }}
-                transition={{ duration: 0.18 }}
-                className="bg-white rounded-xl border border-gray-200 hover:border-gray-300 hover:shadow-sm p-6 transition-all duration-200 h-full"
-              >
-                <div className="w-9 h-9 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center mb-4">
-                  <b.icon size={16} className="text-gray-600" />
-                </div>
-                <h3 className="font-semibold text-sm text-gray-900 mb-2">{b.title}</h3>
-                <p className="text-xs text-gray-500 leading-relaxed">{b.body}</p>
-              </motion.div>
-            </MotionReveal>
-          ))}
-        </div>
-      </div>
-
-      {/* 5. Investment framing + CTA */}
+      {/* Closing band */}
       <MotionReveal>
-        <div className="grid md:grid-cols-[1fr_auto] gap-8 items-center p-8 bg-white rounded-2xl border border-gray-200">
-          <div className="max-w-xl">
-            <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2">
-              The practical case
-            </p>
-            <p className="text-lg font-semibold text-gray-900 leading-snug">
-              Operational savings accumulate through reduced downtime, improved
-              consistency, and simplified deployment — not a single headline number.
-            </p>
-            <p className="mt-3 text-sm text-gray-500 leading-relaxed">
-              A single deployment reduces recurring operational inefficiencies.
-              The same system scales to additional lines without rebuilding from
-              scratch.
-            </p>
-          </div>
-          <div className="flex flex-col gap-3 flex-shrink-0">
+        <div className="grid md:grid-cols-[1fr_auto] gap-8 items-center p-8 bg-graphite rounded-2xl border border-steel">
+          <p className="text-lg font-semibold text-offwhite leading-snug max-w-lg">
+            Start with a single cell. The tools you register there are the same
+            tools the next robot calls.
+          </p>
+          <div className="flex flex-col sm:flex-row md:flex-col gap-3 flex-shrink-0">
             <CTAButton href="#cta" variant="primary" icon className="text-sm px-6 py-3">
               Discuss Deployment
             </CTAButton>
@@ -283,7 +218,6 @@ export function ROISection() {
           </div>
         </div>
       </MotionReveal>
-
     </SectionWrapper>
   );
 }

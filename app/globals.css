@@ -40,35 +40,40 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
 
-  /* Brand colors */
-  --color-brand-blue: #1a5fb4;
-  --color-brand-blue-light: #3584e4;
-  --color-brand-blue-pale: #e8f0fb;
-  --color-brand-orange: #e66100;
-  --color-brand-orange-light: #f5a623;
-  --color-brand-gray: #f8f9fa;
-  --color-brand-dark: #1a1a2e;
+  /* ── Primary palette ──────────────────────────────────────────────
+     Neon Lime  #ADD037   Carbon Black #0F1112   Graphite #1A1C1B
+     Steel Gray #323333   Off White    #F5F3F0   Dark(text) #1A1A1A  */
+  --color-accent: #add037;
+  --color-carbon: #0f1112;
+  --color-graphite: #1a1c1b;
+  --color-steel: #323333;
+  --color-offwhite: #f5f3f0;
+  --color-ink: #1a1a1a;
+
+  /* Derived: the palette has no mid-tone for secondary text. Steel Gray
+     on Carbon Black is 1.5:1 — unreadable. This sits at 5.6:1. */
+  --color-mute: #8c8c89;
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.13 0 0);
-  --card: oklch(0.99 0 0);
-  --card-foreground: oklch(0.13 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.13 0 0);
-  --primary: oklch(0.28 0.12 250);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.2 0 0);
-  --muted: oklch(0.96 0 0);
-  --muted-foreground: oklch(0.5 0 0);
-  --accent: oklch(0.95 0.02 250);
-  --accent-foreground: oklch(0.2 0.1 250);
+  --background: #0f1112;
+  --foreground: #f5f3f0;
+  --card: #1a1c1b;
+  --card-foreground: #f5f3f0;
+  --popover: #1a1c1b;
+  --popover-foreground: #f5f3f0;
+  --primary: #add037;
+  --primary-foreground: #1a1a1a;
+  --secondary: #1a1c1b;
+  --secondary-foreground: #f5f3f0;
+  --muted: #1a1c1b;
+  --muted-foreground: #8c8c89;
+  --accent: #add037;
+  --accent-foreground: #1a1a1a;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.91 0 0);
-  --input: oklch(0.91 0 0);
-  --ring: oklch(0.5 0.1 250);
+  --border: #323333;
+  --input: #323333;
+  --ring: #add037;
   --radius: 0.5rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);

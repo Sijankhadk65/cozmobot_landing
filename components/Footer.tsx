@@ -22,7 +22,7 @@ const columns = [
     links: [
       { label: "Book a Demo", href: "#cta" },
       { label: "Partner With Us", href: "#cta" },
-      { label: "Contact", href: "mailto:contact@cozmobot.ai" },
+      { label: "Contact", href: "mailto:info@cozmobot.com" },
     ],
   },
 ];

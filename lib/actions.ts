@@ -1,5 +1,8 @@
 "use server";
 
+import { headers } from "next/headers";
+import { allowContactSend } from "./rate-limit";
+
 const CONTACT_EMAIL = "info@cozmobot.com";
 
 const REASONS = {
@@ -27,6 +30,17 @@ const SUCCESS_MESSAGE =
 function read(formData: FormData, field: Field) {
   const value = formData.get(field);
   return typeof value === "string" ? value.trim() : "";
+}
+
+async function clientIp() {
+  const headerList = await headers();
+  // Prefer x-real-ip: the platform sets it. A client can prepend entries to
+  // x-forwarded-for, so its left-most value is only trustworthy behind a proxy
+  // that overwrites the header.
+  const realIp = headerList.get("x-real-ip");
+  if (realIp) return realIp.trim();
+  const forwarded = headerList.get("x-forwarded-for");
+  return forwarded?.split(",")[0].trim() || null;
 }
 
 export async function submitContact(
@@ -70,6 +84,17 @@ export async function submitContact(
       status: "error",
       message: "Please fix the highlighted fields.",
       fieldErrors,
+      values,
+    };
+  }
+
+  // Counted here rather than at the top of the action so that a visitor who
+  // fumbles the email field three times doesn't burn their quota.
+  if (!(await allowContactSend(await clientIp()))) {
+    return {
+      status: "error",
+      message: `You've sent several messages recently. Please email us directly at ${CONTACT_EMAIL}.`,
+      fieldErrors: {},
       values,
     };
   }

@@ -2,7 +2,7 @@
 
 import { SectionWrapper } from "../SectionWrapper";
 import { MotionReveal } from "../MotionReveal";
-import { CTAButton } from "../CTAButton";
+import { ContactForm } from "../ContactForm";
 import { Blocks, Users, ShieldCheck } from "lucide-react";
 
 export function CTASection() {
@@ -24,23 +24,7 @@ export function CTASection() {
             voice. Then talk to us about the robot you want it to drive next.
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <CTAButton
-              href="mailto:contact@cozmobot.ai"
-              variant="primary"
-              icon
-              className="text-base px-8 py-4"
-            >
-              Book a Demo
-            </CTAButton>
-            <CTAButton
-              href="mailto:partners@cozmobot.ai"
-              variant="secondary"
-              className="text-base px-8 py-4"
-            >
-              Partner With Us
-            </CTAButton>
-          </div>
+          <ContactForm />
 
           <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[

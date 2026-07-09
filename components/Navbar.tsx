@@ -5,10 +5,11 @@ import { CTAButton } from "./CTAButton";
 import { Bot } from "lucide-react";
 
 const navLinks = [
-  { label: "Solution", href: "#solution" },
-  { label: "Features", href: "#features" },
+  { label: "Platform", href: "#platform" },
+  { label: "Capabilities", href: "#capabilities" },
+  { label: "Omnicron", href: "#omnicron" },
   { label: "Architecture", href: "#architecture" },
-  { label: "Industries", href: "#industries" },
+  { label: "Any Robot", href: "#any-robot" },
 ];
 
 export function Navbar() {
@@ -17,22 +18,25 @@ export function Navbar() {
       initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200/80"
+      className="fixed top-0 left-0 right-0 z-50 bg-carbon/90 backdrop-blur-md border-b border-steel/70"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-2 font-semibold text-gray-900 text-lg">
-          <div className="w-7 h-7 bg-[#1a5fb4] rounded-md flex items-center justify-center">
-            <Bot className="w-4 h-4 text-white" />
+        <a href="#" className="flex items-center gap-2.5 text-offwhite">
+          <div className="w-7 h-7 bg-accent rounded-md flex items-center justify-center">
+            <Bot className="w-4 h-4 text-ink" />
           </div>
-          CozmoBot
+          <span className="font-semibold text-lg leading-none">CozmoBot</span>
+          <span className="hidden lg:inline-block text-xs text-mute border-l border-steel pl-2.5 leading-none">
+            makers of nex-ON
+          </span>
         </a>
 
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-7">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+              className="text-sm text-mute hover:text-offwhite transition-colors"
             >
               {link.label}
             </a>

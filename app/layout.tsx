@@ -13,30 +13,31 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CozmoBot — Autonomous Industrial Robotics",
+  title: "nex-ON by CozmoBot — Deploy Any Robot, Just by Talking to It",
   description:
-    "End-to-end AI welding automation powered by computer vision, smart parameter prediction, and zero-code robot programming. The future of industrial automation.",
+    "nex-ON is a robot-agnostic AI deployment platform. Perception, tooling, and sensor integration let an AI brain deploy any robot to do any task, directed in plain human language. Proven on Omnicron, our autonomous welding cobot.",
   keywords: [
+    "robot-agnostic platform",
+    "embodied AI",
+    "natural language robotics",
+    "AI robot deployment",
     "autonomous welding",
-    "AI robotics",
-    "industrial automation",
-    "robotic welding",
-    "computer vision robotics",
-    "zero-code robotics",
-    "adaptive manufacturing",
+    "collaborative robots",
+    "open-vocabulary vision",
+    "humanoid robotics",
   ],
   openGraph: {
-    title: "CozmoBot — Autonomous Industrial Robotics",
+    title: "nex-ON by CozmoBot — Deploy Any Robot, Just by Talking to It",
     description:
-      "End-to-end AI welding automation. Computer vision + AI parameter prediction + trajectory planning.",
+      "A robot-agnostic AI deployment platform. Any robot, any task, directed in plain language. Proven on Omnicron, our autonomous welding cobot.",
     type: "website",
     siteName: "CozmoBot",
   },
   twitter: {
     card: "summary_large_image",
-    title: "CozmoBot — Autonomous Industrial Robotics",
+    title: "nex-ON by CozmoBot — Deploy Any Robot, Just by Talking to It",
     description:
-      "End-to-end AI welding automation. Zero-code robot programming for industrial workflows.",
+      "A robot-agnostic AI deployment platform. Any robot, any task, directed in plain language.",
   },
 };
 
@@ -50,7 +51,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col bg-white text-gray-900">
+      <body className="min-h-full flex flex-col bg-carbon text-offwhite">
         {children}
       </body>
     </html>

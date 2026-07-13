@@ -92,6 +92,10 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    /* Let the typeface pick its optical size per rendered size, the way
+       Apple's system fonts do — heavier stems small, finer strokes large. */
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
   }
   html {
     @apply scroll-smooth;
@@ -101,5 +105,53 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* ── Optical typography ───────────────────────────────────────────────
+     Tracking is size-specific: large display type reads too loose at
+     default spacing, so it tightens; body stays near zero; small uppercase
+     eyebrows open up. Leading tracks size inversely — tight up top, airy
+     for reading. These replace flat `tracking-tight` on headings. */
+  .text-display {
+    letter-spacing: -0.033em;
+    line-height: 1.02;
+  }
+  .text-title {
+    letter-spacing: -0.021em;
+    line-height: 1.1;
+  }
+  .text-eyebrow {
+    letter-spacing: 0.16em;
+  }
+}
+
+/* ── Accessibility: motion, transparency, contrast ─────────────────────
+   Reduced motion keeps comprehension cues (opacity/color) but drops
+   spring/slide/parallax. Reduced transparency frosts the glass chrome
+   solid. Both are honored per-component too, but this is the safety net. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    background: var(--card) !important;
+    backdrop-filter: none !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .glass {
+    background: var(--card) !important;
+    border-color: var(--foreground) !important;
   }
 }

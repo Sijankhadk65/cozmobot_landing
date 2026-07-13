@@ -49,7 +49,7 @@ export function Footer() {
 
           {columns.map((col) => (
             <div key={col.heading}>
-              <p className="text-xs font-semibold tracking-widest uppercase text-mute mb-4">
+              <p className="text-xs font-semibold text-eyebrow uppercase text-mute mb-4">
                 {col.heading}
               </p>
               <ul className="space-y-2 text-sm text-mute">

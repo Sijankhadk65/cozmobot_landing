@@ -1,0 +1,35 @@
+A skilled welder looks at a joint and knows what to do in about a second.
+
+Getting a robot to do the same thing takes weeks. Someone has to program it, move by move. And if the part shifts even slightly from the plan, the robot fails and someone starts over.
+
+That is why so much factory work is still done by hand. The robots are capable enough. Putting them to work is the hard part — and the people who can do it are getting harder to find every year.
+
+So we stopped trying to program the robot.
+
+This is CozmoBot, and the platform we have spent the last stretch building: nex-ON.
+
+nex-ON lets a person tell a robot what they want, out loud, in plain language. The robot looks at what is actually in front of it, works out how to do the job, checks that it is safe, and does it. Then it tells you what happened.
+
+No specialist. No programming. You just talk to it.
+
+Our first robot built on nex-ON is Omnicron — an autonomous welding cobot.
+
+We started with welding on purpose. It is one of the hardest jobs to automate and one of the hardest to hire for. There is a global shortage of skilled welders, and the work that needs them most — short runs, custom fabrication, constant changeovers — is exactly the work traditional automation cannot afford to touch.
+
+With Omnicron, the welder describes the joint. Omnicron finds it, measures it, rehearses the pass with the arc completely off, and only welds for real once a person deliberately allows it. Safety is not a setting we added. It is how the thing is built.
+
+It is running today, on a real robot arm.
+
+And Omnicron is where we start, not where we stop. The same platform is designed to run other robots doing other jobs. We will show those when they are real.
+
+Everyone else is building robots.
+
+We are building what makes them useful.
+
+Welding today. A universal robotic workforce tomorrow.
+
+If you run a fabrication shop and cannot find the welders you need, we would like to show you Omnicron.
+
+info@cozmobot.com
+
+#Robotics #Manufacturing #AI #Welding #Automation

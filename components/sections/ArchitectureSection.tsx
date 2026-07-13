@@ -37,10 +37,10 @@ export function ArchitectureSection() {
     <SectionWrapper id="architecture" className="bg-graphite">
       <MotionReveal>
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs font-semibold tracking-widest uppercase text-mute">
+          <span className="text-xs font-semibold text-eyebrow uppercase text-mute">
             System Architecture
           </span>
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-offwhite tracking-tight">
+          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-offwhite text-title">
             Interfaces, not fixed
             <br />
             implementations
@@ -107,7 +107,7 @@ export function ArchitectureSection() {
           />
         </div>
 
-        <p className="text-center text-[10px] font-mono uppercase tracking-widest text-mute mb-5">
+        <p className="text-center text-[10px] font-mono uppercase text-eyebrow text-mute mb-5">
           calls modular tools
         </p>
 
@@ -157,7 +157,7 @@ export function ArchitectureSection() {
           transition={{ duration: 0.5, delay: 1 }}
           className="rounded-xl border border-steel bg-graphite px-5 py-5"
         >
-          <p className="text-center text-[10px] font-mono uppercase tracking-widest text-mute mb-4">
+          <p className="text-center text-[10px] font-mono uppercase text-eyebrow text-mute mb-4">
             any body
           </p>
           <div className="flex flex-wrap items-center justify-center gap-2.5">

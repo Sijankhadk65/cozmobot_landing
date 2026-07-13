@@ -78,10 +78,10 @@ export function CapabilitiesSection() {
     <SectionWrapper id="capabilities">
       <MotionReveal>
         <div className="text-center max-w-2xl mx-auto mb-6">
-          <span className="text-xs font-semibold tracking-widest uppercase text-mute">
+          <span className="text-xs font-semibold text-eyebrow uppercase text-mute">
             Platform Capabilities
           </span>
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-offwhite tracking-tight">
+          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-offwhite text-title">
             Everything below
             <br />
             is running today

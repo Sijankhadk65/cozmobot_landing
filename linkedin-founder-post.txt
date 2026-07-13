@@ -1,0 +1,40 @@
+Eighteen months ago, a few of us set out to answer one question: could you simply talk to a robot and have it do real work?
+
+Not one robot. Not one job. Any robot, any job.
+
+Today I can finally show you what we built.
+
+It is called nex-ON. You tell a robot what you want, out loud, in plain language. It looks at what is actually in front of it, works out how to do the job, checks that it is safe, and does it. Then it tells you what happened. No programming. No specialist. You talk to it.
+
+That was the whole bet, and it is the only thing we worked on.
+
+Omnicron — the welding cobot in this video — is not a separate product we built. It is what happened when we pointed nex-ON at a real job and it worked. A welder describes the joint out loud. It finds it, measures it, rehearses the pass, and once a person allows it, welds.
+
+We chose welding as the first test because it is brutally unforgiving. If the platform could do that, the platform was real. Omnicron is the proof, not the point.
+
+I want to be honest about what the last year and a half actually looked like, because the two-minute version always sounds cleaner than it was.
+
+For a long time, it did not work.
+
+[THE HONEST BIT — replace with 2–3 real ones:]
+[e.g. "For months the arm would confidently move to a point three centimetres from where it was supposed to be, and we could not tell you why."]
+[e.g. "We rebuilt the vision system twice. The second time we threw away work we had been proud of for six months."]
+[e.g. "There was a week in [month] where we genuinely discussed whether we had picked an impossible problem."]
+
+There were demos that failed in front of people we wanted to impress. There were stretches where the fix we were certain about turned out to be wrong, and we lost weeks finding that out. Anyone who has built hardware knows the specific feeling of watching a robot do something inexplicable at 2am with no idea whether you are an hour or a month from the answer.
+
+We kept going because the problem would not let us go. Every shop we spoke to said the same thing: they cannot find the skilled people they need, and the work that needs them most is the work nobody will automate. The gap was real. We just had to be stubborn enough to close it.
+
+Then one day the robot did exactly what someone asked it to do, out loud, on a part it had never seen. We stood there and watched it. That is why you do this.
+
+To the small team who stayed through all of it — [names] — thank you. You gave a year and a half of your lives to a hard bet with no guarantee.
+
+And this is the part I am most excited about: because the hard work went into the platform, the welder is only the first thing it can be. The same system is built to run other robots, doing other jobs. Omnicron is where we start, not where we stop.
+
+Welding today. A universal robotic workforce tomorrow.
+
+If you run a fabrication shop and cannot find the welders you need, I would genuinely love to show you this.
+
+info@cozmobot.com
+
+#Robotics #Manufacturing #Welding #Founders #EmbodiedAI

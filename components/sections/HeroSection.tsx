@@ -1,10 +1,16 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { CTAButton } from "../CTAButton";
 import { ChevronDown, Mic, Eye, Ruler, Move3d, Wrench, Radio } from "lucide-react";
+import { spring } from "@/lib/motion";
 
 const ACCENT = "#add037";
+
+// A looping keyframe sequence that collapses to its resting frame when the
+// user asks for reduced motion — keeps the diagram legible without churn.
+const loop = <T,>(frames: T[], reduce: boolean, rest: T): T[] | T =>
+  reduce ? rest : frames;
 
 const tools = [
   { icon: Eye, label: "Vision" },
@@ -22,8 +28,9 @@ const bodies = [
 ];
 
 function PlatformViz() {
+  const reduce = useReducedMotion() ?? false;
   return (
-    <div className="relative w-full rounded-2xl bg-graphite border border-steel/70 overflow-hidden p-6 md:p-8">
+    <div className="relative w-full rounded-2xl bg-graphite border border-steel/70 overflow-hidden p-6 md:p-8 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.6)]">
       {/* Grid pattern */}
       <div
         className="absolute inset-0 opacity-40 pointer-events-none"
@@ -37,7 +44,7 @@ function PlatformViz() {
       <div className="relative space-y-5">
         {/* 1. Spoken command */}
         <div>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-mute mb-2">
+          <p className="text-[10px] font-mono uppercase text-eyebrow text-mute mb-2">
             Operator
           </p>
           <div className="flex items-center gap-3 bg-carbon rounded-xl border border-steel px-4 py-3">
@@ -53,7 +60,9 @@ function PlatformViz() {
                 <motion.div
                   key={i}
                   className="w-0.5 bg-accent rounded-full"
-                  animate={{ height: ["20%", "100%", "40%", "80%", "20%"] }}
+                  animate={{
+                    height: loop(["20%", "100%", "40%", "80%", "20%"], reduce, "50%"),
+                  }}
                   transition={{
                     duration: 1.4,
                     repeat: Infinity,
@@ -70,7 +79,7 @@ function PlatformViz() {
         <div className="flex justify-center">
           <motion.div
             className="w-px h-4 bg-gradient-to-b from-steel to-accent"
-            animate={{ opacity: [0.3, 1, 0.3] }}
+            animate={{ opacity: loop([0.3, 1, 0.3], reduce, 0.7) }}
             transition={{ duration: 2, repeat: Infinity }}
           />
         </div>
@@ -79,16 +88,20 @@ function PlatformViz() {
         <motion.div
           className="rounded-xl bg-accent px-4 py-3 flex items-center justify-between"
           animate={{
-            boxShadow: [
-              "0 2px 8px rgba(173,208,55,0.15)",
-              "0 4px 22px rgba(173,208,55,0.35)",
-              "0 2px 8px rgba(173,208,55,0.15)",
-            ],
+            boxShadow: loop(
+              [
+                "0 2px 8px rgba(173,208,55,0.15)",
+                "0 4px 22px rgba(173,208,55,0.35)",
+                "0 2px 8px rgba(173,208,55,0.15)",
+              ],
+              reduce,
+              "0 4px 18px rgba(173,208,55,0.28)",
+            ),
           }}
           transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
         >
           <div>
-            <p className="text-[10px] font-mono uppercase tracking-widest text-ink/80">
+            <p className="text-[10px] font-mono uppercase text-eyebrow text-ink/80">
               Reasoning brain
             </p>
             <p className="text-sm font-semibold text-ink mt-0.5">
@@ -97,14 +110,17 @@ function PlatformViz() {
           </div>
           <motion.div
             className="w-2 h-2 rounded-full bg-ink"
-            animate={{ opacity: [0.3, 1, 0.3], scale: [0.9, 1.15, 0.9] }}
+            animate={{
+              opacity: loop([0.3, 1, 0.3], reduce, 1),
+              scale: loop([0.9, 1.15, 0.9], reduce, 1),
+            }}
             transition={{ duration: 1.6, repeat: Infinity }}
           />
         </motion.div>
 
         {/* 3. Tools */}
         <div>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-mute mb-2">
+          <p className="text-[10px] font-mono uppercase text-eyebrow text-mute mb-2">
             Modular capabilities
           </p>
           <div className="grid grid-cols-5 gap-2">
@@ -113,7 +129,7 @@ function PlatformViz() {
                 key={tool.label}
                 className="flex flex-col items-center gap-1.5 bg-carbon rounded-lg border border-steel py-2.5 px-1"
                 animate={{
-                  borderColor: ["#323333", ACCENT, "#323333"],
+                  borderColor: loop(["#323333", ACCENT, "#323333"], reduce, "#323333"),
                 }}
                 transition={{
                   duration: 1.2,
@@ -139,14 +155,14 @@ function PlatformViz() {
         <div className="flex justify-center">
           <motion.div
             className="w-px h-4 bg-gradient-to-b from-accent to-steel"
-            animate={{ opacity: [0.3, 1, 0.3] }}
+            animate={{ opacity: loop([0.3, 1, 0.3], reduce, 0.7) }}
             transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
           />
         </div>
 
         {/* 4. Bodies */}
         <div>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-mute mb-2">
+          <p className="text-[10px] font-mono uppercase text-eyebrow text-mute mb-2">
             Any body
           </p>
           <div className="flex flex-wrap gap-2">
@@ -201,21 +217,21 @@ export function HeroSection() {
         {/* Left: Copy */}
         <div className="space-y-6">
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ ...spring, delay: 0.05 }}
           >
-            <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent bg-accent/10 px-3 py-1 rounded-full border border-accent/25">
+            <span className="inline-flex items-center gap-2 text-xs font-semibold text-eyebrow uppercase text-accent bg-accent/10 px-3 py-1 rounded-full border border-accent/25">
               <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
               Robot-agnostic AI deployment platform
             </span>
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.08] tracking-tight text-offwhite"
+            transition={{ ...spring, delay: 0.13 }}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-display text-offwhite"
           >
             Deploy any robot
             <br />
@@ -225,9 +241,9 @@ export function HeroSection() {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
+            transition={{ ...spring, delay: 0.21 }}
             className="text-lg text-mute leading-relaxed max-w-lg"
           >
             <span className="font-semibold text-offwhite">nex-ON</span> is the
@@ -239,7 +255,7 @@ export function HeroSection() {
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            transition={{ ...spring, delay: 0.29 }}
             className="flex flex-wrap gap-3 pt-2"
           >
             <CTAButton href="#cta" variant="primary" icon className="text-base px-7 py-3.5">
@@ -253,7 +269,7 @@ export function HeroSection() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.7 }}
+            transition={{ duration: 0.5, delay: 0.42 }}
             className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-5 border-t border-steel/60"
           >
             {[
@@ -263,7 +279,9 @@ export function HeroSection() {
               { value: "Dry-run", label: "Safe by default" },
             ].map((stat) => (
               <div key={stat.label}>
-                <p className="text-xl font-bold text-offwhite">{stat.value}</p>
+                <p className="text-xl font-bold text-offwhite tracking-[-0.01em]">
+                  {stat.value}
+                </p>
                 <p className="text-xs text-mute">{stat.label}</p>
               </div>
             ))}
@@ -274,21 +292,28 @@ export function HeroSection() {
         <motion.div
           initial={{ opacity: 0, x: 24 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
+          transition={{ ...spring, delay: 0.18 }}
         >
           <PlatformViz />
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className="relative mx-auto flex flex-col items-center gap-1 text-mute pb-8"
-        animate={{ y: [0, 6, 0] }}
-        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <span className="text-xs tracking-widest uppercase">Scroll</span>
-        <ChevronDown className="w-4 h-4" />
-      </motion.div>
+      {/* Scroll indicator — hints downward, in the direction of the gesture */}
+      <ScrollHint />
     </section>
+  );
+}
+
+function ScrollHint() {
+  const reduce = useReducedMotion() ?? false;
+  return (
+    <motion.div
+      className="relative mx-auto flex flex-col items-center gap-1 text-mute pb-8"
+      animate={{ y: reduce ? 0 : [0, 6, 0] }}
+      transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+    >
+      <span className="text-xs text-eyebrow uppercase">Scroll</span>
+      <ChevronDown className="w-4 h-4" />
+    </motion.div>
   );
 }

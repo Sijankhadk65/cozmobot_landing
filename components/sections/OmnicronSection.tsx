@@ -152,7 +152,7 @@ function SeamTrace() {
   return (
     <div ref={ref} className="rounded-xl border border-offwhite/10 bg-carbon p-5">
       <div className="flex items-center justify-between mb-4">
-        <p className="text-[10px] font-mono uppercase tracking-widest text-offwhite/65">
+        <p className="text-[10px] font-mono uppercase text-eyebrow text-offwhite/65">
           Seam trace
         </p>
         <div className="flex items-center gap-1.5">
@@ -250,14 +250,14 @@ export function OmnicronSection() {
       <MotionReveal>
         <div className="max-w-3xl mb-14">
           <div className="flex items-center gap-3 mb-4">
-            <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent bg-carbon px-3 py-1 rounded-full border border-accent/35">
+            <span className="inline-flex items-center gap-2 text-xs font-semibold text-eyebrow uppercase text-accent bg-carbon px-3 py-1 rounded-full border border-accent/35">
               <Flame size={12} />
               Application
             </span>
             <span className="text-xs text-offwhite/70">Built on nex-ON</span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-offwhite tracking-tight leading-[1.1]">
+          <h2 className="text-4xl md:text-5xl font-bold text-offwhite text-display">
             Omnicron
           </h2>
           <p className="mt-3 text-xl text-accent font-medium">
@@ -280,7 +280,7 @@ export function OmnicronSection() {
       <div className="grid lg:grid-cols-2 gap-8 mb-16">
         <MotionReveal>
           <div className="h-full rounded-2xl border border-offwhite/10 bg-carbon p-6">
-            <p className="text-xs font-semibold tracking-widest uppercase text-accent mb-6">
+            <p className="text-xs font-semibold text-eyebrow uppercase text-accent mb-6">
               A weld pass, step by step
             </p>
             <div className="space-y-1">
@@ -315,7 +315,7 @@ export function OmnicronSection() {
       <MotionReveal>
         <div className="rounded-2xl border border-offwhite/10 bg-carbon p-6 md:p-8 mb-16">
           <div className="mb-8">
-            <p className="text-xs font-semibold tracking-widest uppercase text-accent mb-2">
+            <p className="text-xs font-semibold text-eyebrow uppercase text-accent mb-2">
               Weld weave
             </p>
             <p className="text-offwhite/70 leading-relaxed max-w-xl">
@@ -351,10 +351,10 @@ export function OmnicronSection() {
       <div className="mb-14">
         <MotionReveal>
           <div className="max-w-2xl mb-8">
-            <p className="text-xs font-semibold tracking-widest uppercase text-accent mb-3">
+            <p className="text-xs font-semibold text-eyebrow uppercase text-accent mb-3">
               The safety model
             </p>
-            <h3 className="text-2xl md:text-3xl font-bold text-offwhite tracking-tight">
+            <h3 className="text-2xl md:text-3xl font-bold text-offwhite text-title">
               An arc is dangerous. So it is off until you say otherwise.
             </h3>
           </div>
@@ -379,10 +379,10 @@ export function OmnicronSection() {
       <div className="mb-14">
         <MotionReveal>
           <div className="max-w-2xl mb-8">
-            <p className="text-xs font-semibold tracking-widest uppercase text-accent mb-3">
+            <p className="text-xs font-semibold text-eyebrow uppercase text-accent mb-3">
               Where it deploys
             </p>
-            <h3 className="text-2xl md:text-3xl font-bold text-offwhite tracking-tight">
+            <h3 className="text-2xl md:text-3xl font-bold text-offwhite text-title">
               Where a shortage of welders meets work no integrator will quote.
             </h3>
             <p className="mt-4 text-offwhite/60 leading-relaxed">

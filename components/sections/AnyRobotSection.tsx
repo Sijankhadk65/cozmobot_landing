@@ -81,7 +81,7 @@ function Matrix({
   return (
     <div className="rounded-2xl border border-steel bg-graphite overflow-hidden h-full">
       <div className="px-5 py-3.5 border-b border-steel bg-carbon">
-        <p className="text-xs font-semibold tracking-widest uppercase text-mute">
+        <p className="text-xs font-semibold text-eyebrow uppercase text-mute">
           {title}
         </p>
       </div>
@@ -153,10 +153,10 @@ export function AnyRobotSection() {
     <SectionWrapper id="any-robot">
       <MotionReveal>
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs font-semibold tracking-widest uppercase text-accent">
+          <span className="text-xs font-semibold text-eyebrow uppercase text-accent">
             Any Robot, Any Task
           </span>
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-offwhite tracking-tight">
+          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-offwhite text-title">
             One platform.
             <br />
             Any body.
@@ -186,7 +186,7 @@ export function AnyRobotSection() {
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <CheckCircle2 size={15} className="text-accent" />
-                <p className="text-xs font-semibold tracking-widest uppercase text-accent">
+                <p className="text-xs font-semibold text-eyebrow uppercase text-accent">
                   Proven today
                 </p>
               </div>
@@ -200,7 +200,7 @@ export function AnyRobotSection() {
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <CircleDashed size={15} className="text-mute" />
-                <p className="text-xs font-semibold tracking-widest uppercase text-mute">
+                <p className="text-xs font-semibold text-eyebrow uppercase text-mute">
                   Architected for, not yet shipped
                 </p>
               </div>
@@ -217,7 +217,7 @@ export function AnyRobotSection() {
 
       {/* Positioning */}
       <MotionReveal>
-        <p className="text-xs font-semibold tracking-widest uppercase text-mute mb-6">
+        <p className="text-xs font-semibold text-eyebrow uppercase text-mute mb-6">
           Where we sit
         </p>
       </MotionReveal>

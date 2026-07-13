@@ -1,0 +1,9 @@
+CozmoBot is building the full-stack Embodied AI platform for industrial robotics — a hardware-agnostic intelligence layer that enables any robot to learn and perform skilled manufacturing tasks.
+
+Our platform, nex-ON, sits between an AI brain and a robot body. Operators direct robots by talking to them: nex-ON perceives the real scene, picks the right tool, verifies the move is safe, and acts. No teach pendant. No CAD programming.
+
+Omnicron, our autonomous welding cobot, is nex-ON's first deployment — not the ceiling of it.
+
+From welding today to a universal robotic workforce tomorrow.
+
+📩 info@cozmobot.com

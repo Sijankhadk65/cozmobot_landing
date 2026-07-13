@@ -100,7 +100,7 @@ function Track({
             }`}
           />
           <span
-            className={`text-xs font-semibold tracking-widest uppercase ${
+            className={`text-xs font-semibold text-eyebrow uppercase ${
               struck ? "text-mute" : "text-accent"
             }`}
           >
@@ -145,10 +145,10 @@ export function ROISection() {
       {/* Headline */}
       <MotionReveal>
         <div className="max-w-xl mb-14">
-          <span className="text-xs font-semibold tracking-widest uppercase text-mute">
+          <span className="text-xs font-semibold text-eyebrow uppercase text-mute">
             Operations
           </span>
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-offwhite tracking-tight leading-tight">
+          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-offwhite text-title">
             What actually changes
             <br />
             on the floor.

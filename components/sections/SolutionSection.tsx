@@ -130,10 +130,10 @@ export function SolutionSection() {
         {/* Left sticky label */}
         <div className="md:sticky md:top-24">
           <MotionReveal>
-            <span className="text-xs font-semibold tracking-widest uppercase text-accent">
+            <span className="text-xs font-semibold text-eyebrow uppercase text-accent">
               How It Works
             </span>
-            <h2 className="mt-3 text-3xl md:text-4xl font-bold text-offwhite tracking-tight">
+            <h2 className="mt-3 text-3xl md:text-4xl font-bold text-offwhite text-title">
               A conversation,
               <br />
               not a program.
@@ -145,7 +145,7 @@ export function SolutionSection() {
             </p>
 
             <div className="mt-8 p-5 bg-carbon rounded-xl border border-steel">
-              <p className="text-xs font-semibold tracking-widest uppercase text-mute mb-3">
+              <p className="text-xs font-semibold text-eyebrow uppercase text-mute mb-3">
                 The loop
               </p>
               <div className="space-y-2.5 font-mono text-xs">

@@ -10,10 +10,10 @@ export function CTASection() {
     <SectionWrapper id="cta" className="bg-graphite">
       <MotionReveal>
         <div className="max-w-3xl mx-auto text-center">
-          <span className="text-xs font-semibold tracking-widest uppercase text-accent">
+          <span className="text-xs font-semibold text-eyebrow uppercase text-accent">
             Get Started
           </span>
-          <h2 className="mt-3 text-3xl md:text-5xl font-bold text-offwhite tracking-tight leading-[1.1]">
+          <h2 className="mt-3 text-3xl md:text-5xl font-bold text-offwhite text-display">
             Stop programming.
             <br />
             Start talking.

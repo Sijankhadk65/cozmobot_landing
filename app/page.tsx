@@ -5,6 +5,7 @@ import { PlatformSection } from "@/components/sections/PlatformSection";
 import { SolutionSection } from "@/components/sections/SolutionSection";
 import { CapabilitiesSection } from "@/components/sections/CapabilitiesSection";
 import { OmnicronSection } from "@/components/sections/OmnicronSection";
+import { OrioSection } from "@/components/sections/OrioSection";
 import { ArchitectureSection } from "@/components/sections/ArchitectureSection";
 import { AnyRobotSection } from "@/components/sections/AnyRobotSection";
 import { ROISection } from "@/components/sections/ROISection";
@@ -22,6 +23,7 @@ export default function Home() {
         <SolutionSection />
         <CapabilitiesSection />
         <OmnicronSection />
+        <OrioSection />
         <ArchitectureSection />
         <AnyRobotSection />
         <ROISection />

@@ -14,9 +14,14 @@ const tools = [
   { icon: Radio, label: "Sensors" },
 ];
 
-const bodies = [
-  { label: "Collaborative arm", proven: true },
-  { label: "Humanoid", proven: false },
+const bodies: {
+  label: string;
+  proven: boolean;
+  note?: string;
+  href?: string;
+}[] = [
+  { label: "Collaborative arm", proven: true, note: "Omnicron", href: "#omnicron" },
+  { label: "Humanoid", proven: false, note: "Orio", href: "#orio" },
   { label: "AMR", proven: false },
   { label: "Fleet", proven: false },
 ];
@@ -150,23 +155,51 @@ function PlatformViz() {
             Any body
           </p>
           <div className="flex flex-wrap gap-2">
-            {bodies.map((body) => (
-              <div
-                key={body.label}
-                className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 border text-xs ${
-                  body.proven
-                    ? "bg-carbon border-accent/40 text-offwhite"
-                    : "bg-carbon/40 border-dashed border-steel text-mute"
-                }`}
-              >
-                <span
-                  className={`w-1.5 h-1.5 rounded-full ${
-                    body.proven ? "bg-accent" : "bg-steel"
-                  }`}
-                />
-                {body.label}
-              </div>
-            ))}
+            {bodies.map((body) => {
+              const chip = (
+                <>
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full ${
+                      body.proven ? "bg-accent" : "bg-steel"
+                    }`}
+                  />
+                  {body.label}
+                  {/* The named applications carry their product name, so the
+                      hero says what nex-ON already drives without spending a
+                      whole block on it. */}
+                  {body.note && (
+                    <>
+                      <span className="text-mute/50">·</span>
+                      <span className="text-accent font-medium">
+                        {body.note}
+                      </span>
+                    </>
+                  )}
+                </>
+              );
+
+              const className = `flex items-center gap-1.5 rounded-full px-3 py-1.5 border text-xs ${
+                body.proven
+                  ? "bg-carbon border-accent/40 text-offwhite"
+                  : "bg-carbon/40 border-dashed border-steel text-mute"
+              }`;
+
+              return body.href ? (
+                <motion.a
+                  key={body.label}
+                  href={body.href}
+                  whileHover={{ y: -2 }}
+                  transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+                  className={`${className} hover:border-accent/70 transition-colors`}
+                >
+                  {chip}
+                </motion.a>
+              ) : (
+                <div key={body.label} className={className}>
+                  {chip}
+                </div>
+              );
+            })}
           </div>
         </div>
 

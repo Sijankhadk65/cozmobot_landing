@@ -1,9 +1,18 @@
 "use client";
 
+import Image from "next/image";
 import { SectionWrapper } from "../SectionWrapper";
 import { MotionReveal } from "../MotionReveal";
-import { motion, useInView } from "framer-motion";
+import {
+  motion,
+  useInView,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from "framer-motion";
 import { useRef } from "react";
+import omnicronHero from "@/assets/omnicron-hero.png";
 import {
   Flame,
   ShieldAlert,
@@ -243,38 +252,161 @@ function SeamTrace() {
   );
 }
 
+// ── The Omnicron photograph ───────────────────────────────────────────────────
+// Treated as a physical object: it materializes (blur + scale resolving together,
+// not a flat fade), catches light where the pointer is, and parallaxes against
+// its frame. Every spring is critically damped — nothing here carries momentum
+// from a gesture, so nothing should overshoot.
+const SPRING = { stiffness: 220, damping: 30, mass: 0.6 };
+
+function OmnicronPhoto() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const reduceMotion = useReducedMotion();
+
+  // Pointer position, normalized to the frame (0–100%), tracked 1:1.
+  const px = useMotionValue(50);
+  const py = useMotionValue(50);
+  const lit = useMotionValue(0);
+
+  const sx = useSpring(px, SPRING);
+  const sy = useSpring(py, SPRING);
+  const sLit = useSpring(lit, SPRING);
+
+  // Specular highlight — light catching the surface where the pointer is.
+  const sheen = useMotionTemplate`radial-gradient(340px circle at ${sx}% ${sy}%, rgba(245,243,240,0.14), transparent 65%)`;
+  // The subject drifts against the frame, opposite the pointer, for depth.
+  const driftX = useSpring(useMotionValue(0), SPRING);
+  const driftY = useSpring(useMotionValue(0), SPRING);
+
+  function handlePointerMove(e: React.PointerEvent<HTMLDivElement>) {
+    if (reduceMotion || e.pointerType === "touch") return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const nx = ((e.clientX - r.left) / r.width) * 100;
+    const ny = ((e.clientY - r.top) / r.height) * 100;
+    px.set(nx);
+    py.set(ny);
+    driftX.set(((nx - 50) / 50) * -7);
+    driftY.set(((ny - 50) / 50) * -7);
+  }
+
+  function handlePointerLeave() {
+    lit.set(0);
+    driftX.set(0);
+    driftY.set(0);
+  }
+
+  // Enter: the surface arrives as a material — blur and scale resolve together.
+  // Reduced motion neutralizes those two values rather than dropping the keys:
+  // useReducedMotion() is null on the first render, so a target missing `scale`
+  // and `filter` would strand them at their hidden values forever.
+  const hidden = {
+    opacity: 0,
+    scale: reduceMotion ? 1 : 0.94,
+    filter: reduceMotion ? "blur(0px)" : "blur(14px)",
+  };
+  const shown = { opacity: 1, scale: 1, filter: "blur(0px)" };
+
+  return (
+    <div className="relative mx-auto w-full max-w-[340px] lg:max-w-[440px]">
+      {/* Ambient bounce from the subject's own backdrop */}
+      <motion.div
+        aria-hidden
+        className="absolute -inset-8 rounded-[3rem] bg-accent/15 blur-3xl"
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ type: "spring", bounce: 0, duration: 0.9, delay: 0.1 }}
+      />
+
+      <motion.div
+        ref={ref}
+        onPointerMove={handlePointerMove}
+        onPointerEnter={() => !reduceMotion && lit.set(1)}
+        onPointerLeave={handlePointerLeave}
+        initial={hidden}
+        animate={inView ? shown : hidden}
+        transition={{ type: "spring", bounce: 0, duration: 0.7 }}
+        className="group relative rounded-2xl overflow-hidden bg-carbon shadow-[0_32px_80px_-24px_rgba(0,0,0,0.75)] ring-1 ring-inset ring-offwhite/12"
+      >
+        <motion.div style={reduceMotion ? undefined : { x: driftX, y: driftY }}>
+          {/* `sizes` covers the 105% scale the drift needs, so the extra 5%
+              is real pixels rather than an upscale. */}
+          <Image
+            src={omnicronHero}
+            alt="Omnicron welding cobot — a Cozmobot arm with a MIG torch mounted at the wrist."
+            placeholder="blur"
+            quality={90}
+            sizes="(min-width: 1024px) 480px, (min-width: 640px) 380px, 95vw"
+            className="w-full h-auto scale-105"
+          />
+        </motion.div>
+
+        {/* Specular highlight, tracking the pointer */}
+        <motion.div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none mix-blend-plus-lighter"
+          style={{ backgroundImage: sheen, opacity: sLit }}
+        />
+
+        {/* Top edge catching light, the way a real panel does */}
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-offwhite/30 to-transparent pointer-events-none"
+        />
+
+        {/* Caption rides a scroll-edge scrim, not a hard divider */}
+        <div className="absolute bottom-0 inset-x-0 flex items-center justify-between gap-3 bg-gradient-to-t from-carbon via-carbon/80 to-transparent px-4 pt-12 pb-4">
+          <p className="text-[10px] font-mono font-medium uppercase tracking-[0.16em] text-offwhite/85">
+            Omnicron · torch at the wrist
+          </p>
+          <span className="inline-flex items-center gap-1.5 flex-shrink-0">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+            <span className="text-[10px] font-mono font-medium tracking-[0.16em] text-accent">
+              ARC SAFE
+            </span>
+          </span>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
 export function OmnicronSection() {
   return (
     <SectionWrapper id="omnicron" className="bg-steel">
       {/* Header */}
-      <MotionReveal>
-        <div className="max-w-3xl mb-14">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent bg-carbon px-3 py-1 rounded-full border border-accent/35">
-              <Flame size={12} />
-              Application
-            </span>
-            <span className="text-xs text-offwhite/70">Built on nex-ON</span>
-          </div>
+      <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-16 items-center mb-16">
+        <MotionReveal>
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent bg-carbon px-3 py-1 rounded-full border border-accent/35">
+                <Flame size={12} />
+                Application
+              </span>
+              <span className="text-xs text-offwhite/70">Built on nex-ON</span>
+            </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-offwhite tracking-tight leading-[1.1]">
-            Omnicron
-          </h2>
-          <p className="mt-3 text-xl text-accent font-medium">
-            The autonomous welding cobot.
-          </p>
-          <p className="mt-5 text-lg text-offwhite/70 leading-relaxed">
-            Omnicron is what happens when you point nex-ON at the hardest
-            near-term task in industrial robotics. It demands everything at
-            once — sub-millimeter perception, safe real-world actuation, and
-            operability by someone who has never programmed a robot.
-          </p>
-          <p className="mt-4 text-offwhite/60 leading-relaxed">
-            It is one deployment of the platform, not the ceiling of it. The
-            same brain, the same tools, a torch on the end.
-          </p>
-        </div>
-      </MotionReveal>
+            <h2 className="font-brand text-4xl md:text-5xl font-bold text-offwhite tracking-tight leading-[1.1]">
+              Omnicron
+            </h2>
+            <p className="mt-3 text-xl text-accent font-medium">
+              The autonomous welding cobot.
+            </p>
+            <p className="mt-5 text-lg text-offwhite/70 leading-relaxed">
+              Omnicron is what happens when you point nex-ON at the hardest
+              near-term task in industrial robotics. It demands everything at
+              once — sub-millimeter perception, safe real-world actuation, and
+              operability by someone who has never programmed a robot.
+            </p>
+            <p className="mt-4 text-offwhite/60 leading-relaxed">
+              It is one deployment of the platform, not the ceiling of it. The
+              same brain, the same tools, a torch on the end.
+            </p>
+          </div>
+        </MotionReveal>
+
+        <OmnicronPhoto />
+      </div>
 
       {/* Two-column: pass sequence + seam trace */}
       <div className="grid lg:grid-cols-2 gap-8 mb-16">

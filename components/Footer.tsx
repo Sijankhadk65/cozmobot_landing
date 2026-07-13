@@ -1,4 +1,5 @@
-import { Bot } from "lucide-react";
+import Image from "next/image";
+import logo from "@/assets/site-logo-lockup.png";
 
 const columns = [
   {
@@ -33,12 +34,12 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2 font-semibold text-offwhite mb-3">
-              <div className="w-6 h-6 bg-accent rounded-md flex items-center justify-center">
-                <Bot className="w-3.5 h-3.5 text-ink" />
-              </div>
-              CozmoBot
-            </div>
+            <Image
+              src={logo}
+              alt="CozmoBot"
+              sizes="150px"
+              className="h-7 w-auto mb-4"
+            />
             <p className="text-sm text-mute leading-relaxed max-w-xs">
               We build <span className="font-medium text-offwhite">nex-ON</span>,
               the robot-agnostic AI deployment platform — and{" "}

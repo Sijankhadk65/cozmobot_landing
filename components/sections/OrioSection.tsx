@@ -57,7 +57,7 @@ function OrioPhoto() {
             needs ~height × 1.78 of image width. */}
         <Image
           src={orioHero}
-          alt="Orio, a friendly humanoid assistant robot, waiting beside a shelf in a store aisle."
+          alt="Orio, a friendly wheeled assistant robot, waiting beside a shelf in a store aisle."
           placeholder="blur"
           quality={90}
           sizes="(min-width: 1280px) 1000px, 640px"
@@ -125,18 +125,19 @@ export function OrioSection() {
                 Orio
               </h2>
               <p className="mt-3 text-xl text-accent font-medium text-balance">
-                The humanoid that helps the public.
+                The robot that helps the public.
               </p>
 
               <p className="mt-5 text-mute leading-relaxed">
-                Omnicron puts a torch on the end of nex-ON. Orio puts a face on
-                it. A humanoid built for the places the public actually stands
-                in — shops, supermarkets, stations, lobbies — where the person
-                who needs help is a customer, not an operator.
+                Omnicron puts a torch on the end of nex-ON. Orio gives it a face
+                and a set of wheels — a mobile robot built for the places the
+                public actually stands in: shops, supermarkets, stations,
+                lobbies, where the person who needs help is a customer, not an
+                operator.
               </p>
               <p className="mt-4 text-mute leading-relaxed">
-                Ask it where something is and it answers, points, and walks you
-                there. It runs on the same{" "}
+                Ask it where something is and it answers, then leads you to it.
+                It runs on the same{" "}
                 <span className="font-semibold text-offwhite">nex-ON</span>{" "}
                 brain and the same tool loop that drives Omnicron — perception,
                 reasoning, and motion, directed in plain language.

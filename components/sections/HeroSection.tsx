@@ -21,8 +21,8 @@ const bodies: {
   href?: string;
 }[] = [
   { label: "Collaborative arm", proven: true, note: "Omnicron", href: "#omnicron" },
-  { label: "Humanoid", proven: false, note: "Orio", href: "#orio" },
-  { label: "AMR", proven: false },
+  { label: "AMR", proven: false, note: "Orio", href: "#orio" },
+  { label: "Humanoid", proven: false },
   { label: "Fleet", proven: false },
 ];
 

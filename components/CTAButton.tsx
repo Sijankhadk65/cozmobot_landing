@@ -41,6 +41,7 @@ export function CTAButton({
     return (
       <motion.a
         href={href}
+        onClick={onClick}
         className={`${base} ${styles[variant]} ${className}`}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}

@@ -5,6 +5,7 @@ import { MotionReveal } from "../MotionReveal";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Mic, BrainCircuit, Eye, ShieldCheck, Play, Volume2 } from "lucide-react";
+import { PlatformViz } from "../PlatformViz";
 
 const steps = [
   {
@@ -144,28 +145,10 @@ export function SolutionSection() {
               back out loud.
             </p>
 
-            <div className="mt-8 p-5 bg-carbon rounded-xl border border-steel">
-              <p className="text-xs font-semibold tracking-widest uppercase text-mute mb-3">
-                The loop
-              </p>
-              <div className="space-y-2.5 font-mono text-xs">
-                <div className="flex items-center gap-2 text-mute">
-                  <span className="text-accent">you</span>
-                  <span className="text-mute">──voice / text──▶</span>
-                  <span className="text-offwhite font-semibold">nex-ON</span>
-                </div>
-                <div className="flex items-center gap-2 text-mute pl-4">
-                  <span className="text-mute">└─ calls</span>
-                  <span className="text-mute">
-                    camera · robot · task logic
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 text-mute">
-                  <span className="text-offwhite font-semibold">nex-ON</span>
-                  <span className="text-mute">──speaks back──▶</span>
-                  <span className="text-accent">you</span>
-                </div>
-              </div>
+            {/* The live console: the same loop the six steps narrate, animated
+                and pinned in view while they scroll. */}
+            <div className="mt-8">
+              <PlatformViz />
             </div>
           </MotionReveal>
         </div>

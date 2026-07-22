@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { SectionWrapper } from "../SectionWrapper";
 import { MotionReveal } from "../MotionReveal";
 import { motion } from "framer-motion";
@@ -69,13 +70,13 @@ export function PlatformSection() {
                 non-expert operability. Nail that, and the same platform
                 generalizes outward.
               </p>
-              <a
-                href="#omnicron"
+              <Link
+                href="/omnicron"
                 className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:gap-2.5 transition-all"
               >
                 See the first deployment
                 <ArrowRight size={14} />
-              </a>
+              </Link>
             </div>
           </MotionReveal>
         </div>

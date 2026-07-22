@@ -27,7 +27,7 @@ const products: {
     blurb:
       "A MIG torch on the end of nex-ON. It finds the joint, measures it, rehearses the pass, and — once armed — runs a live weld.",
     status: { label: "Proven · welding live", proven: true },
-    href: "#omnicron",
+    href: "/omnicron",
   },
   {
     name: "Orio",
@@ -36,7 +36,7 @@ const products: {
     blurb:
       "The same brain on wheels, with a face. Built for shops, stations, and lobbies — where the person who needs help is a customer, not an operator.",
     status: { label: "In build", proven: false },
-    href: "#orio",
+    href: "/orio",
   },
 ];
 

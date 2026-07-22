@@ -5,7 +5,6 @@ import { MotionReveal } from "../MotionReveal";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Mic, BrainCircuit, Eye, ShieldCheck, Play, Volume2 } from "lucide-react";
-import { PlatformViz } from "../PlatformViz";
 
 const steps = [
   {
@@ -145,10 +144,37 @@ export function SolutionSection() {
               back out loud.
             </p>
 
-            {/* The live console: the same loop the six steps narrate, animated
-                and pinned in view while they scroll. */}
-            <div className="mt-8">
-              <PlatformViz />
+            {/* The loop at a glance, pinned beside the steps as they scroll. The
+                animated console version of this leads the hero, so here it stays
+                a quiet, static summary rather than repeating the same motion. */}
+            <div className="mt-8 rounded-2xl border border-steel bg-graphite/60 p-6">
+              <p className="text-[10px] font-mono uppercase tracking-widest text-mute mb-4">
+                One loop, six moves
+              </p>
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-2 text-sm">
+                {steps.map((step, i) => (
+                  <span key={step.number} className="flex items-center gap-2">
+                    <span className="inline-flex items-center gap-2 rounded-lg border border-steel bg-carbon px-3 py-1.5 text-offwhite/85">
+                      <step.icon size={13} className="text-accent" />
+                      {step.title.replace(/^(You|It|nex-ON) /, "")}
+                    </span>
+                    {i < steps.length - 1 && (
+                      <span className="text-steel">&rarr;</span>
+                    )}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-5 flex items-center justify-between border-t border-steel pt-3">
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                  <span className="text-[10px] font-mono text-accent">
+                    DRY RUN — NOT ARMED
+                  </span>
+                </span>
+                <span className="text-[10px] font-mono text-mute">
+                  HAND-EYE CALIBRATED
+                </span>
+              </div>
             </div>
           </MotionReveal>
         </div>

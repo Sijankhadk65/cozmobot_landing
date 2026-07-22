@@ -1,28 +1,32 @@
 import Image from "next/image";
+import Link from "next/link";
 import logo from "@/assets/site-logo-lockup.png";
 
+// Section links resolve against the home page (`/#…`); the products have their
+// own routes.
 const columns = [
   {
     heading: "nex-ON",
     links: [
-      { label: "Platform", href: "#platform" },
-      { label: "Capabilities", href: "#capabilities" },
-      { label: "Architecture", href: "#architecture" },
-      { label: "Any Robot, Any Task", href: "#any-robot" },
+      { label: "Platform", href: "/#platform" },
+      { label: "How it works", href: "/#how" },
+      { label: "Capabilities", href: "/#capabilities" },
+      { label: "Any Robot, Any Task", href: "/#any-robot" },
     ],
   },
   {
     heading: "Applications",
     links: [
-      { label: "Omnicron — welding cobot", href: "#omnicron" },
-      { label: "Deployment", href: "#operations" },
+      { label: "Omnicron — welding cobot", href: "/omnicron" },
+      { label: "Orio — public assistant", href: "/orio" },
+      { label: "Deployment", href: "/#operations" },
     ],
   },
   {
     heading: "Company",
     links: [
-      { label: "Book a Demo", href: "#cta" },
-      { label: "Partner With Us", href: "#cta" },
+      { label: "Book a Demo", href: "/#cta" },
+      { label: "Partner With Us", href: "/#cta" },
       { label: "Contact", href: "mailto:info@cozmobot.com" },
     ],
   },
@@ -56,12 +60,21 @@ export function Footer() {
               <ul className="space-y-2 text-sm text-mute">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className="hover:text-accent transition-colors"
-                    >
-                      {link.label}
-                    </a>
+                    {link.href.startsWith("mailto:") ? (
+                      <a
+                        href={link.href}
+                        className="hover:text-accent transition-colors"
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        className="hover:text-accent transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

@@ -8,16 +8,12 @@ import { CTAButton } from "./CTAButton";
 import { Asterisk, Menu, X } from "lucide-react";
 import logo from "@/assets/site-logo-lockup.png";
 
-// The bar is global, so section links point at the home page's anchors
-// (`/#…`) and the products at their own routes. Next's <Link> handles both the
-// cross-page hop and the scroll-to-anchor.
+// The bar is global. Now that the home page is the single nex-ON scroll
+// experience, the nav carries only the two product routes; the marketing
+// sections that used to be in-page anchors are no longer mounted.
 const navLinks: { label: string; href: string; soon?: boolean }[] = [
-  { label: "Platform", href: "/#platform" },
-  { label: "How it works", href: "/#how" },
-  { label: "Capabilities", href: "/#capabilities" },
   { label: "Omnicron", href: "/omnicron" },
   { label: "Orio", href: "/orio", soon: true },
-  { label: "FAQ", href: "/#faq" },
 ];
 
 // The neon asterisk that flags a not-yet-shipped link. A text `*` renders as a

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist_Mono, Orbitron } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 // Satoshi carries all text; Geist Mono stays on the instrument-panel readouts;
@@ -70,7 +69,6 @@ export default function RootLayout({
       className={`${satoshi.variable} ${geistMono.variable} ${orbitron.variable} h-full`}
     >
       <body className="min-h-full flex flex-col bg-carbon text-offwhite">
-        <Navbar />
         {children}
         <Footer />
       </body>

@@ -143,14 +143,18 @@ function NexonModel({ progress }: { progress: MotionValue<number> }) {
 export function NexonScene({ progress }: { progress: MotionValue<number> }) {
   return (
     <>
-      <color attach="background" args={["#0f1112"]} />
+      {/* No scene background — the canvas is transparent so the DOM carbon base
+          and grid show through behind the box. Fog still blends the box's far
+          edge into carbon for depth. */}
       <fog attach="fog" args={["#0f1112", 8, 18]} />
 
-      {/* Key + fill + a lime rim so the dark chassis reads against the dark bg. */}
+      {/* Key + fill. The box sits on a light studio surface now, so it already
+          reads by contrast — the lime rim stays gentle, just a brand-tinted edge
+          rather than the separation it needed on a dark bg. */}
       <ambientLight intensity={0.6} />
       <directionalLight position={[5, 8, 5]} intensity={2.6} />
       <directionalLight position={[0, 2, 7]} intensity={1.4} />
-      <pointLight position={[-4, 2, -4]} intensity={60} distance={18} color="#add037" />
+      <pointLight position={[-4, 2, -4]} intensity={20} distance={18} color="#add037" />
       <pointLight position={[4, -1, 3]} intensity={22} distance={16} color="#ffffff" />
 
       {/* Synthetic studio — generated in-scene (no external HDRI) so the plastic
@@ -161,6 +165,9 @@ export function NexonScene({ progress }: { progress: MotionValue<number> }) {
         <Lightformer intensity={1} position={[4, 2, -2]} scale={[4, 4, 1]} color="#ffffff" />
       </Environment>
 
+      {/* The drop shadow is a CSS filter on the canvas element (see
+          NexonExperience) — the camera is near-level, so a 3D floor/contact
+          shadow would be edge-on or hidden directly behind the box. */}
       <NexonModel progress={progress} />
     </>
   );

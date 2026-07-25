@@ -10,12 +10,11 @@ import {
   useMotionValue,
   useMotionTemplate,
   useScroll,
-  useSpring,
   useTransform,
   useMotionValueEvent,
   type MotionValue,
 } from "framer-motion";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { NexonScene } from "./nexon-scene";
 
 // ── In-canvas load indicator ──────────────────────────────────────────────────
@@ -119,6 +118,10 @@ const MOBILE_ACTS: {
   },
 ];
 
+// Each act's hold-center in progress terms — the box's stops, the scroll-snap
+// rulers, the compact act spring, and the filmstrip offsets all key off these.
+const ACT_PROGRESS = [0.086, 0.323, 0.548, 0.785, 1];
+
 // A soft studio surface: a bright near-white radial wash (brighter up-left)
 // under a faint blueprint grid of dark lines. Rendered as a DOM layer behind
 // the transparent canvas, so it sits behind the box and the contact shadow
@@ -136,20 +139,59 @@ export function NexonExperience() {
   const stageRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
   const [act, setAct] = useState(0);
+  // Compact = phones + tablets (below the xl desktop breakpoint). There the
+  // scroll experience is disabled and the acts are stepped through with
+  // prev/next buttons instead — vertical scroll driving horizontal movement was
+  // awkward on touch.
+  const [isCompact, setIsCompact] = useState(false);
 
   useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 1279px)");
+    const apply = () => setIsCompact(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: stageRef,
     offset: ["start start", "end end"],
   });
 
+  // One progress value drives the whole scene, overlays, and filmstrip. On
+  // desktop it mirrors the scroll; on compact a spring eases it between the
+  // per-act stops as the buttons change `act`.
+  const progress = useMotionValue(0);
+
   useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const i = Math.min(ACTS.length - 1, Math.floor(v * ACTS.length));
-    setAct(i);
+    if (isCompact) return;
+    progress.set(v);
+    setAct(Math.min(ACTS.length - 1, Math.floor(v * ACTS.length)));
   });
 
-  const railScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  useEffect(() => {
+    if (!isCompact) return;
+    const controls = animate(progress, ACT_PROGRESS[act], {
+      type: "spring",
+      stiffness: 180,
+      damping: 26,
+      mass: 0.9,
+    });
+    return () => controls.stop();
+  }, [act, isCompact, progress]);
+
+  // Entering desktop (mount, or resizing up from compact): align progress with
+  // the actual scroll position so nothing lags a frame or lands mid-page stale.
+  useEffect(() => {
+    if (!isCompact) progress.set(scrollYProgress.get());
+  }, [isCompact, progress, scrollYProgress]);
+
+  const go = (dir: -1 | 1) =>
+    setAct((a) => Math.min(ACTS.length - 1, Math.max(0, a + dir)));
+
+  const railScale = useTransform(progress, [0, 1], [0, 1]);
 
   // Act 1 and the scroll hint must be on screen at first paint, so their
   // entrance is a one-shot mount reveal (0 → 1, animated in the effect below)
@@ -173,63 +215,51 @@ export function NexonExperience() {
     };
   }, [heroReveal, hintReveal]);
 
-  const heroExit = useTransform(scrollYProgress, [0.15, 0.204], [1, 0]);
-  const heroExitY = useTransform(scrollYProgress, [0.15, 0.204], [0, -24]);
+  const heroExit = useTransform(progress, [0.15, 0.204], [1, 0]);
+  const heroExitY = useTransform(progress, [0.15, 0.204], [0, -24]);
   const heroOpacity = useTransform(() => heroReveal.get() * heroExit.get());
   const heroY = useTransform(() => (1 - heroReveal.get()) * 24 + heroExitY.get());
 
-  const hintExit = useTransform(scrollYProgress, [0.054, 0.108], [1, 0]);
+  const hintExit = useTransform(progress, [0.054, 0.108], [1, 0]);
   const hintOpacity = useTransform(() => hintReveal.get() * hintExit.get());
 
-  // Act 5 is the final resting state at the section bottom: it fades IN on the
-  // last beat, then HOLDS to the end. The third stop pins the hold to progress 1
-  // (the max) on purpose — Chrome runs this as a native scroll-timeline
-  // animation, and once scroll passes the last offset the property snaps back to
-  // its base (opacity 0). Ending the range exactly at 1 keeps it active — and
-  // held at 1 — all the way to the bottom. (Firefox's JS path clamps either way.)
-  const act5Opacity = useTransform(scrollYProgress, [0.882, 0.946, 1], [0, 1, 1]);
-  const act5Y = useTransform(scrollYProgress, [0.882, 0.946, 1], [24, 0, 0]);
+  // Act 5 fades in on the last beat, then holds to the end.
+  const act5Opacity = useTransform(progress, [0.882, 0.946, 1], [0, 1, 1]);
+  const act5Y = useTransform(progress, [0.882, 0.946, 1], [24, 0, 0]);
 
-  // Phones/tablets: snap the filmstrip one full panel at a time. Rather than
-  // scrubbing the track directly with scroll (which smears two half-panels
-  // together mid-scroll), the active panel is a DISCRETE index — which box stop
-  // you've scrolled past the midpoint of — and a spring drives the track to it,
-  // so each swipe lands crisply. Units are % of the 500vw track (20% = one
-  // panel), so it stays viewport-relative.
-  const STOP_MIDPOINTS = [0.205, 0.436, 0.667, 0.893];
-  const mobilePanel = useTransform(scrollYProgress, (v) => {
-    let i = 0;
-    for (const m of STOP_MIDPOINTS) if (v >= m) i += 1;
-    return i * -20;
-  });
-  const mobilePanelSpring = useSpring(mobilePanel, {
-    stiffness: 320,
-    damping: 34,
-    mass: 0.6,
-  });
-  const trackX = useMotionTemplate`${mobilePanelSpring}%`;
+  // Compact filmstrip: the five acts ride a horizontal track whose offset keys
+  // off the same progress, so panel and box move together — each act centering a
+  // full panel. 20% = one panel of the 500vw track. On compact the act spring
+  // eases progress between stops, so each button press slides one panel over.
+  const trackXNum = useTransform(progress, ACT_PROGRESS, [0, -20, -40, -60, -80]);
+  const trackX = useMotionTemplate`${trackXNum}%`;
 
   return (
     // 5.6 viewport-heights of scroll distance drives the 5 acts; the canvas and
     // overlays are pinned inside while the page scrolls past. The last act lands
     // at the section bottom, so there's no empty scroll past it.
-    <section ref={stageRef} className="relative bg-[#f1f1ea]" style={{ height: "560vh" }}>
-      {/* ── Scroll-snap steps ────────────────────────────────────────────
+    // Desktop: a tall (560vh) scroll section drives the acts. Compact: a fixed
+    // 100vh stage with no scroll — the buttons step through the acts instead.
+    <section
+      ref={stageRef}
+      className="relative bg-[#f1f1ea]"
+      style={{ height: isCompact ? "100vh" : "560vh" }}
+    >
+      {/* ── Scroll-snap steps (desktop only) ─────────────────────────────
           A zero-height ruler at each act's hold-center. The 560vh section
           pins a 100vh canvas, so its scrollable run is 460vh and a ruler at
           `p · 460vh` sits exactly where progress === p — the moment each view
           is fully composed. CSS scroll-snap (set on <html>) rests the page on
-          these, so scrolling settles view-to-view instead of scrubbing. Purely
-          positional: the choreography and beat timings are untouched. The final
-          stop sits at progress 1 (the bottom), so the last act ends the scroll. */}
-      {[0.086, 0.323, 0.548, 0.785, 1].map((p) => (
-        <div
-          key={p}
-          aria-hidden
-          className="absolute left-0 h-px w-px snap-start"
-          style={{ top: `${p * 460}vh` }}
-        />
-      ))}
+          these, so scrolling settles view-to-view instead of scrubbing. */}
+      {!isCompact &&
+        ACT_PROGRESS.map((p) => (
+          <div
+            key={p}
+            aria-hidden
+            className="absolute left-0 h-px w-px snap-start"
+            style={{ top: `${p * 460}vh` }}
+          />
+        ))}
 
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         {/* Background, behind the transparent canvas: the light studio surface. */}
@@ -250,7 +280,7 @@ export function NexonExperience() {
             }}
           >
             <Suspense fallback={<CanvasLoader />}>
-              <NexonScene progress={scrollYProgress} />
+              <NexonScene progress={progress} />
             </Suspense>
           </Canvas>
         )}
@@ -270,8 +300,8 @@ export function NexonExperience() {
             voice · vision · motion · tooling
           </div>
 
-          {/* Act rail + readout */}
-          <div className="absolute bottom-6 left-6 lg:left-8 flex items-center gap-3">
+          {/* Act rail + readout — desktop only (compact shows dots below) */}
+          <div className="absolute bottom-6 left-6 lg:left-8 flex items-center gap-3 max-xl:hidden">
             <div className="relative h-16 w-px bg-[#1a1a1a]/20 overflow-hidden">
               <motion.div
                 style={{ scaleY: railScale }}
@@ -366,7 +396,7 @@ export function NexonExperience() {
 
         {/* ── Act 2 · thesis ─────────────────────────────────────────── */}
         <Beat
-          progress={scrollYProgress}
+          progress={progress}
           range={[0.215, 0.28, 0.366, 0.43]}
           className="left-6 lg:left-8 top-1/2 -translate-y-1/2 max-w-lg max-xl:hidden"
         >
@@ -382,7 +412,7 @@ export function NexonExperience() {
 
         {/* ── Act 3 · top / vents / the loop ─────────────────────────── */}
         <Beat
-          progress={scrollYProgress}
+          progress={progress}
           range={[0.43, 0.495, 0.602, 0.667]}
           className="right-6 lg:right-8 top-1/2 -translate-y-1/2 max-w-md text-right max-xl:hidden"
         >
@@ -401,7 +431,7 @@ export function NexonExperience() {
 
         {/* ── Act 4 · back / ports / any body ────────────────────────── */}
         <Beat
-          progress={scrollYProgress}
+          progress={progress}
           range={[0.667, 0.731, 0.839, 0.882]}
           className="left-6 lg:left-8 top-1/2 -translate-y-1/2 max-w-md max-xl:hidden"
         >
@@ -450,17 +480,58 @@ export function NexonExperience() {
           </div>
         </motion.div>
 
-        {/* Scroll hint — present on load, fades out once you start scrolling.
-            Opacity-only (no transform) so the -translate-x centering survives. */}
+        {/* Scroll hint — desktop only (scroll is disabled on compact). Present
+            on load, fades out once you start scrolling. Opacity-only (no
+            transform) so the -translate-x centering survives. */}
         <motion.div
           style={{ opacity: hintOpacity }}
-          className="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-6 flex flex-col items-center gap-1 text-[#1a1a1a]/70"
+          className="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-6 flex flex-col items-center gap-1 text-[#1a1a1a]/70 max-xl:hidden"
         >
           <span className="text-[10px] font-mono uppercase tracking-[0.2em]">
             Scroll
           </span>
           <ChevronDown size={16} />
         </motion.div>
+
+        {/* ── Compact controls (below xl) ──────────────────────────────
+            Scroll is disabled here, so prev/next (and the dots) step through
+            the acts, easing `progress` between stops. */}
+        <div className="xl:hidden pointer-events-auto absolute bottom-7 left-1/2 -translate-x-1/2 flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => go(-1)}
+            disabled={act === 0}
+            aria-label="Previous"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-[#141414]/20 bg-white/70 text-[#141414] backdrop-blur transition-colors hover:border-accent disabled:pointer-events-none disabled:opacity-30"
+          >
+            <ChevronLeft size={18} />
+          </button>
+
+          <div className="flex items-center gap-1.5">
+            {ACTS.map((label, i) => (
+              <button
+                key={label}
+                type="button"
+                onClick={() => setAct(i)}
+                aria-label={`Go to ${label}`}
+                aria-current={i === act}
+                className={`h-1.5 rounded-full transition-all ${
+                  i === act ? "w-5 bg-accent" : "w-1.5 bg-[#141414]/25"
+                }`}
+              />
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => go(1)}
+            disabled={act === ACTS.length - 1}
+            aria-label="Next"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-[#141414]/20 bg-white/70 text-[#141414] backdrop-blur transition-colors hover:border-accent disabled:pointer-events-none disabled:opacity-30"
+          >
+            <ChevronRight size={18} />
+          </button>
+        </div>
       </div>
     </section>
   );

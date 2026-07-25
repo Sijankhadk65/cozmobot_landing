@@ -155,6 +155,19 @@ export function NexonExperience() {
     return () => mq.removeEventListener("change", apply);
   }, []);
 
+  // Compact: the stage is exactly one small-viewport tall and scroll is disabled,
+  // so lock body scroll to stop the mobile browser chrome from leaving a
+  // scrollable gap below it. Only mounts on the home page, so other routes still
+  // scroll normally.
+  useEffect(() => {
+    if (!isCompact) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [isCompact]);
+
   const { scrollYProgress } = useScroll({
     target: stageRef,
     offset: ["start start", "end end"],
@@ -243,7 +256,9 @@ export function NexonExperience() {
     <section
       ref={stageRef}
       className="relative bg-[#f1f1ea]"
-      style={{ height: isCompact ? "100vh" : "560vh" }}
+      // Compact: the small-viewport height (excludes the mobile browser chrome)
+      // so the whole stage — box, text, and buttons — fits without scrolling.
+      style={{ height: isCompact ? "100svh" : "560vh" }}
     >
       {/* ── Scroll-snap steps (desktop only) ─────────────────────────────
           A zero-height ruler at each act's hold-center. The 560vh section
@@ -261,13 +276,22 @@ export function NexonExperience() {
           />
         ))}
 
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+      <div
+        className={`w-full overflow-hidden ${
+          isCompact ? "relative h-[100svh]" : "sticky top-0 h-screen"
+        }`}
+      >
         {/* Background, behind the transparent canvas: the light studio surface. */}
         <div aria-hidden className="absolute inset-0" style={LIGHT_SURFACE} />
 
         {mounted && (
           <Canvas
-            className="absolute inset-0"
+            // Compact: confine the box to the upper part of the stage so the
+            // bottom stays clear for the act text and the buttons (no dark text
+            // landing on the dark box). Desktop: full-bleed.
+            className={
+              isCompact ? "absolute inset-x-0 top-0 h-[60svh]" : "absolute inset-0"
+            }
             dpr={[1, 2]}
             camera={{ position: [0, 0, 6], fov: 35 }}
             gl={{ antialias: true, powerPreference: "high-performance" }}

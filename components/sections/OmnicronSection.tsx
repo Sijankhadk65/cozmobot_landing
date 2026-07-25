@@ -4,6 +4,7 @@ import Image from "next/image";
 import { SectionWrapper } from "../SectionWrapper";
 import { MotionReveal } from "../MotionReveal";
 import {
+  AnimatePresence,
   motion,
   useInView,
   useMotionTemplate,
@@ -11,14 +12,24 @@ import {
   useReducedMotion,
   useSpring,
 } from "framer-motion";
-import { useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import omnicronHero from "@/assets/omnicron-hero.png";
+import weldCell from "@/assets/omnicron_welding_images/17.jpeg";
+import weldStandoff from "@/assets/omnicron_welding_images/11.jpeg";
+import weldArc from "@/assets/omnicron_welding_images/9.jpeg";
+import weldBeadTube from "@/assets/omnicron_welding_images/12.jpeg";
+import weldBeadAngle from "@/assets/omnicron_welding_images/3.jpeg";
+import weldCoupons from "@/assets/omnicron_welding_images/1.jpeg";
 import {
   Flame,
   ShieldAlert,
   Gauge,
   LockKeyhole,
   ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Expand,
+  X,
   Zap,
   Ship,
   Cog,
@@ -371,6 +382,249 @@ function OmnicronPhoto() {
   );
 }
 
+// ── Proof: real welds from the shop floor ─────────────────────────────────────
+// Every diagram above describes intent. These are the outcome. The order walks
+// the same arc the pass sequence does — positioned, struck, finished — so the
+// photographs read as evidence for the claims rather than decoration.
+const proofShots = [
+  {
+    src: weldCell,
+    caption: "Arc live in the cell",
+    alt: "Omnicron's arm mounted to a welding table, torch down on a clamped joint with the arc struck and sparks flying, screen curtain behind.",
+  },
+  {
+    src: weldStandoff,
+    caption: "Torch at standoff, pre-strike",
+    alt: "The MIG torch held at a constant standoff above a clamped steel box section, positioned on the seam before the arc is armed.",
+  },
+  {
+    src: weldArc,
+    caption: "Tracing the seam",
+    alt: "Close view through the welding screen of the torch mid-pass, arc bright at the joint with spatter arcing off the table.",
+  },
+  {
+    src: weldBeadTube,
+    caption: "Finished bead, box section",
+    alt: "A completed weld bead running the length of a steel box section, with even ripple spacing.",
+  },
+  {
+    src: weldBeadAngle,
+    caption: "Bead detail, angle iron",
+    alt: "Close-up of a weld bead laid down on angle iron, showing consistent stacked ripples along the seam.",
+  },
+  {
+    src: weldCoupons,
+    caption: "Coupons off the table",
+    alt: "Several welded steel coupons resting on the fixture table after their passes, beads visible on each.",
+  },
+];
+
+// ── Lightbox ──────────────────────────────────────────────────────────────────
+// The photographs are the evidence, so they have to be inspectable at size.
+// Opens over the section, keyboard-navigable, and returns focus to the tile
+// that opened it so a keyboard user doesn't get dropped at the top of the page.
+function Lightbox({
+  index,
+  onClose,
+  onNavigate,
+}: {
+  index: number;
+  onClose: () => void;
+  onNavigate: (next: number) => void;
+}) {
+  const reduceMotion = useReducedMotion();
+  const shot = proofShots[index];
+
+  // Wrap at both ends — with six shots, a dead-end arrow is more annoying than
+  // a loop is disorienting.
+  const step = useCallback(
+    (delta: number) => {
+      onNavigate((index + delta + proofShots.length) % proofShots.length);
+    },
+    [index, onNavigate],
+  );
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+      else if (e.key === "ArrowRight") step(1);
+      else if (e.key === "ArrowLeft") step(-1);
+    }
+    window.addEventListener("keydown", onKeyDown);
+
+    // Freeze the page behind the overlay, restoring whatever overflow the
+    // document already had rather than assuming it was the default.
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [onClose, step]);
+
+  return (
+    <motion.div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${shot.caption} — image ${index + 1} of ${proofShots.length}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/95 backdrop-blur-sm p-4 sm:p-8"
+    >
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Close image viewer"
+        className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full flex items-center justify-center border border-offwhite/15 bg-carbon/80 text-offwhite/70 hover:text-accent hover:border-accent/40 transition-colors"
+      >
+        <X size={18} />
+      </button>
+
+      {[-1, 1].map((delta) => (
+        <button
+          key={delta}
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            step(delta);
+          }}
+          aria-label={delta === -1 ? "Previous image" : "Next image"}
+          className={`absolute top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full flex items-center justify-center border border-offwhite/15 bg-carbon/80 text-offwhite/70 hover:text-accent hover:border-accent/40 transition-colors ${
+            delta === -1 ? "left-2 sm:left-6" : "right-2 sm:right-6"
+          }`}
+        >
+          {delta === -1 ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
+        </button>
+      ))}
+
+      {/* Keyed on index so a navigation swaps the figure rather than
+          cross-fading a single element through two different photographs. */}
+      <AnimatePresence mode="wait">
+        <motion.figure
+          key={index}
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.97 }}
+          transition={{ type: "spring", bounce: 0, duration: 0.32 }}
+          onClick={(e) => e.stopPropagation()}
+          className="relative max-w-5xl w-full flex flex-col items-center gap-4"
+        >
+          <Image
+            src={shot.src}
+            alt={shot.alt}
+            placeholder="blur"
+            quality={90}
+            sizes="(min-width: 1024px) 1024px, 95vw"
+            className="w-auto h-auto max-w-full max-h-[78vh] rounded-lg object-contain"
+          />
+          <figcaption className="flex items-center gap-3 text-center">
+            <span className="text-[10px] font-mono font-medium uppercase tracking-[0.16em] text-offwhite/85">
+              {shot.caption}
+            </span>
+            <span className="text-[10px] font-mono text-offwhite/45">
+              {index + 1} / {proofShots.length}
+            </span>
+          </figcaption>
+        </motion.figure>
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+function ProofGallery() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const triggerRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  // Send focus back to the tile the viewer was opened from.
+  const closeViewer = useCallback(() => {
+    const returnTo = openIndex;
+    setOpenIndex(null);
+    if (returnTo !== null) triggerRefs.current[returnTo]?.focus();
+  }, [openIndex]);
+
+  return (
+    <div className="mb-16">
+      <MotionReveal>
+        <div className="max-w-2xl mb-8">
+          <p className="text-xs font-semibold tracking-widest uppercase text-accent mb-3">
+            Proof
+          </p>
+          <h3 className="text-2xl md:text-3xl font-bold text-offwhite tracking-tight">
+            It is not a render. These are its welds.
+          </h3>
+          <p className="mt-4 text-offwhite/60 leading-relaxed">
+            Passes run by Omnicron on our shop floor — the torch positioned, the
+            arc struck, and the beads it left behind.
+          </p>
+        </div>
+      </MotionReveal>
+
+      {/* The shots are a mix of portrait and landscape. Cropping them to a
+          uniform ratio would be cropping the evidence, so each tile takes its
+          own image's aspect ratio and masonry columns absorb the unevenness. */}
+      <div className="columns-1 sm:columns-2 lg:columns-3 gap-4">
+        {proofShots.map((shot, i) => (
+          <MotionReveal
+            key={shot.caption}
+            delay={i * 0.07}
+            className="mb-4 break-inside-avoid"
+          >
+            <motion.button
+              type="button"
+              ref={(el) => {
+                triggerRefs.current[i] = el;
+              }}
+              onClick={() => setOpenIndex(i)}
+              aria-label={`View ${shot.caption} full size`}
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.2 }}
+              className="group relative block w-full text-left overflow-hidden rounded-xl border border-offwhite/10 bg-carbon hover:border-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-steel transition-colors duration-200"
+            >
+              <Image
+                src={shot.src}
+                alt={shot.alt}
+                placeholder="blur"
+                quality={90}
+                sizes="(min-width: 1024px) 340px, (min-width: 640px) 50vw, 95vw"
+                className="w-full h-auto transition-transform duration-500 group-hover:scale-[1.03]"
+              />
+
+              {/* Affordance — the tile is only obviously clickable once you're
+                  on it, so the cue arrives with the pointer. */}
+              <span
+                aria-hidden
+                className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center border border-offwhite/15 bg-carbon/75 text-offwhite/80 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-200"
+              >
+                <Expand size={13} />
+              </span>
+
+              <span className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-carbon via-carbon/75 to-transparent px-4 pt-10 pb-3">
+                <span className="text-[10px] font-mono font-medium uppercase tracking-[0.16em] text-offwhite/85">
+                  {shot.caption}
+                </span>
+              </span>
+            </motion.button>
+          </MotionReveal>
+        ))}
+      </div>
+
+      <AnimatePresence>
+        {openIndex !== null && (
+          <Lightbox
+            index={openIndex}
+            onClose={closeViewer}
+            onNavigate={setOpenIndex}
+          />
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export function OmnicronSection() {
   return (
     <SectionWrapper id="omnicron" className="bg-steel">
@@ -478,6 +732,9 @@ export function OmnicronSection() {
           </div>
         </div>
       </MotionReveal>
+
+      {/* Proof */}
+      <ProofGallery />
 
       {/* Safety model */}
       <div className="mb-14">

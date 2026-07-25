@@ -28,7 +28,13 @@ const bodies = [
     href: "#omnicron",
   },
   { icon: PersonStanding, label: "Humanoid", proven: false },
-  { icon: Truck, label: "Autonomous mobile robot", proven: false },
+  {
+    icon: Truck,
+    label: "Autonomous mobile robot",
+    proven: false,
+    note: "Orio",
+    href: "#orio",
+  },
   { icon: Network, label: "Mixed fleet", proven: false },
 ];
 

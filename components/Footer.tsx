@@ -25,8 +25,8 @@ const columns = [
   {
     heading: "Company",
     links: [
-      { label: "Book a Demo", href: "/#cta" },
-      { label: "Partner With Us", href: "/#cta" },
+      { label: "Book a Demo", href: "/platform#cta" },
+      { label: "Partner With Us", href: "/platform#cta" },
       { label: "Contact", href: "mailto:info@cozmobot.com" },
     ],
   },

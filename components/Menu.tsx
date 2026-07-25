@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Asterisk } from "lucide-react";
@@ -48,6 +49,7 @@ const item: Variants = {
 
 export function Menu() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   // While open: close on Escape and lock background scroll, restoring the prior
   // overflow on close.
@@ -123,13 +125,22 @@ export function Menu() {
                 animate="show"
                 className="flex w-fit flex-col items-center gap-4 md:gap-6"
               >
-                {links.map((link, i) => (
+                {links.map((link, i) => {
+                  const active =
+                    pathname === link.href ||
+                    pathname.startsWith(`${link.href}/`);
+                  return (
                   <Fragment key={link.href}>
                     <motion.div variants={item}>
                       <Link
                         href={link.href}
                         onClick={() => setOpen(false)}
-                        className="inline-flex items-start font-brand text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-bold uppercase tracking-tight text-[#141414] hover:text-accent transition-colors"
+                        aria-current={active ? "page" : undefined}
+                        className={`inline-flex items-start font-brand text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-bold uppercase tracking-tight transition-colors ${
+                          active
+                            ? "text-accent"
+                            : "text-[#141414] hover:text-accent"
+                        }`}
                       >
                         {link.soon && <SoonMark />}
                         {link.label}
@@ -143,7 +154,8 @@ export function Menu() {
                       />
                     )}
                   </Fragment>
-                ))}
+                  );
+                })}
               </motion.nav>
             </div>
           </motion.div>

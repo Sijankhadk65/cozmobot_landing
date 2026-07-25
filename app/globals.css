@@ -97,6 +97,11 @@
   }
   html {
     @apply scroll-smooth;
+    /* Steps the scroll onto the nex-ON experience's per-act snap points
+       (dropped in NexonExperience). Proximity, not mandatory, so it settles
+       on a view when you rest near one but never traps the CTA/footer below,
+       which carry no snap points. */
+    scroll-snap-type: y proximity;
   }
 }
 

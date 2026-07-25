@@ -1,20 +1,19 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { CTAButton } from "./CTAButton";
 import { Asterisk, Menu, X } from "lucide-react";
 import logo from "@/assets/site-logo-lockup.png";
 
+// The bar is global. Now that the home page is the single nex-ON scroll
+// experience, the nav carries only the two product routes; the marketing
+// sections that used to be in-page anchors are no longer mounted.
 const navLinks: { label: string; href: string; soon?: boolean }[] = [
-  { label: "Platform", href: "#platform" },
-  { label: "Capabilities", href: "#capabilities" },
-  { label: "Omnicron", href: "#omnicron" },
-  { label: "Orio", href: "#orio", soon: true },
-  { label: "Architecture", href: "#architecture" },
-  { label: "Any Robot", href: "#any-robot" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Omnicron", href: "/omnicron" },
+  { label: "Orio", href: "/orio", soon: true },
 ];
 
 // The neon asterisk that flags a not-yet-shipped link. A text `*` renders as a
@@ -69,7 +68,7 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* The lockup already carries the wordmark, so no text beside it. */}
-        <a href="#" className="flex items-center gap-2.5 text-offwhite">
+        <Link href="/" className="flex items-center gap-2.5 text-offwhite">
           <Image
             src={logo}
             alt="CozmoBot"
@@ -80,11 +79,11 @@ export function Navbar() {
           <span className="hidden lg:inline-block text-xs text-mute border-l border-steel pl-2.5 leading-none">
             makers of nex-ON
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden md:flex items-center gap-5 lg:gap-7">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               className="relative text-sm text-mute hover:text-offwhite transition-colors"
@@ -95,7 +94,7 @@ export function Navbar() {
                   <SoonMark />
                 </span>
               )}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -150,14 +149,14 @@ export function Navbar() {
               <ul className="max-w-7xl mx-auto px-6 py-4 flex flex-col">
                 {navLinks.map((link) => (
                   <li key={link.href}>
-                    <a
+                    <Link
                       href={link.href}
                       onClick={() => setOpen(false)}
                       className="flex items-center gap-1 py-3 text-base text-offwhite/90 hover:text-accent border-b border-steel/40 transition-colors"
                     >
                       {link.label}
                       {link.soon && <SoonMark />}
-                    </a>
+                    </Link>
                   </li>
                 ))}
                 <li className="pt-4">

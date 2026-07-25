@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { CTAButton } from "../CTAButton";
-import { HeroVideo } from "../HeroVideo";
+import { PlatformViz } from "../PlatformViz";
 import { ChevronDown } from "lucide-react";
 
 export function HeroSection() {
@@ -90,13 +90,14 @@ export function HeroSection() {
           </motion.div>
         </div>
 
-        {/* Right: the real robot, mid-weld */}
+        {/* Right: the platform loop, live — voice in, brain reasons, tools
+            compose, any body acts. The nex-ON story shown, not an application. */}
         <motion.div
           initial={{ opacity: 0, x: 24 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
         >
-          <HeroVideo />
+          <PlatformViz />
         </motion.div>
       </div>
 

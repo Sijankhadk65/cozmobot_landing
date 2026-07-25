@@ -8,10 +8,10 @@ const columns = [
   {
     heading: "nex-ON",
     links: [
-      { label: "Platform", href: "/#platform" },
-      { label: "How it works", href: "/#how" },
-      { label: "Capabilities", href: "/#capabilities" },
-      { label: "Any Robot, Any Task", href: "/#any-robot" },
+      { label: "Platform", href: "/platform" },
+      { label: "How it works", href: "/platform#how" },
+      { label: "Capabilities", href: "/platform#capabilities" },
+      { label: "Any Robot, Any Task", href: "/platform#any-robot" },
     ],
   },
   {
@@ -19,7 +19,7 @@ const columns = [
     links: [
       { label: "Omnicron — welding cobot", href: "/omnicron" },
       { label: "Orio — public assistant", href: "/orio" },
-      { label: "Deployment", href: "/#operations" },
+      { label: "Deployment", href: "/platform#operations" },
     ],
   },
   {
@@ -38,12 +38,14 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           <div className="md:col-span-2">
-            <Image
-              src={logo}
-              alt="CozmoBot"
-              sizes="150px"
-              className="h-7 w-auto mb-4"
-            />
+            <Link href="/" aria-label="CozmoBot — home" className="inline-block mb-4">
+              <Image
+                src={logo}
+                alt="CozmoBot"
+                sizes="150px"
+                className="h-7 w-auto"
+              />
+            </Link>
             <p className="text-sm text-mute leading-relaxed max-w-xs">
               We build <span className="font-medium text-offwhite">nex-ON</span>,
               the robot-agnostic AI deployment platform — and{" "}

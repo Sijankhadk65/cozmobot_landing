@@ -26,22 +26,25 @@ useGLTF.preload(MODEL_URL);
 // together; the first/last pairs are flat plateaus that hold the view steady
 // while the beat reads. Yaw stays monotonic (0 → 0.7 → π → 2π) so acts 2–5 read
 // as one continuous left turn after the opening tilt-down out of top-down.
-const STOPS = [0, 0.08, 0.3, 0.51, 0.73, 0.93, 1] as const;
+// Act 5 (the final front view) lands at progress 1.0 — the section bottom — so
+// there's no held-still tail to scroll through after it. Earlier stops are the
+// original breakpoints rescaled by 1/0.93 to fill the whole 0→1 range.
+const STOPS = [0, 0.086, 0.323, 0.548, 0.785, 1] as const;
 
 // Pitch (rotation.x): +π/2 lays the top toward the camera for the top-down
 // read, drops to 0 for the flat front/back, and takes a gentle iso lean.
-const PITCH = [1.45, 1.45, 0, 0.6, 0, 0, 0];
+const PITCH = [1.45, 1.45, 0, 0.6, 0, 0];
 // Yaw (rotation.y): held at 0 through the tilt-down and front, then a single
 // left-ward revolution — iso → back → home on the front.
-const YAW = [0, 0, 0, 0.7, Math.PI, 2 * Math.PI, 2 * Math.PI];
+const YAW = [0, 0, 0, 0.7, Math.PI, 2 * Math.PI];
 // Camera dolly — eases back a touch to frame the wide top-down footprint, then
 // leans in on the isometric beat.
-const CAM_Z = [6.4, 6.4, 6.0, 5.7, 6.0, 6.0, 6.0];
+const CAM_Z = [6.4, 6.4, 6.0, 5.7, 6.0, 6.0];
 // Camera height — a lift on the iso beat for the three-quarter read.
-const CAM_Y = [0.0, 0.0, 0.0, 0.3, 0.0, 0.0, 0.0];
+const CAM_Y = [0.0, 0.0, 0.0, 0.3, 0.0, 0.0];
 // Accent emissive — the "agent active" glow peaking as the vents (top) and
 // ports (back) fill frame.
-const GLOW = [2.2, 2.2, 0.9, 1.4, 2.0, 1.1, 1.0];
+const GLOW = [2.2, 2.2, 0.9, 1.4, 2.0, 1.1];
 
 // Sample a keyframe track at progress `p` with smoothstep easing between stops.
 function track(p: number, values: number[]) {
@@ -64,10 +67,25 @@ function NexonModel({ progress }: { progress: MotionValue<number> }) {
   const group = useRef<THREE.Group>(null);
   const camera = useThree((s) => s.camera);
 
+  // Scale the whole unit with the viewport so it never crowds the copy on
+  // smaller screens: full size on wide desktops, easing down to ~half on phones.
+  // `size` is the canvas' CSS-pixel width and updates on resize, so this stays
+  // reactive.
+  const viewportWidth = useThree((s) => s.size.width);
+  const responsiveScale = THREE.MathUtils.clamp(viewportWidth / 1280, 0.5, 1);
+
   // Prepare the model once: drop the baked backdrop plane so the unit floats on
   // our own carbon background, normalize its size, and collect the lime accent
   // materials so the scroll can pulse them.
   const { fitScale, accents } = useMemo(() => {
+    // `useGLTF` hands back a shared, cached scene, and R3F leaves our fitScale on
+    // it at unmount. Reset to identity before measuring so the bounding box is
+    // the model's true size on every mount — otherwise a soft-nav back to home
+    // measures the still-scaled scene and the box compounds smaller each return.
+    scene.scale.set(1, 1, 1);
+    scene.position.set(0, 0, 0);
+    scene.updateMatrixWorld(true);
+
     // Detach the baked backdrop plane entirely — left in, it dominates the
     // bounding box (a 3×3 plate) and normalizes the real unit down to a speck.
     const drop: THREE.Object3D[] = [];
@@ -76,6 +94,7 @@ function NexonModel({ progress }: { progress: MotionValue<number> }) {
     });
     for (const o of drop) o.removeFromParent();
 
+    scene.updateMatrixWorld(true);
     const box = new THREE.Box3().setFromObject(scene);
     const size = new THREE.Vector3();
     box.getSize(size);
@@ -132,7 +151,7 @@ function NexonModel({ progress }: { progress: MotionValue<number> }) {
   // Identity already faces the front (+Z, push button) at the camera; the choreo
   // group pitches/yaws around the recentered box.
   return (
-    <group ref={group}>
+    <group ref={group} scale={responsiveScale}>
       <Center>
         <primitive object={scene} scale={fitScale} />
       </Center>

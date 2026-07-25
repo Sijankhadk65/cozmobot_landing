@@ -1,15 +1,14 @@
 import { NexonExperience } from "@/components/three/NexonExperience";
-import { CTASection } from "@/components/sections/CTASection";
 
 // The home page is a single scroll-driven scene around the nex-ON edge unit:
-// five acts told against the 3D model, then the contact CTA. The deep product
-// stories live on their own routes (/omnicron, /orio), reached from the final
-// act.
+// five acts told against the 3D model, ending on the Omnicron / Orio links in
+// the final act. No contact CTA or footer here — it stays a pure, immersive
+// experience. Contact lives on the deep routes (/platform, /omnicron, /orio),
+// each of which carries the shared CTASection.
 export default function Home() {
   return (
     <main>
       <NexonExperience />
-      <CTASection />
     </main>
   );
 }

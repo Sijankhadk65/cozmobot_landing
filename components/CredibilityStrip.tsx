@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Cpu, MessagesSquare, Flame, CircuitBoard } from "lucide-react";
 
@@ -31,7 +32,7 @@ const facts: {
     icon: Flame,
     lead: "Live welds",
     detail: "On our own shop floor",
-    href: "#omnicron",
+    href: "/omnicron",
   },
 ];
 
@@ -70,12 +71,12 @@ export function CredibilityStrip() {
                 className="md:px-6 md:first:pl-0 md:last:pr-0"
               >
                 {fact.href ? (
-                  <a
+                  <Link
                     href={fact.href}
                     className="flex items-center gap-3 group"
                   >
                     {inner}
-                  </a>
+                  </Link>
                 ) : (
                   <div className="flex items-center gap-3">{inner}</div>
                 )}

@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist_Mono, Orbitron } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Menu } from "@/components/Menu";
+import { BrandHome } from "@/components/BrandHome";
+import { ConditionalFooter } from "@/components/ConditionalFooter";
 
 // Satoshi carries all text; Geist Mono stays on the instrument-panel readouts;
 // Orbitron is display-only, reserved for the product names via `font-brand`.
@@ -24,7 +27,12 @@ const orbitron = Orbitron({
 });
 
 export const metadata: Metadata = {
-  title: "nex-ON by CozmoBot — Deploy Any Robot, Just by Talking to It",
+  metadataBase: new URL("https://cozmobot.com"),
+  title: {
+    default: "nex-ON by CozmoBot — Deploy Any Robot, Just by Talking to It",
+    // Child pages set a short title; this appends the brand.
+    template: "%s · CozmoBot",
+  },
   description:
     "nex-ON is a robot-agnostic AI deployment platform. Perception, tooling, and sensor integration let an AI brain deploy any robot to do any task, directed in plain human language. Proven on Omnicron, our autonomous welding cobot.",
   keywords: [
@@ -63,7 +71,10 @@ export default function RootLayout({
       className={`${satoshi.variable} ${geistMono.variable} ${orbitron.variable} h-full`}
     >
       <body className="min-h-full flex flex-col bg-carbon text-offwhite">
+        <BrandHome />
+        <Menu />
         {children}
+        <ConditionalFooter />
       </body>
     </html>
   );

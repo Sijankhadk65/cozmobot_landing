@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { SectionWrapper } from "../SectionWrapper";
 import { MotionReveal } from "../MotionReveal";
 import { motion } from "framer-motion";
@@ -16,6 +17,7 @@ import {
   CheckCircle2,
   CircleDashed,
   ArrowRight,
+  type LucideIcon,
 } from "lucide-react";
 
 const bodies = [
@@ -25,7 +27,7 @@ const bodies = [
     label: "Welding cobot",
     proven: true,
     note: "Omnicron",
-    href: "#omnicron",
+    href: "/omnicron",
   },
   { icon: PersonStanding, label: "Humanoid", proven: false },
   {
@@ -33,7 +35,7 @@ const bodies = [
     label: "Autonomous mobile robot",
     proven: false,
     note: "Orio",
-    href: "#orio",
+    href: "/orio",
   },
   { icon: Network, label: "Mixed fleet", proven: false },
 ];
@@ -44,7 +46,7 @@ const tasks = [
     label: "Welding",
     proven: true,
     note: "Omnicron",
-    href: "#omnicron",
+    href: "/omnicron",
   },
   { icon: Wrench, label: "Assembly", proven: false },
   { icon: ScanLine, label: "Inspection", proven: false },
@@ -77,7 +79,7 @@ function Matrix({
 }: {
   title: string;
   items: {
-    icon: React.ElementType;
+    icon: LucideIcon;
     label: string;
     proven: boolean;
     note?: string;
@@ -124,13 +126,13 @@ function Matrix({
               </p>
               {item.note &&
                 (item.href ? (
-                  <a
+                  <Link
                     href={item.href}
                     className="inline-flex items-center gap-1 text-xs text-offwhite/80 mt-0.5 hover:text-offwhite hover:gap-1.5 transition-all"
                   >
                     {item.note}
                     <ArrowRight size={10} />
-                  </a>
+                  </Link>
                 ) : (
                   <p className="text-xs text-offwhite/80 mt-0.5">{item.note}</p>
                 ))}

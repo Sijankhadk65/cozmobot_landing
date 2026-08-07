@@ -62,15 +62,15 @@ const positioning = [
   },
   {
     versus: "vs. embodied-AI & general robotics",
-    them: "Humanoid and robot-foundation-model companies build robot bodies or end-to-end learned control policies — capital-intensive, hardware-heavy, often single-embodiment.",
-    us: "We are not a robot manufacturer and not a monolithic learned policy. We sit above any body and compose proven perception and motion tools under an LLM's reasoning.",
+    them: "Humanoid and robot-foundation-model companies build robot bodies — capital-intensive, hardware-heavy, and usually tied to one of them.",
+    us: "We are not a robot manufacturer. We sit above the body, so the robots you already own are the ones we run on.",
   },
 ];
 
 const differentiators = [
   "Works with robots that already exist, from many vendors.",
-  "Interpretable and controllable — discrete tool calls with safety gates and dry runs, not an opaque neural policy.",
-  "Swappable by design — a better detector or a new sensor drops in without a rewrite.",
+  "Predictable and controllable — you see the plan and approve it before anything runs.",
+  "Every capability we add works for the next robot too.",
 ];
 
 function Matrix({
@@ -170,9 +170,8 @@ export function AnyRobotSection() {
             Any body.
           </h2>
           <p className="mt-4 text-mute text-lg leading-relaxed">
-            We are precise about what ships today and what the architecture is
-            built for. The modularity is real in the codebase. The additional
-            robot bodies are the roadmap.
+            We are precise about what ships today and what the platform is built
+            for. Below, the first is proven; the rest is the roadmap.
           </p>
         </div>
       </MotionReveal>
@@ -199,10 +198,8 @@ export function AnyRobotSection() {
                 </p>
               </div>
               <p className="text-sm text-mute leading-relaxed">
-                The full stack running on a real collaborative arm — voice
-                orchestration, open-vocabulary vision, real-world measurement,
-                safe dry- and live-gated actuation, color-guided pathing, and
-                hand-eye calibration — proven end to end as Omnicron.
+                The full platform running on a real collaborative arm, in a real
+                cell, doing real work — proven end to end as Omnicron.
               </p>
             </div>
             <div>
@@ -213,10 +210,9 @@ export function AnyRobotSection() {
                 </p>
               </div>
               <p className="text-sm text-mute leading-relaxed">
-                The same orchestration and tool interfaces extending to
-                humanoids, AMRs, and additional end-effectors and sensors. The
-                swappable detector, tool-based capabilities, and abstracted
-                motion exist today. The additional bodies do not — yet.
+                The same platform extending to humanoids, mobile robots, and
+                more tasks. It is designed for them today. Those deployments do
+                not exist yet — and we will not pretend otherwise.
               </p>
             </div>
           </div>

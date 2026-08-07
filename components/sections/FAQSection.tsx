@@ -6,23 +6,22 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { Plus } from "lucide-react";
 
-// Answers the objections a buyer actually arrives with. Facts are the user's
-// own; the NVIDIA Jetson model names are pending final confirmation.
+// Answers the objections a buyer actually arrives with — at their altitude.
+// Specifics of the stack belong in a demo conversation, not on a public page.
 const faqs: { q: string; a: React.ReactNode }[] = [
   {
     q: "Which robots does nex-ON support?",
     a: (
       <>
         nex-ON is robot-agnostic by design. Today it runs on a{" "}
-        <span className="text-offwhite font-medium">FAIRINO FR5</span>{" "}
-        collaborative arm — that pairing is Omnicron, our welding application.
-        Orio, the mobile application, is built on{" "}
+        <span className="text-offwhite font-medium">collaborative arm</span> —
+        that deployment is Omnicron, our welding application — on{" "}
         <span className="text-offwhite font-medium">
           NVIDIA edge AI hardware
-        </span>{" "}
-        (Jetson Thor / Orin and DGX Spark). Because perception, tooling, and
-        control are interfaces rather than fixed implementations, the same stack
-        is architected to drop onto other arms and bodies.
+        </span>
+        . The platform is built to move onto other arms and bodies without being
+        rewritten. Tell us what&apos;s on your floor and we&apos;ll tell you
+        where it stands.
       </>
     ),
   },
@@ -59,9 +58,8 @@ const faqs: { q: string; a: React.ReactNode }[] = [
         Safety is built in, not bolted on. Every dangerous action runs{" "}
         <span className="text-offwhite font-medium">dry by default</span> — the
         motion is identical, but nothing is energized. A live arc must be
-        deliberately armed each session and never persists across restarts.
-        Speeds default low, and a dry-run reachability check reports feasibility
-        before the arm moves at all.
+        deliberately armed each session, and the system checks a move is
+        feasible before the arm moves at all.
       </>
     ),
   },

@@ -14,12 +14,13 @@ import {
   Mic,
 } from "lucide-react";
 
+// The shape of the system, not its contents — labels only, no explanation.
 const tools = [
-  { icon: Eye, label: "Vision", sub: "Detection", color: "#add037" },
-  { icon: Radio, label: "Sensors", sub: "Integration", color: "#add037" },
-  { icon: Move3d, label: "Motion", sub: "IK & control", color: "#add037" },
-  { icon: Wrench, label: "Tooling", sub: "End-effector", color: "#add037" },
-  { icon: Plus, label: "New tool", sub: "Extensible", color: "#8c8c89", dashed: true },
+  { icon: Eye, label: "Vision", color: "#add037" },
+  { icon: Radio, label: "Sensors", color: "#add037" },
+  { icon: Move3d, label: "Motion", color: "#add037" },
+  { icon: Wrench, label: "Tooling", color: "#add037" },
+  { icon: Plus, label: "More", color: "#8c8c89", dashed: true },
 ];
 
 const bodies = [
@@ -41,14 +42,13 @@ export function ArchitectureSection() {
             System Architecture
           </span>
           <h2 className="mt-3 text-3xl md:text-4xl font-bold text-offwhite tracking-tight">
-            Interfaces, not fixed
+            One layer,
             <br />
-            implementations
+            any body
           </h2>
           <p className="mt-4 text-mute">
-            The brain calls modular tools. The tools drive any body. Swap a
-            detector, add an end-effector, register a robot — the platform
-            compounds instead of being rebuilt.
+            A brain, the capabilities it can reach for, and the robot that
+            carries them out.
           </p>
         </div>
       </MotionReveal>
@@ -108,7 +108,7 @@ export function ArchitectureSection() {
         </div>
 
         <p className="text-center text-[10px] font-mono uppercase tracking-widest text-mute mb-5">
-          calls modular tools
+          capabilities
         </p>
 
         {/* Tools row */}
@@ -135,7 +135,6 @@ export function ArchitectureSection() {
                 <tool.icon size={18} style={{ color: tool.color }} />
               </div>
               <p className="font-semibold text-sm text-offwhite">{tool.label}</p>
-              <p className="text-xs text-mute mt-0.5">{tool.sub}</p>
             </motion.div>
           ))}
         </div>

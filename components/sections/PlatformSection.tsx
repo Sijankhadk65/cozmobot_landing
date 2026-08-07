@@ -17,7 +17,7 @@ const layers = [
     icon: Blocks,
     label: "The Capabilities",
     detail:
-      "Modular, swappable tools the brain can call: vision models, measurement, motion, manipulation, sensor feeds. Register a new tool, gain a new skill.",
+      "Everything in between: seeing, measuring, moving, handling. Each new capability is one the platform keeps — for every robot after it.",
   },
   {
     icon: Bot,
@@ -51,12 +51,12 @@ export function PlatformSection() {
               </span>
             </p>
             <p className="mt-4 text-mute leading-relaxed">
-              Because perception, tooling, and control are{" "}
+              It is built to{" "}
               <span className="font-medium text-offwhite">
-                interfaces rather than fixed implementations
+                generalize rather than be rebuilt
               </span>
-              , adding a new robot or a new skill means registering a new tool —
-              not rebuilding the system.
+              , so a new robot or a new skill is an addition to the platform —
+              not a project from scratch.
             </p>
 
             <div className="mt-8 p-5 bg-accent/8 rounded-xl border border-accent/25">
@@ -65,10 +65,9 @@ export function PlatformSection() {
               </p>
               <p className="text-sm text-mute leading-relaxed">
                 We prove the platform on the hardest, most valuable near-term
-                task we could find — one that demands everything at once:
-                sub-millimeter perception, safe real-world actuation, and
-                non-expert operability. Nail that, and the same platform
-                generalizes outward.
+                task we could find — one that demands precision, safety, and
+                non-expert operability all at once. Nail that, and the same
+                platform generalizes outward.
               </p>
               <Link
                 href="/omnicron"

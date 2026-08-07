@@ -4,56 +4,34 @@ import { SectionWrapper } from "../SectionWrapper";
 import { MotionReveal } from "../MotionReveal";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Mic, BrainCircuit, Eye, ShieldCheck, Play, Volume2 } from "lucide-react";
+import { Mic, ShieldCheck, Play } from "lucide-react";
 
+// Deliberately high level. This page is for buyers, not implementers — it says
+// what the loop does, never how it is built.
 const steps = [
   {
     number: "01",
     icon: Mic,
-    title: "You speak the goal",
-    subtitle: "Voice or text, hands-free",
+    title: "You say what you want",
+    subtitle: "Plain language",
     description:
-      "Push to talk, in your own language. The session can be locked to one language so background chatter can't hijack it. An optional barge-in mode lets you interrupt the robot just by starting to talk.",
+      "Describe the job the way you'd describe it to a colleague. No teach pendant, no program, no CAD model.",
   },
   {
     number: "02",
-    icon: BrainCircuit,
-    title: "nex-ON reasons and chooses",
-    subtitle: "Agentic tool-calling loop",
+    icon: ShieldCheck,
+    title: "It rehearses first",
+    subtitle: "Nothing energized",
     description:
-      "The model decides, mid-conversation, when to look through the camera, what to measure, when to move, and when to act. It composes the tools it needs rather than following a fixed script.",
+      "nex-ON looks at the real scene, works out the job, and runs it dry so you can watch the motion before anything is live.",
   },
   {
     number: "03",
-    icon: Eye,
-    title: "It perceives the real scene",
-    subtitle: "Open-vocabulary vision & measurement",
-    description:
-      "Ask for any object in plain words — “metal tube,” “flange,” “plate” — with no per-class training. nex-ON fuses the image with aligned depth to estimate real length, width, and distance in millimeters.",
-  },
-  {
-    number: "04",
-    icon: ShieldCheck,
-    title: "It checks before it moves",
-    subtitle: "Safety by construction",
-    description:
-      "A dry-run reachability check reports whether a move is feasible before the arm moves. Dangerous actions must be deliberately armed. Speeds default low, and per-axis motion locks constrain what can change.",
-  },
-  {
-    number: "05",
     icon: Play,
-    title: "It acts",
-    subtitle: "Perception mapped to motion",
+    title: "You arm it, and it runs",
+    subtitle: "Then tells you how it went",
     description:
-      "A calibrated hand-eye transform turns “the pixel I see” into “the exact 3D point to move to.” The robot executes against what it actually observed — not a model file.",
-  },
-  {
-    number: "06",
-    icon: Volume2,
-    title: "It tells you what happened",
-    subtitle: "Spoken back, immediately",
-    description:
-      "Replies start speaking after the first sentence while later sentences are still being generated, so it stays responsive even on long answers. The terminal shows only the conversation; diagnostics go to logs.",
+      "Give the word and it does the work against what it actually sees — then reports back out loud.",
   },
 ];
 
@@ -139,43 +117,9 @@ export function SolutionSection() {
               not a program.
             </h2>
             <p className="mt-4 text-mute text-lg leading-relaxed">
-              The operator speaks. The model decides when to look, what to
-              measure, where to act, and how to move — then does it and reports
-              back out loud.
+              You describe the outcome you want. nex-ON figures out the rest,
+              rehearses it safely, and runs it once you say go.
             </p>
-
-            {/* The loop at a glance, pinned beside the steps as they scroll. The
-                animated console version of this leads the hero, so here it stays
-                a quiet, static summary rather than repeating the same motion. */}
-            <div className="mt-8 rounded-2xl border border-steel bg-graphite/60 p-6">
-              <p className="text-[10px] font-mono uppercase tracking-widest text-mute mb-4">
-                One loop, six moves
-              </p>
-              <div className="flex flex-wrap items-center gap-x-2 gap-y-2 text-sm">
-                {steps.map((step, i) => (
-                  <span key={step.number} className="flex items-center gap-2">
-                    <span className="inline-flex items-center gap-2 rounded-lg border border-steel bg-carbon px-3 py-1.5 text-offwhite/85">
-                      <step.icon size={13} className="text-accent" />
-                      {step.title.replace(/^(You|It|nex-ON) /, "")}
-                    </span>
-                    {i < steps.length - 1 && (
-                      <span className="text-steel">&rarr;</span>
-                    )}
-                  </span>
-                ))}
-              </div>
-              <div className="mt-5 flex items-center justify-between border-t border-steel pt-3">
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                  <span className="text-[10px] font-mono text-accent">
-                    DRY RUN — NOT ARMED
-                  </span>
-                </span>
-                <span className="text-[10px] font-mono text-mute">
-                  HAND-EYE CALIBRATED
-                </span>
-              </div>
-            </div>
           </MotionReveal>
         </div>
 

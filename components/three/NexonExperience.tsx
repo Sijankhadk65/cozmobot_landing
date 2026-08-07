@@ -94,7 +94,7 @@ const MOBILE_ACTS: {
   {
     eyebrow: "Edge unit",
     title: "Robotics, out of the box.",
-    body: "nex-ON — the embodied agentic OS. One edge unit between an AI brain and any robot body.",
+    body: "nex-ON — the embodied OS. One edge unit between an AI brain and any robot body.",
   },
   {
     eyebrow: "The layer",
@@ -413,8 +413,7 @@ export function NexonExperience() {
           </h1>
           <p className="mt-5 text-lg text-[#1a1a1a]/75 max-w-md">
             <span className="text-[#141414] font-semibold">nex-ON</span> — the
-            embodied agentic OS. One edge unit between an AI brain and any robot
-            body.
+            embodied OS. One edge unit between an AI brain and any robot body.
           </p>
         </motion.div>
 

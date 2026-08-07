@@ -205,8 +205,8 @@ export function ROISection() {
       <MotionReveal>
         <div className="grid md:grid-cols-[1fr_auto] gap-8 items-center p-8 bg-graphite rounded-2xl border border-steel">
           <p className="text-lg font-semibold text-offwhite leading-snug max-w-lg">
-            Start with a single cell. The tools you register there are the same
-            tools the next robot calls.
+            Start with a single cell. What the platform learns to do there, the
+            next robot inherits.
           </p>
           <div className="flex flex-col sm:flex-row md:flex-col gap-3 flex-shrink-0">
             <CTAButton href="#cta" variant="primary" icon className="text-sm px-6 py-3">

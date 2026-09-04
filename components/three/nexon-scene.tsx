@@ -11,40 +11,45 @@ useGLTF.preload(MODEL_URL);
 
 // ── Scroll choreography ───────────────────────────────────────────────────────
 // Five framed views, one per act, expressed as a state at each progress
-// breakpoint. Everything the scroll drives (box pitch/yaw, camera dolly/tilt,
+// breakpoint. Everything the scroll drives (box scale, drift, rotation, camera,
 // accent glow) is a keyframed track sampled by progress and then critically
 // damped toward, so fast scrubbing stays smooth instead of snapping.
 //
-// The sequence, in order down the page:
-//   1. Top-Down          — pitched forward so the top/vents face the camera
-//   2. Front             — flat on, push button toward the lens
-//   3. Isometric (left)  — turned + tilted to reveal the left face and top
-//   4. Back              — carried around to the ports
-//   5. Front again       — one clean revolution completes back on the front
+// The unit is NOT the subject, and for most of the scroll it is not even on
+// screen. nex-ON is licensed software; the hardware is one optional way to run
+// it, so the sequence is software first and hardware last:
+//
+//   1. The problem — text only, no unit
+//   2. The OS      — text + the stack diagram, no unit
+//   3. The runtime — text + the agent loop, no unit
+//   4. Any body    — text + drivers/apps; the unit begins to fade up, small
+//   5. Install it  — the unit, small and sharp, named as optional
 //
 // Stops sit at the hold-center of each text beat so copy and camera land
-// together; the first/last pairs are flat plateaus that hold the view steady
-// while the beat reads. Yaw stays monotonic (0 → 0.7 → π → 2π) so acts 2–5 read
-// as one continuous left turn after the opening tilt-down out of top-down.
-// Act 5 (the final front view) lands at progress 1.0 — the section bottom — so
-// there's no held-still tail to scroll through after it. Earlier stops are the
-// original breakpoints rescaled by 1/0.93 to fill the whole 0→1 range.
+// together. Act 5 lands at progress 1.0 — the section bottom — so there's no
+// held-still tail to scroll through after it.
 const STOPS = [0, 0.086, 0.323, 0.548, 0.785, 1] as const;
 
-// Pitch (rotation.x): +π/2 lays the top toward the camera for the top-down
-// read, drops to 0 for the flat front/back, and takes a gentle iso lean.
-const PITCH = [1.45, 1.45, 0, 0.6, 0, 0];
-// Yaw (rotation.y): held at 0 through the tilt-down and front, then a single
-// left-ward revolution — iso → back → home on the front.
-const YAW = [0, 0, 0, 0.7, Math.PI, 2 * Math.PI];
-// Camera dolly — eases back a touch to frame the wide top-down footprint, then
-// leans in on the isometric beat.
-const CAM_Z = [6.4, 6.4, 6.0, 5.7, 6.0, 6.0];
-// Camera height — a lift on the iso beat for the three-quarter read.
-const CAM_Y = [0.0, 0.0, 0.0, 0.3, 0.0, 0.0];
-// Accent emissive — the "agent active" glow peaking as the vents (top) and
-// ports (back) fill frame.
-const GLOW = [2.2, 2.2, 0.9, 1.4, 2.0, 1.1];
+// The unit is not on screen for most of this. nex-ON is licensed software, so
+// the opening acts are the software alone — text and diagrams, no hardware —
+// and the unit only arrives near the end, already small, as one optional way to
+// run it. Scale/drift therefore park it where the closing beat wants it and
+// barely move; the entrance is carried by the canvas fade in NexonExperience,
+// so the unit doesn't slide into frame, it simply turns out to have been there.
+const SCALE = [0.5, 0.5, 0.5, 0.5, 0.46, 0.52];
+const DRIFT_X = [1.15, 1.15, 1.15, 1.15, 1.4, 1.15];
+const DRIFT_Y = [0.15, 0.15, 0.15, 0.15, 0.28, 0.15];
+
+// A soft three-quarter view held throughout, turning slowly. The old
+// choreography toured the chassis — top, vents, ports — which is exactly the
+// hardware read we're removing, so there is no face tour any more.
+const PITCH = [0.25, 0.25, 0.3, 0.35, 0.4, 0.3];
+const YAW = [0, 0, 0.6, 1.4, 2.4, 3.6];
+// The camera holds still — the unit is parked, not travelling.
+const CAM_Z = [6.2, 6.2, 6.2, 6.2, 6.2, 6.2];
+const CAM_Y = [0.05, 0.05, 0.05, 0.05, 0.05, 0.05];
+// Accent emissive — low while the unit is still hidden, lifting as it arrives.
+const GLOW = [1.2, 1.2, 1.2, 1.2, 1.4, 1.8];
 
 // Sample a keyframe track at progress `p` with smoothstep easing between stops.
 function track(p: number, values: number[]) {
@@ -66,6 +71,14 @@ function NexonModel({ progress }: { progress: MotionValue<number> }) {
   const { scene } = useGLTF(MODEL_URL);
   const group = useRef<THREE.Group>(null);
   const camera = useThree((s) => s.camera);
+  // The damped height, WITHOUT the idle bob folded in. Damping `g.position.y`
+  // directly fed each frame's bob back into the next frame's damper, which
+  // compounded into a visible jitter.
+  const baseY = useRef(0);
+  // The canvas mounts part-way down the scroll, so the very first frame has to
+  // snap to the pose for the current progress. Damping up from identity made
+  // the unit appear mid-shrink and settle into place.
+  const posed = useRef(false);
 
   // Scale the whole unit with the viewport so it never crowds the copy on
   // smaller screens: full size on wide desktops, easing down to ~half on phones.
@@ -73,6 +86,9 @@ function NexonModel({ progress }: { progress: MotionValue<number> }) {
   // reactive.
   const viewportWidth = useThree((s) => s.size.width);
   const responsiveScale = THREE.MathUtils.clamp(viewportWidth / 1280, 0.5, 1);
+  // On compact the canvas is a narrow band above the copy, so the sideways
+  // drift has to be much smaller or the unit walks off the edge of the frame.
+  const driftSpread = viewportWidth < 1280 ? 0.3 : 1;
 
   // Prepare the model once: drop the baked backdrop plane so the unit floats on
   // our own carbon background, normalize its size, and collect the lime accent
@@ -99,11 +115,6 @@ function NexonModel({ progress }: { progress: MotionValue<number> }) {
     const size = new THREE.Vector3();
     box.getSize(size);
     const maxDim = Math.max(size.x, size.y, size.z) || 1;
-    // eslint-disable-next-line no-console
-    console.log(
-      `BBOX size x=${size.x.toFixed(3)} y=${size.y.toFixed(3)} z=${size.z.toFixed(3)}`,
-    );
-
     const accents: THREE.MeshStandardMaterial[] = [];
     scene.traverse((o) => {
       const mesh = o as THREE.Mesh;
@@ -121,6 +132,11 @@ function NexonModel({ progress }: { progress: MotionValue<number> }) {
     return { fitScale: 2.6 / maxDim, accents };
   }, [scene]);
 
+  // `useFrame` is an imperative per-frame callback: mutating the Three.js
+  // object graph in place is the whole point of it, and there is no render pass
+  // to go through. The React Compiler's immutability rule can't see that, so
+  // it's disabled for the body of the callback only.
+  /* eslint-disable react-hooks/immutability */
   useFrame((state, delta) => {
     const g = group.current;
     if (!g) return;
@@ -128,30 +144,51 @@ function NexonModel({ progress }: { progress: MotionValue<number> }) {
     const t = state.clock.elapsedTime;
     const d = Math.min(delta, 1 / 30); // clamp so a stutter can't over-damp
 
-    // Keyframed pitch (top-down → front → iso → back → front) + left yaw + bob.
-    g.rotation.x = THREE.MathUtils.damp(g.rotation.x, track(p, PITCH), 5, d);
-    g.rotation.y = THREE.MathUtils.damp(
-      g.rotation.y,
-      track(p, YAW) + Math.sin(t * 0.4) * 0.03,
-      5,
-      d,
-    );
-    g.position.y = Math.sin(t * 0.8) * 0.04;
+    // Targets for this scroll position.
+    const pitch = track(p, PITCH);
+    const yaw = track(p, YAW) + Math.sin(t * 0.4) * 0.03;
+    const targetScale = responsiveScale * track(p, SCALE);
+    const targetX = track(p, DRIFT_X) * driftSpread;
+    const targetY = track(p, DRIFT_Y);
+    const camZ = track(p, CAM_Z);
+    const camY = track(p, CAM_Y);
 
-    // Camera dolly + tilt, always looking at the unit.
-    camera.position.z = THREE.MathUtils.damp(camera.position.z, track(p, CAM_Z), 4, d);
-    camera.position.y = THREE.MathUtils.damp(camera.position.y, track(p, CAM_Y), 4, d);
+    // First frame after mount: adopt the pose outright. There is nothing to
+    // ease from — the unit is still invisible at this point, and easing from
+    // identity is what made it appear mid-shrink.
+    if (!posed.current) {
+      posed.current = true;
+      g.rotation.x = pitch;
+      g.rotation.y = yaw;
+      g.scale.setScalar(targetScale);
+      g.position.x = targetX;
+      baseY.current = targetY;
+      camera.position.z = camZ;
+      camera.position.y = camY;
+    } else {
+      g.rotation.x = THREE.MathUtils.damp(g.rotation.x, pitch, 5, d);
+      g.rotation.y = THREE.MathUtils.damp(g.rotation.y, yaw, 5, d);
+      g.scale.setScalar(THREE.MathUtils.damp(g.scale.x, targetScale, 5, d));
+      g.position.x = THREE.MathUtils.damp(g.position.x, targetX, 5, d);
+      baseY.current = THREE.MathUtils.damp(baseY.current, targetY, 5, d);
+      camera.position.z = THREE.MathUtils.damp(camera.position.z, camZ, 4, d);
+      camera.position.y = THREE.MathUtils.damp(camera.position.y, camY, 4, d);
+    }
+
+    // The idle bob is applied on top of the damped base, never back into it.
+    g.position.y = baseY.current + Math.sin(t * 0.8) * 0.04;
     camera.lookAt(0, 0, 0);
 
     // Accent glow: keyframed level + a slow "heartbeat" pulse.
     const glow = track(p, GLOW) * (0.85 + 0.15 * Math.sin(t * 2.2));
     for (const m of accents) m.emissiveIntensity = glow;
   });
+  /* eslint-enable react-hooks/immutability */
 
   // Identity already faces the front (+Z, push button) at the camera; the choreo
   // group pitches/yaws around the recentered box.
   return (
-    <group ref={group} scale={responsiveScale}>
+    <group ref={group}>
       <Center>
         <primitive object={scene} scale={fitScale} />
       </Center>
@@ -186,7 +223,7 @@ export function NexonScene({ progress }: { progress: MotionValue<number> }) {
 
       {/* The drop shadow is a CSS filter on the canvas element (see
           NexonExperience) — the camera is near-level, so a 3D floor/contact
-          shadow would be edge-on or hidden directly behind the box. */}
+          shadow would be edge-on or hidden directly behind the unit. */}
       <NexonModel progress={progress} />
     </>
   );

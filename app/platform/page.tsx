@@ -13,7 +13,7 @@ import { CTASection } from "@/components/sections/CTASection";
 export const metadata: Metadata = {
   title: "nex-ON — the robot-agnostic AI deployment platform",
   description:
-    "nex-ON is the layer between an AI brain and any robot body: why deploying robots is hard today, what the platform does, and how any robot maps to any task.",
+    "nex-ON is licensed software between an AI brain and any robot body: why deploying robots is hard today, what the platform does, and how any robot maps to any task.",
   openGraph: {
     title: "nex-ON — the robot-agnostic AI deployment platform",
     description:
@@ -44,9 +44,10 @@ export default function PlatformPage() {
             One layer between an AI brain and any robot body.
           </h1>
           <p className="mt-5 text-lg text-mute leading-relaxed max-w-2xl">
-            <span className="font-semibold text-offwhite">nex-ON</span> sees the
-            real scene and does the work — directed entirely in plain human
-            language. No programming, no specialist, no model file.
+            <span className="font-semibold text-offwhite">nex-ON</span> is
+            licensed software that sees the real scene and does the work —
+            directed entirely in plain human language. It runs above the robots
+            you already own. No programming, no specialist, no model file.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link

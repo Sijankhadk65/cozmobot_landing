@@ -29,13 +29,14 @@ const orbitron = Orbitron({
 export const metadata: Metadata = {
   metadataBase: new URL("https://cozmobot.com"),
   title: {
-    default: "nex-ON by CozmoBot — Deploy Any Robot, Just by Talking to It",
+    default: "nex-ON by CozmoBot — Robot Deployment Software. Any Robot, Just by Talking to It",
     // Child pages set a short title; this appends the brand.
     template: "%s · CozmoBot",
   },
   description:
-    "nex-ON is a robot-agnostic AI deployment platform. Perception, tooling, and sensor integration let an AI brain deploy any robot to do any task, directed in plain human language. Proven on Omnicron, our autonomous welding cobot.",
+    "nex-ON is licensed, robot-agnostic AI software for deploying robots you already own. Perception, tooling, and sensor integration let an AI brain put any robot to any task, directed in plain human language. No teach pendant, no CAD programming, no new hardware. Proven on Omnicron, our autonomous welding cobot.",
   keywords: [
+    "robot deployment software",
     "robot-agnostic platform",
     "embodied AI",
     "natural language robotics",
@@ -46,17 +47,17 @@ export const metadata: Metadata = {
     "humanoid robotics",
   ],
   openGraph: {
-    title: "nex-ON by CozmoBot — Deploy Any Robot, Just by Talking to It",
+    title: "nex-ON by CozmoBot — Robot Deployment Software",
     description:
-      "A robot-agnostic AI deployment platform. Any robot, any task, directed in plain language. Proven on Omnicron, our autonomous welding cobot.",
+      "Licensed, robot-agnostic AI software. Deploy the robots you already own to any task, directed in plain language. Proven on Omnicron, our autonomous welding cobot.",
     type: "website",
     siteName: "CozmoBot",
   },
   twitter: {
     card: "summary_large_image",
-    title: "nex-ON by CozmoBot — Deploy Any Robot, Just by Talking to It",
+    title: "nex-ON by CozmoBot — Robot Deployment Software",
     description:
-      "A robot-agnostic AI deployment platform. Any robot, any task, directed in plain language.",
+      "Licensed, robot-agnostic AI software. Deploy the robots you already own, directed in plain language.",
   },
 };
 

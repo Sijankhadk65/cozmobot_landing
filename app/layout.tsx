@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Orbitron } from "next/font/google";
+import { JetBrains_Mono, Orbitron } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Menu } from "@/components/Menu";
-import { BrandHome } from "@/components/BrandHome";
-import { ConditionalFooter } from "@/components/ConditionalFooter";
+import { SiteHeader } from "@/components/site/SiteHeader";
 
-// Satoshi carries all text; Geist Mono stays on the instrument-panel readouts;
-// Orbitron is display-only, reserved for the product names via `font-brand`.
+// Satoshi sets everything readable. Orbitron is a display face, reserved for
+// uppercase micro-labels, nav and buttons — never body copy, never a full
+// headline. JetBrains Mono appears only inside the session transcript.
 const satoshi = localFont({
   src: "./fonts/Satoshi-Variable.woff2",
   variable: "--font-satoshi",
@@ -15,49 +14,52 @@ const satoshi = localFont({
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 const orbitron = Orbitron({
   variable: "--font-orbitron",
   subsets: ["latin"],
-  weight: ["700"],
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://cozmobot.com"),
   title: {
-    default: "nex-ON by CozmoBot — Robot Deployment Software. Any Robot, Just by Talking to It",
+    default: "CozmoBot — nex-ON, the embodied OS for any robot",
     // Child pages set a short title; this appends the brand.
     template: "%s · CozmoBot",
   },
   description:
-    "nex-ON is licensed, robot-agnostic AI software for deploying robots you already own. Perception, tooling, and sensor integration let an AI brain put any robot to any task, directed in plain human language. No teach pendant, no CAD programming, no new hardware. Proven on Omnicron, our autonomous welding cobot.",
+    "nex-ON is the embodied OS — a robot-agnostic deployment platform between an AI brain and a robot body. Perception, tooling and motion become modular capabilities an LLM composes on the fly, delivered as an edition built for your industry. Weld OS first. You direct it by talking.",
   keywords: [
-    "robot deployment software",
-    "robot-agnostic platform",
+    "embodied OS",
+    "robot deployment platform",
+    "robot-agnostic software",
     "embodied AI",
     "natural language robotics",
-    "AI robot deployment",
     "autonomous welding",
     "collaborative robots",
     "open-vocabulary vision",
     "humanoid robotics",
   ],
   openGraph: {
-    title: "nex-ON by CozmoBot — Robot Deployment Software",
+    title: "CozmoBot — nex-ON, the embodied OS for any robot",
     description:
-      "Licensed, robot-agnostic AI software. Deploy the robots you already own to any task, directed in plain language. Proven on Omnicron, our autonomous welding cobot.",
+      "The robot-agnostic deployment platform between an AI brain and a robot body. One OS core, a purpose-built edition for every industry — Weld OS first.",
     type: "website",
     siteName: "CozmoBot",
   },
   twitter: {
     card: "summary_large_image",
-    title: "nex-ON by CozmoBot — Robot Deployment Software",
+    title: "CozmoBot — nex-ON, the embodied OS for any robot",
     description:
-      "Licensed, robot-agnostic AI software. Deploy the robots you already own, directed in plain language.",
+      "Deploy any robot to do anything. One OS core, an edition per industry — Weld OS live today.",
   },
 };
 
@@ -69,13 +71,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${satoshi.variable} ${geistMono.variable} ${orbitron.variable} h-full`}
+      className={`${satoshi.variable} ${orbitron.variable} ${jetbrainsMono.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col bg-carbon text-offwhite">
-        <BrandHome />
-        <Menu />
+      <body className="flex min-h-full flex-col overflow-x-hidden">
+        <SiteHeader />
+        {/* Each page carries its own footer variant — full sitemap on the home
+            page, the one-line rule on the inner routes. */}
         {children}
-        <ConditionalFooter />
       </body>
     </html>
   );

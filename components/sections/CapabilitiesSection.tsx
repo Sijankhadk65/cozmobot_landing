@@ -1,92 +1,89 @@
-"use client";
+import Link from "next/link";
 
-import { SectionWrapper } from "../SectionWrapper";
-import { MotionReveal } from "../MotionReveal";
-import { motion } from "framer-motion";
-import {
-  MessagesSquare,
-  Languages,
-  ScanEye,
-  Ruler,
-  Palette,
-  ShieldCheck,
-  Crosshair,
-  Radio,
-  Cpu,
-} from "lucide-react";
-
-// Named, not explained. The list shows the breadth of what runs today; how any
-// of it works belongs in a demo conversation, not on a public page.
 const capabilities = [
-  { icon: MessagesSquare, title: "Conversational Orchestration", highlight: true },
-  { icon: Languages, title: "Multilingual Voice" },
-  { icon: ScanEye, title: "Open-Vocabulary Vision" },
-  { icon: Ruler, title: "Real-World Measurement" },
-  { icon: Palette, title: "Color-Guided Pathing" },
-  { icon: ShieldCheck, title: "Motion Safety" },
-  { icon: Crosshair, title: "Hand-Eye Calibration" },
-  { icon: Radio, title: "Sensor Integration" },
-  { icon: Cpu, title: "On-Site Compute" },
+  {
+    idx: "01",
+    title: "Conversational orchestration",
+    body: "An agentic tool-calling loop chooses when to look, when to move and when to act, then narrates the result in a sentence or two.",
+  },
+  {
+    idx: "02",
+    title: "Voice in and out",
+    body: "Push-to-talk recognition and streamed speech. Replies start speaking after the first sentence, so long answers still feel immediate.",
+  },
+  {
+    idx: "03",
+    title: "Locked multilingual sessions",
+    body: "English, Hindi or German — locked per session so background chatter in another language cannot hijack the robot. Optional barge-in.",
+  },
+  {
+    idx: "04",
+    title: "Open-vocabulary vision",
+    body: "Ask for any object in plain words with no per-class training. The detection backend is a swappable interface.",
+  },
+  {
+    idx: "05",
+    title: "Real-world measurement",
+    body: "Image, aligned depth and camera intrinsics fuse into length, width and distance in millimetres — the physical size of the part.",
+  },
+  {
+    idx: "06",
+    title: "Seam detection and following",
+    body: "Inside an operator-drawn area, a depth-and-image profile scan finds the joint, maps both endpoints into robot coordinates and traces it.",
+  },
+  {
+    idx: "07",
+    title: "Safety by construction",
+    body: "Dry-run rehearsal, deliberate arming of dangerous actions that never persists across restarts, per-axis motion locks, low default speeds.",
+  },
+  {
+    idx: "08",
+    title: "Colour-guided pathing",
+    body: "Detect markers, dots and taped lines by colour, then move to or trace them — including shortest-path multi-target routes.",
+  },
+  {
+    idx: "09",
+    title: "Hand-eye calibration",
+    body: "A calibrated camera-to-robot transform turns the pixel it sees into the exact 3D point to move to.",
+  },
 ];
 
 export function CapabilitiesSection() {
   return (
-    <SectionWrapper id="capabilities">
-      <MotionReveal>
-        <div className="text-center max-w-2xl mx-auto mb-6">
-          <span className="text-xs font-semibold tracking-widest uppercase text-mute">
-            Platform Capabilities
-          </span>
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-offwhite tracking-tight">
-            Everything below
-            <br />
-            is running today
-          </h2>
-        </div>
-      </MotionReveal>
-
-      <MotionReveal delay={0.1}>
-        <div className="flex justify-center mb-16">
-          <div className="inline-flex items-center gap-2 text-xs bg-accent/10 text-accent border border-accent/30 rounded-full px-4 py-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-            Implemented and proven on a real collaborative arm
+    <section id="capabilities" className="border-b border-hair">
+      <div className="shell band">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <div className="eyebrow">05 / shipping today</div>
+            <h2 className="h-section mt-5 max-w-[22ch]">
+              Everything below runs on a real arm right now.
+            </h2>
           </div>
+          <Link
+            href="/platform"
+            className="border-b border-[rgba(140,170,40,0.5)] pb-1 font-brand text-[11.5px] uppercase tracking-[0.07em] text-moss transition-colors hover:border-moss"
+          >
+            Full technical detail →
+          </Link>
         </div>
-      </MotionReveal>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {capabilities.map((c, i) => (
-          <MotionReveal key={c.title} delay={i * 0.05}>
-            <motion.div
-              whileHover={{ y: -4, boxShadow: "0 8px 24px rgba(0,0,0,0.45)" }}
-              transition={{ duration: 0.2 }}
-              className={`relative h-full flex items-center gap-3.5 p-5 rounded-xl border transition-colors duration-200 ${
-                c.highlight
-                  ? "bg-accent text-ink border-accent"
-                  : "bg-graphite border-steel hover:border-accent/40"
-              }`}
+        <div className="grid-hair mt-12 grid grid-cols-[repeat(auto-fit,minmax(265px,1fr))]">
+          {capabilities.map((capability) => (
+            <div
+              key={capability.idx}
+              className="min-h-[190px] bg-mist px-6.5 pb-8.5 pt-7.5 transition-colors hover:bg-hatch"
             >
-              <div
-                className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                  c.highlight ? "bg-ink/10" : "bg-accent/10 border border-accent/20"
-                }`}
-              >
-                <c.icon
-                  className={c.highlight ? "text-ink" : "text-accent"}
-                  size={18}
-                />
+              <div className="font-brand text-[10.5px] tracking-[0.09em] text-body">
+                {capability.idx}
               </div>
-              <h3
-                className={`font-semibold text-sm leading-snug ${
-                  c.highlight ? "text-ink" : "text-offwhite"
-                }`}
-              >
-                {c.title}
-              </h3>
-            </motion.div>
-          </MotionReveal>
-        ))}
+              <div className="mt-4 text-[19px] leading-[1.25]">
+                {capability.title}
+              </div>
+              <p className="copy-sm mt-3">{capability.body}</p>
+            </div>
+          ))}
+        </div>
       </div>
-    </SectionWrapper>
+    </section>
   );
 }

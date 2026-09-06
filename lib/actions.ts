@@ -2,18 +2,11 @@
 
 import { headers } from "next/headers";
 import { allowContactSend } from "./rate-limit";
+import { EDITIONS, ROBOTS } from "./contact-options";
 
-const CONTACT_EMAIL = "info@cozmobot.com";
+const CONTACT_EMAIL = "business@cozmobot.com";
 
-const REASONS = {
-  demo: "Demo request",
-  partnership: "Partnership inquiry",
-  other: "General inquiry",
-} as const;
-
-type Reason = keyof typeof REASONS;
-
-type Field = "name" | "email" | "company" | "reason" | "message";
+type Field = "name" | "email" | "company" | "edition" | "robot" | "task";
 
 export type ContactState = {
   status: "idle" | "success" | "error";
@@ -25,7 +18,7 @@ export type ContactState = {
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const SUCCESS_MESSAGE =
-  "Thanks — your message is on its way. We usually reply within one business day.";
+  "Thanks — we'll be in touch about your task. We reply within two working days.";
 
 function read(formData: FormData, field: Field) {
   const value = formData.get(field);
@@ -51,8 +44,9 @@ export async function submitContact(
     name: read(formData, "name"),
     email: read(formData, "email"),
     company: read(formData, "company"),
-    reason: read(formData, "reason"),
-    message: read(formData, "message"),
+    edition: read(formData, "edition"),
+    robot: read(formData, "robot"),
+    task: read(formData, "task"),
   };
 
   // Bots fill every field they find; the "website" input is hidden from humans.
@@ -72,12 +66,15 @@ export async function submitContact(
 
   if (values.company.length > 100) fieldErrors.company = "That company name is too long.";
 
-  if (!(values.reason in REASONS)) fieldErrors.reason = "Please choose a reason.";
+  if (!(values.edition in EDITIONS))
+    fieldErrors.edition = "Please choose an edition.";
+  if (!(values.robot in ROBOTS))
+    fieldErrors.robot = "Please tell us what's on site.";
 
-  if (values.message.length < 10)
-    fieldErrors.message = "Tell us a little more — at least a sentence.";
-  else if (values.message.length > 2000)
-    fieldErrors.message = "Please keep this under 2000 characters.";
+  if (values.task.length < 10)
+    fieldErrors.task = "Tell us a little more — at least a sentence.";
+  else if (values.task.length > 2000)
+    fieldErrors.task = "Please keep this under 2000 characters.";
 
   if (Object.keys(fieldErrors).length > 0) {
     return {
@@ -93,24 +90,27 @@ export async function submitContact(
   if (!(await allowContactSend(await clientIp()))) {
     return {
       status: "error",
-      message: `You've sent several messages recently. Please email us directly at ${CONTACT_EMAIL}.`,
+      message: `You've sent several requests recently. Please email us directly at ${CONTACT_EMAIL}.`,
       fieldErrors: {},
       values,
     };
   }
 
-  const reason = values.reason as Reason;
+  const edition = EDITIONS[values.edition as keyof typeof EDITIONS];
+  const robot = ROBOTS[values.robot as keyof typeof ROBOTS];
+
   const subject = values.company
-    ? `${REASONS[reason]} — ${values.name} (${values.company})`
-    : `${REASONS[reason]} — ${values.name}`;
+    ? `Pilot request — ${values.name} (${values.company}) · ${edition}`
+    : `Pilot request — ${values.name} · ${edition}`;
 
   const body = [
-    `Reason:  ${REASONS[reason]}`,
+    `Edition: ${edition}`,
+    `Robot:   ${robot}`,
     `Name:    ${values.name}`,
     `Email:   ${values.email}`,
     values.company ? `Company: ${values.company}` : null,
     "",
-    values.message,
+    values.task,
   ]
     .filter((line) => line !== null)
     .join("\n");

@@ -47,3 +47,7 @@ next-env.d.ts
 /.claude
 /.agents
 skills-lock.json
+
+# Camera masters for the home page reel — 160-260MB each, over GitHub's file
+# limit. The web encodes that actually ship live in public/omnicron_video.
+/assets/omnicron_video/Cozmo_*.mp4

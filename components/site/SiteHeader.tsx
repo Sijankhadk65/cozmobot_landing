@@ -8,6 +8,7 @@ import { Logo } from "./Logo";
 const nav = [
   { label: "Editions", href: "/#editions" },
   { label: "Weld OS", href: "/omnicron" },
+  { label: "Companion OS", href: "/companion" },
   { label: "Platform", href: "/platform" },
   { label: "Company", href: "/company" },
   { label: "Contact", href: "/contact" },

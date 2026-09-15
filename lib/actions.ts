@@ -2,11 +2,18 @@
 
 import { headers } from "next/headers";
 import { allowContactSend } from "./rate-limit";
-import { EDITIONS, ROBOTS } from "./contact-options";
+import { EDITIONS, INTENTS, ROBOTS, readIntent } from "./contact-options";
 
 const CONTACT_EMAIL = "business@cozmobot.com";
 
-type Field = "name" | "email" | "company" | "edition" | "robot" | "task";
+type Field =
+  | "intent"
+  | "name"
+  | "email"
+  | "company"
+  | "edition"
+  | "robot"
+  | "task";
 
 export type ContactState = {
   status: "idle" | "success" | "error";
@@ -19,6 +26,9 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const SUCCESS_MESSAGE =
   "Thanks — we'll be in touch about your task. We reply within two working days.";
+
+// A pre-order is always for Orio on Companion OS, so the form doesn't ask.
+const PREORDER_EDITION = EDITIONS.companion;
 
 function read(formData: FormData, field: Field) {
   const value = formData.get(field);
@@ -40,7 +50,11 @@ export async function submitContact(
   _prevState: ContactState,
   formData: FormData,
 ): Promise<ContactState> {
+  const intent = readIntent(read(formData, "intent"));
+  const preorder = intent === "preorder";
+
   const values = {
+    intent,
     name: read(formData, "name"),
     email: read(formData, "email"),
     company: read(formData, "company"),
@@ -66,10 +80,14 @@ export async function submitContact(
 
   if (values.company.length > 100) fieldErrors.company = "That company name is too long.";
 
-  if (!(values.edition in EDITIONS))
-    fieldErrors.edition = "Please choose an edition.";
-  if (!(values.robot in ROBOTS))
-    fieldErrors.robot = "Please tell us what's on site.";
+  // The pre-order form never renders these two, so only a pilot enquiry is
+  // held to them.
+  if (!preorder) {
+    if (!(values.edition in EDITIONS))
+      fieldErrors.edition = "Please choose an edition.";
+    if (!(values.robot in ROBOTS))
+      fieldErrors.robot = "Please tell us what's on site.";
+  }
 
   if (values.task.length < 10)
     fieldErrors.task = "Tell us a little more — at least a sentence.";
@@ -96,16 +114,24 @@ export async function submitContact(
     };
   }
 
-  const edition = EDITIONS[values.edition as keyof typeof EDITIONS];
-  const robot = ROBOTS[values.robot as keyof typeof ROBOTS];
+  const edition = preorder
+    ? PREORDER_EDITION
+    : EDITIONS[values.edition as keyof typeof EDITIONS];
+  const robot = preorder
+    ? null
+    : ROBOTS[values.robot as keyof typeof ROBOTS];
 
-  const subject = values.company
-    ? `Pilot request — ${values.name} (${values.company}) · ${edition}`
-    : `Pilot request — ${values.name} · ${edition}`;
+  const who = values.company ? `${values.name} (${values.company})` : values.name;
+  // Pre-orders are queued against the first-100 price, so they need to be
+  // sortable out of the pilot traffic at a glance.
+  const subject = preorder
+    ? `Orio pre-order — ${who}`
+    : `Pilot request — ${who} · ${edition}`;
 
   const body = [
+    `Intent:  ${INTENTS[intent]}`,
     `Edition: ${edition}`,
-    `Robot:   ${robot}`,
+    robot ? `Robot:   ${robot}` : null,
     `Name:    ${values.name}`,
     `Email:   ${values.email}`,
     values.company ? `Company: ${values.company}` : null,

@@ -12,6 +12,8 @@ const columns = [
     links: [
       { label: "Platform", href: "/platform" },
       { label: "Weld OS", href: "/omnicron" },
+      { label: "Companion OS", href: "/companion" },
+      { label: "Orio pre-order", href: "/contact?intent=preorder" },
       { label: "Editions", href: "/#editions" },
       { label: "Capabilities", href: "/#capabilities" },
     ],

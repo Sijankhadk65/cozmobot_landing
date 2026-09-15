@@ -11,9 +11,11 @@ const weldOsPoints = [
 const editions = [
   {
     name: "Companion OS",
-    trade: "Humanoid robots · service and assistive",
-    status: "In design",
-    body: "The same orchestration on a humanoid body: everyday tasks alongside people — fetching, handing over and tidying — directed conversationally by whoever is in the room.",
+    trade: "Wheeled robots · home, workshop and care",
+    status: "Pre-orders open",
+    open: true,
+    link: { label: "Meet Orio", href: "/companion" },
+    body: "The same orchestration on a wheeled body for everyday life. Orio carries and fetches, goes where you send it, stands watch under your control, and calls for help when something is wrong.",
   },
   {
     name: "MechFab OS",
@@ -99,7 +101,7 @@ export function EditionsSection() {
 
         <div className="mt-14 flex flex-wrap items-baseline justify-between gap-4">
           <div className="font-brand text-[11px] uppercase tracking-[0.06em] text-olive">
-            Next editions · in design
+            The other editions
           </div>
           <div className="meta">
             the platform is built, the domain layer is what we add
@@ -107,22 +109,54 @@ export function EditionsSection() {
         </div>
 
         <div className="grid-hair mt-[18px] flex flex-wrap">
-          {editions.map((edition) => (
-            <div
-              key={edition.name}
-              className="flex min-h-[230px] flex-[1_1_250px] flex-col bg-paper px-6.5 pb-8 pt-7.5 transition-colors hover:bg-hatch"
-            >
-              <div className="tag flex items-center gap-2.5 text-olive">
-                <span className="h-1.5 w-1.5 rounded-full border border-olive" />
-                <span>{edition.status}</span>
+          {editions.map((edition) => {
+            const cell =
+              "flex min-h-[230px] flex-[1_1_250px] flex-col bg-paper px-6.5 pb-8 pt-7.5 transition-colors hover:bg-hatch";
+            const body = (
+              <>
+                {/* Filled dot for an edition you can act on today, hollow for
+                    one that is still only drawn — the same shape the maturity
+                    section uses to draw that line. */}
+                <div
+                  className={`tag flex items-center gap-2.5 ${
+                    edition.open ? "text-moss" : "text-olive"
+                  }`}
+                >
+                  <span
+                    className={`h-1.5 w-1.5 rounded-full ${
+                      edition.open ? "bg-lime" : "border border-olive"
+                    }`}
+                  />
+                  <span>{edition.status}</span>
+                </div>
+                <div className="mt-4.5 text-[26px] leading-[1.1] tracking-[-0.02em]">
+                  {edition.name}
+                </div>
+                <div className="meta mt-2 text-body">{edition.trade}</div>
+                <p className="copy-sm mt-4">{edition.body}</p>
+                {edition.link && (
+                  <span className="tag mt-auto pt-5 text-moss">
+                    {edition.link.label} &rarr;
+                  </span>
+                )}
+              </>
+            );
+
+            // Only the editions with a page of their own become links.
+            return edition.link ? (
+              <Link
+                key={edition.name}
+                href={edition.link.href}
+                className={cell}
+              >
+                {body}
+              </Link>
+            ) : (
+              <div key={edition.name} className={cell}>
+                {body}
               </div>
-              <div className="mt-4.5 text-[26px] leading-[1.1] tracking-[-0.02em]">
-                {edition.name}
-              </div>
-              <div className="meta mt-2 text-body">{edition.trade}</div>
-              <p className="copy-sm mt-4">{edition.body}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

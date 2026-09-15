@@ -1,6 +1,7 @@
 import { HomeHero } from "@/components/sections/HomeHero";
 import { FactsSection } from "@/components/sections/FactsSection";
 import { EditionsSection } from "@/components/sections/EditionsSection";
+import { CompanionSection } from "@/components/sections/CompanionSection";
 import { BottleneckSection } from "@/components/sections/BottleneckSection";
 import { AgentLoopSection } from "@/components/sections/AgentLoopSection";
 import { PlatformLayersSection } from "@/components/sections/PlatformLayersSection";
@@ -20,13 +21,16 @@ import { SiteFooter } from "@/components/site/SiteFooter";
 // works, the three-layer stack, what ships today, the welding proof point,
 // where we sit against everyone else, what is honestly unshipped, and the
 // questions we get asked — then the pilot ask. Who builds it is held back
-// until the real names and portraits land.
+// until the real names and portraits land. Orio rides in unnumbered between
+// the editions and the bottleneck: it's the one thing on this page you can
+// order rather than pilot, and numbering it would shift every section after.
 export default function Home() {
   return (
     <main>
       <HomeHero />
       <FactsSection />
       <EditionsSection />
+      <CompanionSection />
       <BottleneckSection />
       <AgentLoopSection />
       <PlatformLayersSection />

@@ -18,7 +18,7 @@ export type ContactState = {
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const SUCCESS_MESSAGE =
-  "Thanks — we'll be in touch about your task. We reply within two working days.";
+  "Thanks, we'll be in touch about your task. We reply within two working days.";
 
 function read(formData: FormData, field: Field) {
   const value = formData.get(field);
@@ -72,7 +72,7 @@ export async function submitContact(
     fieldErrors.robot = "Please tell us what's on site.";
 
   if (values.task.length < 10)
-    fieldErrors.task = "Tell us a little more — at least a sentence.";
+    fieldErrors.task = "Tell us a little more, at least a sentence.";
   else if (values.task.length > 2000)
     fieldErrors.task = "Please keep this under 2000 characters.";
 
@@ -100,8 +100,8 @@ export async function submitContact(
   const robot = ROBOTS[values.robot as keyof typeof ROBOTS];
 
   const subject = values.company
-    ? `Pilot request — ${values.name} (${values.company}) · ${edition}`
-    : `Pilot request — ${values.name} · ${edition}`;
+    ? `Pilot request: ${values.name} (${values.company}) · ${edition}`
+    : `Pilot request: ${values.name} · ${edition}`;
 
   const body = [
     `Edition: ${edition}`,

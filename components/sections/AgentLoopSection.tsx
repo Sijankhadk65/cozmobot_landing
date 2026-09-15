@@ -2,12 +2,12 @@ const stages = [
   {
     n: "01",
     title: "Perceive",
-    body: 'Ask for any object in plain words — "metal tube", "flange". Depth-fused imagery returns length, width and distance in millimetres.',
+    body: 'Ask for any object in plain words: "metal tube", "flange". Depth-fused imagery returns length, width and distance in millimetres.',
   },
   {
     n: "02",
     title: "Reason",
-    body: "The brain picks the tools: detect, measure, find the seam, check reachability, plan the stroke. Discrete calls you can read — not an opaque policy.",
+    body: "The brain picks the tools: detect, measure, find the seam, check reachability, plan the stroke. Discrete calls you can read, not an opaque policy.",
   },
   {
     n: "03",
@@ -20,9 +20,9 @@ const stages = [
 // reads at a glance without needing a legend.
 const transcript: { who?: string; line: string; tool?: boolean }[] = [
   { who: "operator ▸", line: "weld the seam on this bracket" },
-  { line: 'detect("bracket") — 1 match, 214 × 62 mm @ 480 mm', tool: true },
-  { line: "find_seam(aoi) — joint located, 96 mm run", tool: true },
-  { line: "check_reach(lead_in) — feasible", tool: true },
+  { line: 'detect("bracket"): 1 match, 214 × 62 mm @ 480 mm', tool: true },
+  { line: "find_seam(aoi): joint located, 96 mm run", tool: true },
+  { line: "check_reach(lead_in): feasible", tool: true },
   { line: "weld_pass(dry, weave=triangle, 2 mm pitch)", tool: true },
   {
     who: "nex-ON ▸",
@@ -41,9 +41,10 @@ export function AgentLoopSection() {
           Perceive. Reason. Act. Narrate.
         </h2>
         <p className="copy mt-5 max-w-[62ch]">
-          An LLM runs an agentic tool-calling loop. Mid-conversation it decides
-          when to look through the camera, what to measure, where to move — then
-          reports back out loud in a sentence or two.
+          Our own frontier model handles the orchestration of the body.
+          Mid-conversation it decides when to look through the camera, what to
+          measure, where to move, then reports back out loud in a sentence or
+          two.
         </p>
 
         <div className="mt-14 grid grid-cols-[repeat(auto-fit,minmax(360px,1fr))] items-start gap-12">

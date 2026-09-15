@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-// A slot the design leaves open — team portraits, the diagnostics screenshot.
+// A slot the design leaves open: team portraits, the diagnostics screenshot.
 // Hatched rather than blank so it reads as "nothing here yet" rather than as a
 // broken image, and captioned with what belongs in it.
 export function Hatch({
@@ -65,7 +65,7 @@ export function StatBar({
   );
 }
 
-// The closing panel every page ends on. Lime wash inside a lime hairline —
+// The closing panel every page ends on. Lime wash inside a lime hairline,
 // the only place on the site where a surface is tinted rather than ruled.
 export function PilotCTA({
   eyebrow,

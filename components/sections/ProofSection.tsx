@@ -23,9 +23,9 @@ export function ProofSection() {
               welding.
             </h2>
             <p className="copy mt-6">
-              Welding demands everything at once — sub-millimetre perception,
+              Welding demands everything at once: sub-millimetre perception,
               safe real-world actuation, and non-expert operability. Omnicron is
-              Weld OS — nex-ON driving a collaborative arm: it finds the
+              Weld OS, nex-ON driving a collaborative arm: it finds the
               bare-metal seam inside an operator-drawn area, maps both endpoints
               into robot coordinates, and runs the stroke at a constant
               standoff. Weave patterns are specified the way welders specify

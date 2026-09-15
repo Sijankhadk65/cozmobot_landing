@@ -89,7 +89,7 @@ export function ContactForm() {
 
   // React resets the form after every action. The reset writes each select back
   // to its first option, and because `value` hasn't changed across renders
-  // React won't reconcile it — so a failed Med OS enquiry would come back as
+  // React won't reconcile it, so a failed Med OS enquiry would come back as
   // Weld OS. Restore both once the reset has landed.
   useEffect(() => {
     if (editionRef.current) editionRef.current.value = edition;
@@ -101,7 +101,7 @@ export function ContactForm() {
       <div className="px-[clamp(20px,3vw,32px)] py-[clamp(40px,6vw,64px)] text-center">
         <div className="eyebrow">Request received</div>
         <div className="mx-auto mt-5 max-w-[24ch] text-2xl leading-[1.2]">
-          Thanks — we&rsquo;ll be in touch about your task.
+          Thanks, we&rsquo;ll be in touch about your task.
         </div>
         <p className="copy-sm mx-auto mt-4 max-w-[40ch]">
           If it&rsquo;s urgent, mail us directly at{" "}

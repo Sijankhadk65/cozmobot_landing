@@ -14,7 +14,7 @@ const nav = [
 ];
 
 // A hash link only counts as the current page when we're already on the page
-// it points into — otherwise "Editions" would light up on every route.
+// it points into. Otherwise "Editions" would light up on every route.
 function isCurrent(href: string, pathname: string) {
   const [path] = href.split("#");
   const base = path === "" ? "/" : path;
@@ -106,7 +106,7 @@ export function SiteHeader() {
 
       {open && (
         // The header carries a backdrop-filter, which makes it the containing
-        // block for any fixed descendant — so the panel is positioned against
+        // block for any fixed descendant, so the panel is positioned against
         // the header instead, hung off its bottom edge and filling whatever
         // viewport is left. That also keeps it aligned to the real header
         // height rather than an assumed one.

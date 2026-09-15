@@ -10,9 +10,9 @@ import beadShot from "@/assets/omnicron_welding_images/1.jpeg";
 export const metadata: Metadata = {
   title: "Weld OS",
   description:
-    "Omnicron is Weld OS — nex-ON's welding edition on a collaborative arm. It finds the bare-metal seam, measures the part, rehearses the pass dry, and welds it when you arm the arc. Directed by voice, with no teach pendant and no CAD program.",
+    "Omnicron is Weld OS: nex-ON's welding edition on a collaborative arm. It finds the bare-metal seam, measures the part, rehearses the pass dry, and welds it when you arm the arc. Directed by voice, with no teach pendant and no CAD program.",
   openGraph: {
-    title: "Weld OS — the first nex-ON industry edition",
+    title: "Weld OS · the first nex-ON industry edition",
     description:
       "Just tell it to weld. Seam finding, millimetre measurement, four weave patterns, and an arc that stays dry until you arm it.",
     type: "website",
@@ -51,7 +51,7 @@ const steps = [
   {
     n: "05",
     title: "Rehearse dry",
-    body: "The full pass runs — lead-in, stroke at constant standoff, retract — with nothing energised. Identical motion, no arc.",
+    body: "The full pass runs (lead-in, stroke at constant standoff, retract) with nothing energised. Identical motion, no arc.",
   },
   {
     n: "06",
@@ -70,7 +70,7 @@ const arcGate = [
 const gallery = [
   {
     src: cellShot,
-    alt: "The cell mid-pass — arm on the welding table, operator watching behind a shield",
+    alt: "The cell mid-pass, arm on the welding table, operator watching behind a shield",
     caption: "In the cell",
   },
   {
@@ -101,7 +101,7 @@ export default function OmnicronPage() {
             Omnicron is Weld OS: nex-ON’s welding edition, running on a
             collaborative arm. It finds the bare-metal seam in front of it,
             measures the part, rehearses the pass dry, and welds it when you arm
-            the arc — all directed by voice, with no teach pendant and no CAD
+            the arc, all directed by voice, with no teach pendant and no CAD
             program.
           </p>
 
@@ -174,7 +174,7 @@ export default function OmnicronPage() {
               Rehearse the whole pass with the arc off.
             </h2>
             <p className="mt-5 text-[17.5px] leading-[1.55] text-body text-pretty">
-              A dry weld is not a simulation — it is the real motion with
+              A dry weld is not a simulation: it is the real motion with
               nothing energised. The operator watches the exact pass, then
               decides.
             </p>
@@ -220,7 +220,7 @@ export default function OmnicronPage() {
             ))}
           </div>
           <p className="meta mt-5">
-            Shot on our own floor — no renders, no compositing.
+            Shot on our own floor. No renders, no compositing.
           </p>
         </div>
       </section>

@@ -11,7 +11,7 @@ const architected = [
   "The same orchestration on humanoids and AMRs",
   "Additional end-effectors and sensor classes",
   "Mixed-fleet task assignment",
-  "First-party hardware — near-term roadmap, not today",
+  "First-party hardware: near-term roadmap, not today",
 ];
 
 export function MaturitySection() {
@@ -23,7 +23,7 @@ export function MaturitySection() {
           A working platform, validated on the hardest first task.
         </h2>
 
-        {/* Filled dot for what runs, hollow for what doesn't — the whole
+        {/* Filled dot for what runs, hollow for what doesn't: the whole
             distinction the section exists to make, carried by one shape. */}
         <div className="grid-hair mt-12 grid grid-cols-[repeat(auto-fit,minmax(285px,1fr))]">
           <div className="bg-mist px-7.5 py-8.5">
@@ -53,7 +53,7 @@ export function MaturitySection() {
               ))}
             </ul>
             <p className="mt-5.5 text-[14.5px] leading-[1.5] text-body text-pretty">
-              The modularity is real in the codebase — swappable detector,
+              The modularity is real in the codebase: swappable detector,
               tool-based capabilities, abstracted motion. The additional bodies
               are roadmap, and we say so.
             </p>

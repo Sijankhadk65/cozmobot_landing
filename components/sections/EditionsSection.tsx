@@ -13,13 +13,13 @@ const editions = [
     name: "Companion OS",
     trade: "Humanoid robots · service and assistive",
     status: "In design",
-    body: "The same orchestration on a humanoid body: everyday tasks alongside people — fetching, handing over and tidying — directed conversationally by whoever is in the room.",
+    body: "The same orchestration on a humanoid body: everyday tasks alongside people (fetching, handing over and tidying), directed conversationally by whoever is in the room.",
   },
   {
     name: "MechFab OS",
     trade: "Mechanical fabrication",
     status: "In design",
-    body: "Cutting, drilling, fitting and fastening across high-mix fabrication work — part identification, alignment and force-aware contact.",
+    body: "Cutting, drilling, fitting and fastening across high-mix fabrication work: part identification, alignment and force-aware contact.",
   },
   {
     name: "Med OS",
@@ -45,7 +45,7 @@ export function EditionsSection() {
         </h2>
         <p className="lede mt-6 max-w-[66ch]">
           nex-ON is the horizontal layer. On top of it we build vertical
-          editions — each carrying the vocabulary, tolerances, tooling and
+          editions, each carrying the vocabulary, tolerances, tooling and
           safety interlocks of a specific trade, so an operator in that trade
           can direct a robot in their own words. Every edition inherits the same
           brain, the same tool registry and the same safety model.
@@ -68,8 +68,8 @@ export function EditionsSection() {
             <p className="mt-6 max-w-[46ch] text-[17.5px] leading-[1.55] text-deep text-pretty">
               We proved the platform on the hardest near-term task. Weld OS
               finds the bare-metal seam in front of it, measures the part,
-              rehearses the pass with the arc off, and welds it when you arm it
-              — directed by voice, with no teach pendant and no CAD program.
+              rehearses the pass with the arc off, and welds it when you arm it,
+              directed by voice, with no teach pendant and no CAD program.
             </p>
             <ul className="mt-7 flex flex-col gap-3">
               {weldOsPoints.map((point) => (

@@ -23,7 +23,7 @@ export function Logo({ height = 24 }: { height?: number }) {
   return (
     <Link
       href="/"
-      aria-label="CozmoBot — home"
+      aria-label="CozmoBot home"
       className="flex items-center gap-2.5 text-brandmark"
     >
       <CozmobotMark className="block w-auto shrink-0" height={height} />

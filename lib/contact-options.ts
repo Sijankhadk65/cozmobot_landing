@@ -1,5 +1,5 @@
 // The pilot form asks which edition the task belongs to and what body is
-// already on the floor — both shape whether we can run it dry next week or
+// already on the floor: both shape whether we can run it dry next week or
 // whether it's a roadmap conversation, so they travel with the enquiry rather
 // than being buried in prose.
 //
@@ -7,10 +7,10 @@
 // functions; the form and the action both read the labels from here.
 
 export const EDITIONS = {
-  weld: "Weld OS — live today",
-  companion: "Companion OS — in design",
-  mechfab: "MechFab OS — in design",
-  med: "Med OS — in design",
+  weld: "Weld OS · live today",
+  companion: "Companion OS · in design",
+  mechfab: "MechFab OS · in design",
+  med: "Med OS · in design",
   other: "Something else",
 } as const;
 

@@ -5,9 +5,9 @@ import { SiteFooter } from "@/components/site/SiteFooter";
 export const metadata: Metadata = {
   title: "Request pilot access",
   description:
-    "We deploy nex-ON on a robot you already have, on a task you already run, and you direct it in plain language on day one — starting dry.",
+    "We deploy nex-ON on a robot you already have, on a task you already run, and you direct it in plain language on day one, starting dry.",
   openGraph: {
-    title: "Request pilot access — CozmoBot",
+    title: "Request pilot access · CozmoBot",
     description:
       "Bring us a part. Talk to it. We calibrate on your arm, run the pass dry, and you judge it on time-to-deploy.",
     type: "website",
@@ -24,7 +24,7 @@ const steps = [
   {
     n: "02",
     title: "We calibrate on your arm",
-    body: "Camera to robot base, on the machine you already own — no new hardware purchase.",
+    body: "Camera to robot base, on the machine you already own. No new hardware purchase.",
   },
   {
     n: "03",
@@ -50,7 +50,7 @@ export default function ContactPage() {
             </h1>
             <p className="copy mt-6 max-w-[52ch]">
               We deploy nex-ON on a robot you already have, on a task you
-              already run, and you direct it in plain language on day one —
+              already run, and you direct it in plain language on day one,
               starting dry.
             </p>
 

@@ -21,8 +21,8 @@ const layers = [
     title: "Reasoning",
     body: "Our own frontier model reasons about the goal and orchestrates the body, deciding mid-conversation which capability to call next.",
     detail: [
-      "Claude Opus via LangChain",
-      "agentic multi-tool loop",
+      "first-party reasoning model",
+      "composes registered capabilities",
       "spoken summary per action",
     ],
   },
@@ -117,7 +117,7 @@ const safety = [
 const stack = [
   {
     k: "Orchestration",
-    v: "Claude Opus via LangChain, agentic multi-tool loop",
+    v: "Our own frontier model",
   },
   {
     k: "Voice",

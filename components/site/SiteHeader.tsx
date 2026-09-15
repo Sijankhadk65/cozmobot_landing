@@ -105,15 +105,21 @@ export function SiteHeader() {
       </div>
 
       {open && (
+        // The header carries a backdrop-filter, which makes it the containing
+        // block for any fixed descendant — so the panel is positioned against
+        // the header instead, hung off its bottom edge and filling whatever
+        // viewport is left. That also keeps it aligned to the real header
+        // height rather than an assumed one.
         <div
           id="site-menu"
-          className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto border-t border-hair bg-paper lg:hidden"
+          className="absolute inset-x-0 top-full h-[calc(100dvh-100%)] overflow-y-auto border-t border-hair bg-paper lg:hidden"
         >
           <nav className="flex flex-col border-b border-line-soft">
             {nav.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={() => setOpen(false)}
                 aria-current={isCurrent(link.href, pathname) ? "page" : undefined}
                 className={`border-b border-line-soft px-[clamp(20px,3vw,32px)] py-5 font-brand text-[13px] uppercase tracking-[0.07em] ${
                   isCurrent(link.href, pathname) ? "text-moss" : "text-ink"
@@ -124,7 +130,11 @@ export function SiteHeader() {
             ))}
           </nav>
           <div className="px-[clamp(20px,3vw,32px)] py-8">
-            <Link href="/contact" className="btn-primary w-full">
+            <Link
+              href="/contact"
+              onClick={() => setOpen(false)}
+              className="btn-primary w-full"
+            >
               Request pilot access
             </Link>
             <a

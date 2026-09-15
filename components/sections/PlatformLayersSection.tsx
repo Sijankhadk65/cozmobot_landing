@@ -23,7 +23,7 @@ export function PlatformLayersSection() {
         </h2>
         <p className="copy mt-5 max-w-[62ch]">
           Perception, tooling and control are interfaces rather than fixed
-          implementations. Adding a robot or a skill means registering a tool —
+          implementations. Adding a robot or a skill means registering a tool,
           not rebuilding the system.
         </p>
 
@@ -32,16 +32,16 @@ export function PlatformLayersSection() {
         <div className="mt-14 border border-line">
           <div className="flex flex-wrap items-center justify-between gap-5 border-b border-line p-7.5">
             <div>
-              <div className="label">Layer 01 — the brain</div>
+              <div className="label">Layer 01 · the brain</div>
               <div className="mt-2 text-[22px]">
-                An LLM orchestrator reasons about the goal
+                Our own frontier model reasons about the goal
               </div>
             </div>
-            <div className="meta">agentic tool-calling loop</div>
+            <div className="meta">orchestration of the body</div>
           </div>
 
           <div className="border-b border-line p-7.5">
-            <div className="label text-moss">Layer 02 — nex-ON capabilities</div>
+            <div className="label text-moss">Layer 02 · nex-ON capabilities</div>
             <div className="grid-hair mt-4.5 flex flex-wrap">
               {capabilities.map((capability) => (
                 <div
@@ -58,7 +58,7 @@ export function PlatformLayersSection() {
           </div>
 
           <div className="p-7.5">
-            <div className="label">Layer 03 — the body</div>
+            <div className="label">Layer 03 · the body</div>
             <div className="mt-4.5 flex flex-wrap gap-2.5">
               {bodies.map((body) => (
                 <span

@@ -4,7 +4,7 @@ const capabilities = [
   {
     idx: "01",
     title: "Conversational orchestration",
-    body: "An agentic tool-calling loop chooses when to look, when to move and when to act, then narrates the result in a sentence or two.",
+    body: "Our own frontier model handles the orchestration of the body: choosing when to look, when to move and when to act, then narrating the result in a sentence or two.",
   },
   {
     idx: "02",
@@ -14,7 +14,7 @@ const capabilities = [
   {
     idx: "03",
     title: "Locked multilingual sessions",
-    body: "English, Hindi or German — locked per session so background chatter in another language cannot hijack the robot. Optional barge-in.",
+    body: "English, Hindi or German, locked per session so background chatter in another language cannot hijack the robot. Optional barge-in.",
   },
   {
     idx: "04",
@@ -24,7 +24,7 @@ const capabilities = [
   {
     idx: "05",
     title: "Real-world measurement",
-    body: "Image, aligned depth and camera intrinsics fuse into length, width and distance in millimetres — the physical size of the part.",
+    body: "Image, aligned depth and camera intrinsics fuse into length, width and distance in millimetres: the physical size of the part.",
   },
   {
     idx: "06",
@@ -39,7 +39,7 @@ const capabilities = [
   {
     idx: "08",
     title: "Colour-guided pathing",
-    body: "Detect markers, dots and taped lines by colour, then move to or trace them — including shortest-path multi-target routes.",
+    body: "Detect markers, dots and taped lines by colour, then move to or trace them, including shortest-path multi-target routes.",
   },
   {
     idx: "09",

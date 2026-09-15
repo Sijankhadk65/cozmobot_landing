@@ -7,15 +7,15 @@
 // functions; the form and the action both read the labels from here.
 
 export const INTENTS = {
-  pilot: "Pilot access — nex-ON on a robot you own",
-  preorder: "Orio pre-order — Companion OS",
+  pilot: "Pilot access · nex-ON on a robot you own",
+  preorder: "Orio pre-order · Companion OS",
 } as const;
 
 export const EDITIONS = {
-  weld: "Weld OS — live today",
-  companion: "Companion OS — pre-orders open",
-  mechfab: "MechFab OS — in design",
-  med: "Med OS — in design",
+  weld: "Weld OS · live today",
+  companion: "Companion OS · pre-orders open",
+  mechfab: "MechFab OS · in design",
+  med: "Med OS · in design",
   other: "Something else",
 } as const;
 
@@ -42,7 +42,7 @@ export const ROBOT_OPTIONS = Object.entries(ROBOTS).map(([value, label]) => ({
 }));
 
 // A pre-order is for one robot on one edition, so the form doesn't ask which
-// edition or what's already on the floor — both are implied. Anything that
+// edition or what's already on the floor: both are implied. Anything that
 // isn't a known intent falls back to the pilot ask.
 export function readIntent(value: string | string[] | undefined): Intent {
   return typeof value === "string" && value in INTENTS

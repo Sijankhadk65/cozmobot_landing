@@ -8,9 +8,9 @@ import orioHero from "@/assets/orio_hero_A.png";
 export const metadata: Metadata = {
   title: "Companion OS",
   description:
-    "Companion OS is the nex-ON edition for everyday life, and Orio is the robot it runs on — a wheeled companion that carries things to you, fetches what you ask for, watches the place when you're out and calls for help if something is wrong. Pre-orders open now, delivery from Q1 2028.",
+    "Companion OS is the nex-ON edition for everyday life, and Orio is the robot it runs on: a wheeled companion that carries things to you, fetches what you ask for, watches the place when you're out and calls for help if something is wrong. Pre-orders open now, delivery from Q1 2028.",
   openGraph: {
-    title: "Companion OS — meet Orio",
+    title: "Companion OS · meet Orio",
     description:
       "A wheeled robot that moves things for you, goes places for you, stands watch and calls for help. First 100 pre-orders at €450 a month, shipping Q1 2028.",
     type: "website",
@@ -52,7 +52,7 @@ const jobs = [
   {
     n: "05",
     title: "Stand watch",
-    body: "Take the wheel from anywhere and drive it through the building — a patrol you steer yourself rather than a camera fixed to a wall.",
+    body: "Take the wheel from anywhere and drive it through the building: a patrol you steer yourself rather than a camera fixed to a wall.",
   },
   {
     n: "06",
@@ -74,11 +74,11 @@ const built = [
   "Voice orchestration, in and out, three languages",
   "Open-vocabulary vision with no per-class training",
   "Millimetre measurement from fused depth",
-  "The tool registry an LLM composes capabilities from",
+  "The tool registry our own frontier model composes capabilities from",
 ];
 
 const toCome = [
-  "The wheeled body itself — in development",
+  "The wheeled body itself, in development",
   "Indoor mapping and route memory",
   "Teleoperation and the watch mode",
   "SOS escalation to your own contacts",
@@ -108,7 +108,7 @@ export default function CompanionPage() {
             Companion OS is nex-ON for everyday life, and Orio is the robot it
             runs on. A wheeled body that carries things where you point it,
             fetches what you ask for by name, stands watch when you are out and
-            calls for help when something is wrong — directed the same way
+            calls for help when something is wrong, directed the same way
             everything on this platform is directed: by talking to it.
           </p>
 
@@ -137,10 +137,10 @@ export default function CompanionPage() {
               />
             </div>
             {/* Every photograph elsewhere on this site was shot on our own
-                floor. This one can't be — the body isn't built — so it is
+                floor. This one can't be (the body isn't built) so it is
                 labelled rather than passed off. */}
             <figcaption className="meta border border-t-0 border-line px-5.5 py-3.5">
-              Design render — Orio is in development, not yet a photograph.
+              Design render: Orio is in development, not yet a photograph.
             </figcaption>
           </figure>
           <StatBar items={facts} attached />
@@ -208,7 +208,7 @@ export default function CompanionPage() {
             <p className="mt-5 text-[17.5px] leading-[1.55] text-body text-pretty">
               Say the word and Orio raises an SOS to the contacts you nominate,
               with the room it happened in and a live view they can open. It can
-              also raise one unprompted — a fall it sees, a person who
+              also raise one unprompted: a fall it sees, a person who
               doesn&rsquo;t get up.
             </p>
             <p className="mt-5 text-[17.5px] leading-[1.55] text-body text-pretty">
@@ -253,8 +253,8 @@ export default function CompanionPage() {
               </div>
               <p className="mt-6 max-w-[46ch] text-[17.5px] leading-[1.55] text-deep text-pretty">
                 Pre-ordering holds a build slot and fixes your rate at the
-                founding-hundred price. Nothing is charged today — no deposit,
-                no card — and you can stand down at any point before delivery by
+                founding-hundred price. Nothing is charged today (no deposit,
+                no card) and you can stand down at any point before delivery by
                 replying to us.
               </p>
               <Link
@@ -281,7 +281,7 @@ export default function CompanionPage() {
           </div>
 
           <p className="meta mt-5">
-            Pricing beyond the first hundred is genuinely undecided — we
+            Pricing beyond the first hundred is genuinely undecided, so we
             won&rsquo;t quote a number we might not hold.
           </p>
         </div>
@@ -295,8 +295,8 @@ export default function CompanionPage() {
           </h2>
           <p className="lede mt-6 max-w-[62ch]">
             Companion OS is a new body on a platform that already runs. The
-            orchestration below it — hearing you, finding the thing, planning
-            the motion — is the same code welding steel on a cobot in our cell
+            orchestration below it (hearing you, finding the thing, planning
+            the motion) is the same code welding steel on a cobot in our cell
             today. The wheeled body is not built yet, and the date on this page
             is a target, not a promise we have already kept.
           </p>

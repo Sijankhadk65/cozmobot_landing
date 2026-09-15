@@ -73,10 +73,10 @@ export function HeroReel() {
               poster={`/omnicron_video/${clip.file}-poster.jpg`}
               controls
               playsInline
-              // Nothing but the poster crosses the wire until it is asked for —
-              // three full clips would otherwise land on every home page visit.
+              // Nothing but the poster crosses the wire until it is asked for.
+              // Three full clips would otherwise land on every home page visit.
               preload="none"
-              aria-label={`${clip.label} — ${clip.note}`}
+              aria-label={`${clip.label}: ${clip.note}`}
               onPlay={() => {
                 started.current = true;
               }}

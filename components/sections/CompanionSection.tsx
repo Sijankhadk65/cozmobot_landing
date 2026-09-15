@@ -5,7 +5,7 @@ import orioHero from "@/assets/orio_hero_A.png";
 const jobs = [
   "Carries things where you point it",
   "Fetches what you ask for by name",
-  "Stands watch — drive it yourself from anywhere",
+  "Stands watch, drive it yourself from anywhere",
   "Raises an SOS to the contacts you nominate",
 ];
 

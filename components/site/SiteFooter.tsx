@@ -34,7 +34,7 @@ const columns = [
       { label: PHONE.label, href: PHONE.href },
       { label: "Request pilot access", href: "/contact" },
     ],
-    // Printed under the links rather than as a fourth link — it's where we
+    // Printed under the links rather than as a fourth link: it's where we
     // are, not somewhere to click.
     address: ADDRESS,
   },
@@ -96,7 +96,7 @@ export function SiteFooter({
             </span>
           </Link>
           <p className="mt-3 max-w-[30ch] text-[14.5px] leading-[1.5] text-body">
-            nex-ON — the embodied OS. Any robot, any task, directed in plain
+            nex-ON: the embodied OS. Any robot, any task, directed in plain
             language.
           </p>
         </div>

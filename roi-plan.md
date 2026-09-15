@@ -1,4 +1,4 @@
-# ROI Section — Customer Perspective
+# ROI Section: Customer Perspective
 
 The ROI section must be written entirely from the customer's point of view.
 

@@ -14,9 +14,9 @@ export async function generateMetadata({
     return {
       title: "Pre-order Orio",
       description:
-        "Orio is the first Companion OS robot — it carries, fetches, stands watch and calls for help. The first 100 orders are \u20ac450 a month, delivered from Q1 2028. Nothing is charged at pre-order.",
+        "Orio is the first Companion OS robot: it carries, fetches, stands watch and calls for help. The first 100 orders are \u20ac450 a month, delivered from Q1 2028. Nothing is charged at pre-order.",
       openGraph: {
-        title: "Pre-order Orio — CozmoBot",
+        title: "Pre-order Orio · CozmoBot",
         description:
           "Put your name on the first hundred. \u20ac450 a month, delivery from Q1 2028, nothing charged today.",
         type: "website",
@@ -28,9 +28,9 @@ export async function generateMetadata({
   return {
     title: "Request pilot access",
     description:
-      "We deploy nex-ON on a robot you already have, on a task you already run, and you direct it in plain language on day one — starting dry.",
+      "We deploy nex-ON on a robot you already have, on a task you already run, and you direct it in plain language on day one, starting dry.",
     openGraph: {
-      title: "Request pilot access — CozmoBot",
+      title: "Request pilot access · CozmoBot",
       description:
         "Bring us a part. Talk to it. We calibrate on your arm, run the pass dry, and you judge it on time-to-deploy.",
       type: "website",
@@ -39,8 +39,8 @@ export async function generateMetadata({
   };
 }
 
-// Two asks share this page. `?intent=preorder` — the link every Orio button on
-// the site carries — opens it on the pre-order, and the form itself can switch
+// Two asks share this page. `?intent=preorder` (the link every Orio button on
+// the site carries) opens it on the pre-order, and the form itself can switch
 // between them, so the copy either side of it has to switch too.
 const preorderSteps = [
   {
@@ -74,7 +74,7 @@ const steps = [
   {
     n: "02",
     title: "We calibrate on your arm",
-    body: "Camera to robot base, on the machine you already own — no new hardware purchase.",
+    body: "Camera to robot base, on the machine you already own. No new hardware purchase.",
   },
   {
     n: "03",
@@ -113,8 +113,8 @@ export default async function ContactPage({
             </h1>
             <p className="copy mt-6 max-w-[52ch]">
               {preorder
-                ? "Orio is the first Companion OS robot — it fetches, carries, watches the place when you\u2019re out, and calls for help if something is wrong. Pre-orders are open now for delivery from Q1 2028."
-                : "We deploy nex-ON on a robot you already have, on a task you already run, and you direct it in plain language on day one — starting dry."}
+                ? "Orio is the first Companion OS robot: it fetches, carries, watches the place when you\u2019re out, and calls for help if something is wrong. Pre-orders are open now for delivery from Q1 2028."
+                : "We deploy nex-ON on a robot you already have, on a task you already run, and you direct it in plain language on day one, starting dry."}
             </p>
 
             <div className="mt-10 border border-line">

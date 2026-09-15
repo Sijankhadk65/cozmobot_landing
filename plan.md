@@ -231,19 +231,19 @@ Break down the autonomous pipeline.
 
 Suggested flow:
 
-### Step 1 — Computer Vision
+### Step 1: Computer Vision
 Robot detects seam geometry and workpiece orientation.
 
-### Step 2 — Smart Parameter Prediction
+### Step 2: Smart Parameter Prediction
 AI predicts optimal welding parameters automatically.
 
-### Step 3 — Trajectory Planning
+### Step 3: Trajectory Planning
 Robot generates collision-safe trajectories.
 
-### Step 4 — Seam Optimization
+### Step 4: Seam Optimization
 System continuously adapts and optimizes the weld path.
 
-### Step 5 — Autonomous Execution
+### Step 5: Autonomous Execution
 Zero-code robotic operation.
 
 This section should have:

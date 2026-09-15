@@ -99,12 +99,12 @@ export function ContactForm({
   const robotRef = useRef<HTMLSelectElement>(null);
 
   // A pre-order is for one robot on one edition, so neither question is worth
-  // asking — the server fills both in.
+  // asking: the server fills both in.
   const preorder = intent === "preorder";
 
   // React resets the form after every action. The reset writes each select back
   // to its first option, and because `value` hasn't changed across renders
-  // React won't reconcile it — so a failed Med OS enquiry would come back as
+  // React won't reconcile it, so a failed Med OS enquiry would come back as
   // Weld OS. Restore them once the reset has landed; the two pilot selects are
   // absent from the DOM on a pre-order, hence the ref guards.
   useEffect(() => {
@@ -121,8 +121,8 @@ export function ContactForm({
         </div>
         <div className="mx-auto mt-5 max-w-[24ch] text-2xl leading-[1.2]">
           {preorder
-            ? "Thanks — you're on the list. We'll confirm your place and price."
-            : "Thanks — we'll be in touch about your task."}
+            ? "Thanks, you're on the list. We'll confirm your place and price."
+            : "Thanks, we'll be in touch about your task."}
         </div>
         <p className="copy-sm mx-auto mt-4 max-w-[40ch]">
           If it&rsquo;s urgent, mail us directly at{" "}

@@ -19,15 +19,15 @@ let warned = false;
  * Allows at most five contact sends per IP per hour.
  *
  * Fails open. A contact form that drops real leads because Redis blipped is
- * worse than one that lets a spammer through, so every failure path here —
- * unconfigured, unknown IP, Redis unreachable — returns true.
+ * worse than one that lets a spammer through, so every failure path here
+ * (unconfigured, unknown IP, Redis unreachable) returns true.
  */
 export async function allowContactSend(ip: string | null): Promise<boolean> {
   if (!limiter) {
     if (!warned) {
       warned = true;
       console.warn(
-        "[contact] UPSTASH_REDIS_REST_URL/TOKEN unset — contact form is not rate limited.",
+        "[contact] UPSTASH_REDIS_REST_URL/TOKEN unset. Contact form is not rate limited.",
       );
     }
     return true;

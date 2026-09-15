@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────────────────
-   nex-ON — the embodied OS.
+   nex-ON: the embodied OS.
 
    The whole site is one editorial system: cream paper, olive ink, a single
    lime accent, and hairline rules doing all the dividing. Nothing is rounded
-   and nothing casts a shadow — structure comes from the 1px grid, not from
+   and nothing casts a shadow: structure comes from the 1px grid, not from
    depth. Three faces only: Satoshi sets everything readable, Orbitron is a
    display face reserved for uppercase micro-labels, nav and buttons (never
    body copy, never a full headline), and JetBrains Mono is for the terminal.

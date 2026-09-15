@@ -1,7 +1,7 @@
 const faqs = [
   {
     q: "Do you sell robots?",
-    a: "Not today. nex-ON is software — the layer between an AI brain and a robot body. We run on collaborative arms that already exist, from vendors our customers already buy. First-party hardware is on the near-term roadmap, not in front of you today.",
+    a: "Not today. nex-ON is software: the layer between an AI brain and a robot body. We run on collaborative arms that already exist, from vendors our customers already buy. First-party hardware is on the near-term roadmap, not in front of you today.",
   },
   {
     q: "Which robots does it support right now?",
@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: "What does a pilot look like?",
-    a: "We deploy on a robot you already have, calibrate camera to robot, and run your task conversationally — starting dry. You judge it on time-to-deploy against your current teach-pendant or CAD/CAM route.",
+    a: "We deploy on a robot you already have, calibrate camera to robot, and run your task conversationally, starting dry. You judge it on time-to-deploy against your current teach-pendant or CAD/CAM route.",
   },
   {
     q: "What infrastructure do we need?",

@@ -1,5 +1,5 @@
 // The three things that decide whether the person on the floor can actually
-// direct the robot — stated plainly, before the argument starts. Unnumbered on
+// direct the robot, stated plainly, before the argument starts. Unnumbered on
 // purpose: it answers the hero rather than carrying a movement of its own.
 const facts = [
   {
@@ -28,7 +28,7 @@ export function FactsSection() {
           What it takes to direct it.
         </h2>
         <p className="lede mt-6 max-w-[58ch]">
-          Not what is under the hood — what an operator meets on day one. If any
+          Not what is under the hood, but what an operator meets on day one. If any
           of these three is wrong, nothing else on this page matters.
         </p>
 

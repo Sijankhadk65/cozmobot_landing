@@ -9,8 +9,8 @@ import { CapabilitiesSection } from "@/components/sections/CapabilitiesSection";
 import { ProofSection } from "@/components/sections/ProofSection";
 import { PositioningSection } from "@/components/sections/PositioningSection";
 import { MaturitySection } from "@/components/sections/MaturitySection";
-// The team section is held back until we have real names and portraits —
-// re-enable this import and the <TeamSection /> below to bring it back.
+// The team section is held back until we have real names and portraits.
+// Re-enable this import and the <TeamSection /> below to bring it back.
 // import { TeamSection } from "@/components/sections/TeamSection";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { PilotCTA } from "@/components/site/ui";
@@ -20,7 +20,7 @@ import { SiteFooter } from "@/components/site/SiteFooter";
 // is, the editions built on it, why deployment is the bottleneck, how the loop
 // works, the three-layer stack, what ships today, the welding proof point,
 // where we sit against everyone else, what is honestly unshipped, and the
-// questions we get asked — then the pilot ask. Who builds it is held back
+// questions we get asked, then the pilot ask. Who builds it is held back
 // until the real names and portraits land. Orio rides in unnumbered between
 // the editions and the bottleneck: it's the one thing on this page you can
 // order rather than pilot, and numbering it would shift every section after.

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-// Held back until we have real names and portraits — re-enable this import
+// Held back until we have real names and portraits. Re-enable this import
 // and the <TeamSection /> below to bring it back.
 // import { TeamSection } from "@/components/sections/TeamSection";
 import { PilotCTA } from "@/components/site/ui";
@@ -8,9 +8,9 @@ import { SiteFooter } from "@/components/site/SiteFooter";
 export const metadata: Metadata = {
   title: "Company",
   description:
-    "CozmoBot builds nex-ON, the embodied OS. Our bet is that the constraint on industrial robotics is not the arm — it is the weeks of specialist programming between buying one and getting work out of it.",
+    "CozmoBot builds nex-ON, the embodied OS. Our bet is that the constraint on industrial robotics is not the arm: it is the weeks of specialist programming between buying one and getting work out of it.",
   openGraph: {
-    title: "Company — CozmoBot",
+    title: "Company · CozmoBot",
     description:
       "The robots exist. We make them deployable. How we work, where we are going, and who is building it.",
     type: "website",
@@ -32,7 +32,7 @@ const principles = [
   {
     n: "03",
     title: "Robots you already own",
-    body: "We meet factories where they are — existing arms, existing vendors, existing tasks. No rip-and-replace to get value.",
+    body: "We meet factories where they are: existing arms, existing vendors, existing tasks. No rip-and-replace to get value.",
   },
   {
     n: "04",
@@ -60,7 +60,7 @@ const roadmap = [
   {
     phase: "Later",
     title: "First-party hardware",
-    body: "Purpose-built machines once the software layer is proven across editions. Near-term roadmap — not what we sell today.",
+    body: "Purpose-built machines once the software layer is proven across editions. Near-term roadmap, not what we sell today.",
   },
 ];
 
@@ -75,7 +75,7 @@ export default function CompanyPage() {
           </h1>
           <p className="lede mt-6 max-w-[60ch]">
             CozmoBot builds nex-ON, the embodied OS. Our bet is that the
-            constraint on industrial robotics is not the arm — it is the weeks
+            constraint on industrial robotics is not the arm: it is the weeks
             of specialist programming between buying an arm and getting work out
             of it. We remove that step by letting people talk to the machine.
           </p>

@@ -25,7 +25,7 @@ export type ContactState = {
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const SUCCESS_MESSAGE =
-  "Thanks — we'll be in touch about your task. We reply within two working days.";
+  "Thanks, we'll be in touch about your task. We reply within two working days.";
 
 // A pre-order is always for Orio on Companion OS, so the form doesn't ask.
 const PREORDER_EDITION = EDITIONS.companion;
@@ -90,7 +90,7 @@ export async function submitContact(
   }
 
   if (values.task.length < 10)
-    fieldErrors.task = "Tell us a little more — at least a sentence.";
+    fieldErrors.task = "Tell us a little more, at least a sentence.";
   else if (values.task.length > 2000)
     fieldErrors.task = "Please keep this under 2000 characters.";
 
@@ -125,8 +125,8 @@ export async function submitContact(
   // Pre-orders are queued against the first-100 price, so they need to be
   // sortable out of the pilot traffic at a glance.
   const subject = preorder
-    ? `Orio pre-order — ${who}`
-    : `Pilot request — ${who} · ${edition}`;
+    ? `Orio pre-order: ${who}`
+    : `Pilot request: ${who} · ${edition}`;
 
   const body = [
     `Intent:  ${INTENTS[intent]}`,

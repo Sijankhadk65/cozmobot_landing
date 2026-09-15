@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     "The technical brief for nex-ON: the three-layer architecture between an AI brain and a robot body, the registry of capabilities the brain can call, the safety model, and the stack it is built from.",
   openGraph: {
-    title: "Platform — nex-ON by CozmoBot",
+    title: "Platform · nex-ON by CozmoBot",
     description:
       "Three layers, one contract between them. The tool registry, the safety model and the stack behind the embodied OS.",
     type: "website",
@@ -17,9 +17,9 @@ export const metadata: Metadata = {
 
 const layers = [
   {
-    tag: "Layer 01 — brain",
+    tag: "Layer 01 · brain",
     title: "Reasoning",
-    body: "A large language model reasons about the goal and orchestrates the work, deciding mid-conversation which capability to call next.",
+    body: "Our own frontier model reasons about the goal and orchestrates the body, deciding mid-conversation which capability to call next.",
     detail: [
       "Claude Opus via LangChain",
       "agentic multi-tool loop",
@@ -27,7 +27,7 @@ const layers = [
     ],
   },
   {
-    tag: "Layer 02 — capabilities",
+    tag: "Layer 02 · capabilities",
     title: "Modular tools",
     body: "Vision, measurement, motion, tooling and sensor feeds are swappable tools registered against an interface, not hard wiring.",
     detail: [
@@ -37,7 +37,7 @@ const layers = [
     ],
   },
   {
-    tag: "Layer 03 — body",
+    tag: "Layer 03 · body",
     title: "Any robot",
     body: "Today a collaborative arm. The same orchestration is architected for welding cobots, humanoids, AMRs and mixed fleets.",
     detail: [
@@ -51,17 +51,17 @@ const layers = [
 const tools = [
   {
     cls: "vision",
-    name: "Open-vocabulary detection — ask for any object in plain words, no per-class training",
+    name: "Open-vocabulary detection: ask for any object in plain words, no per-class training",
     status: "Live",
   },
   {
     cls: "vision",
-    name: "Depth-fused dimensioning — length, width and distance in millimetres",
+    name: "Depth-fused dimensioning: length, width and distance in millimetres",
     status: "Live",
   },
   {
     cls: "vision",
-    name: "Seam profiling — depth-and-image scan inside an operator-drawn area of interest",
+    name: "Seam profiling: depth-and-image scan inside an operator-drawn area of interest",
     status: "Live",
   },
   {
@@ -71,12 +71,12 @@ const tools = [
   },
   {
     cls: "motion",
-    name: "Dry-run reachability check — feasibility reported before the arm moves",
+    name: "Dry-run reachability check: feasibility reported before the arm moves",
     status: "Live",
   },
   {
     cls: "motion",
-    name: "Per-axis motion locks — e.g. hold height constant",
+    name: "Per-axis motion locks, e.g. hold height constant",
     status: "Live",
   },
   {
@@ -86,7 +86,7 @@ const tools = [
   },
   {
     cls: "tooling",
-    name: "Colour-guided pathing — markers, dots and taped lines, shortest-path routes",
+    name: "Colour-guided pathing: markers, dots and taped lines, shortest-path routes",
     status: "Live",
   },
   {
@@ -100,14 +100,14 @@ const tools = [
     status: "Live",
   },
   {
-    cls: "—",
+    cls: "mixed",
     name: "Additional end-effectors, sensor classes and robot bodies",
     status: "Architected",
   },
 ];
 
 const safety = [
-  "Welding defaults to a dry pass — motion identical, nothing energised.",
+  "Welding defaults to a dry pass: motion identical, nothing energised.",
   "A live arc must be deliberately armed each session and never persists across a restart.",
   "Reachability is checked as a dry run before any move executes.",
   "Working and positioning speeds are separate, so a fast work speed cannot leak into a jog.",
@@ -139,7 +139,7 @@ const stack = [
   { k: "Runtime", v: "Python, standard USB depth camera and audio" },
 ];
 
-// The engineer's page. The home page argues; this one is checkable — a layer
+// The engineer's page. The home page argues; this one is checkable: a layer
 // diagram, the registry row by row with a live/architected column that doesn't
 // blur, and the stack named part by part for due diligence.
 export default function PlatformPage() {
@@ -155,7 +155,7 @@ export default function PlatformPage() {
             nex-ON turns “understand the goal” into perceive, choose a tool, and
             act. Because perception, tooling and control are interfaces rather
             than fixed implementations, a new robot or a new skill is a
-            registration — not a rebuild.
+            registration, not a rebuild.
           </p>
         </div>
       </section>
@@ -229,7 +229,7 @@ export default function PlatformPage() {
             </h2>
             <p className="mt-5 text-[17.5px] leading-[1.55] text-body text-pretty">
               The safety model is a property of the platform, not of the welding
-              demo — it transfers to any actuated hardware we put underneath it.
+              demo: it transfers to any actuated hardware we put underneath it.
             </p>
             <div className="mt-8 flex flex-col gap-3.5">
               {safety.map((rule) => (
@@ -286,8 +286,8 @@ export default function PlatformPage() {
                 A clean conversation, with the diagnostics behind it.
               </h2>
               <p className="mt-5 text-[17.5px] leading-[1.55] text-body text-pretty">
-                The operator sees only the exchange. Everything else — tool
-                arguments, depth profiles, IK results, arc state — lands in
+                The operator sees only the exchange. Everything else (tool
+                arguments, depth profiles, IK results, arc state) lands in
                 timestamped logs for the engineer.
               </p>
             </div>

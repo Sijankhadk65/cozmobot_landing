@@ -35,10 +35,11 @@ export function HomeHero() {
           </h1>
 
           <p className="lede mt-6 max-w-[56ch]">
-            nex-ON is the embodied OS — a robot-agnostic deployment platform
+            nex-ON is the embodied OS: a robot-agnostic deployment platform
             that sits between an AI brain and a robot body. Perception, tooling
-            and motion become modular capabilities an LLM composes on the fly,
-            delivered as an edition built for your industry — Weld OS first. You
+            and motion become modular capabilities our own frontier model
+            composes on the fly to orchestrate the body,
+            delivered as an edition built for your industry. Weld OS first. You
             direct it by talking.
           </p>
 

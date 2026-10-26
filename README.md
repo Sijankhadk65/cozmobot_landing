@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CozmoBot · nex-ON site
 
-## Getting Started
+The marketing site for nex-ON, CozmoBot's embodied OS, and Weld OS (Omnicron),
+its first industry edition. Live at [cozmobot.com](https://cozmobot.com).
 
-First, run the development server:
+Built with Next.js 16 (App Router), React 19 and Tailwind CSS v4.
+
+> Next.js 16 differs from older versions in places. Check
+> `node_modules/next/dist/docs/` before reaching for an API from memory.
+
+## Getting started
+
+Requires Node 20.19 or newer.
 
 ```bash
+npm install
+cp .env.example .env.local   # optional, see "Contact form" below
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Script          | What it does                     |
+| --------------- | -------------------------------- |
+| `npm run dev`   | Development server               |
+| `npm run build` | Production build                 |
+| `npm run start` | Serve the production build       |
+| `npm run lint`  | ESLint                           |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Routes
 
-## Learn More
+| Path        | Page                                                    |
+| ----------- | ------------------------------------------------------- |
+| `/`         | Home: the full argument in numbered sections, then the pilot ask |
+| `/platform` | Technical brief for the nex-ON platform                 |
+| `/omnicron` | Weld OS, the welding edition                            |
+| `/company`  | Company                                                 |
+| `/contact`  | Pilot request form                                      |
 
-To learn more about Next.js, take a look at the following resources:
+## Layout
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/                  routes, root layout, fonts, globals.css (the design system)
+components/sections/  one file per home-page section
+components/site/      header, footer, logo, shared pieces (PilotCTA, StatBar)
+components/ContactForm.tsx
+lib/actions.ts        contact form server action
+lib/rate-limit.ts     Upstash rate limiter for the form
+lib/contact-options.ts edition and robot choices shared by form and action
+assets/               images imported by pages, logo source files
+public/omnicron_video/ the three home-page reel clips and their posters
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Design system
 
-## Deploy on Vercel
+Everything lives in `app/globals.css`: cream paper, olive ink, a single lime
+accent, and 1px hairline rules doing all the dividing. Nothing is rounded and
+nothing casts a shadow. Three typefaces, each with one job:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Satoshi** for everything readable
+- **Orbitron** for uppercase micro-labels, nav and buttons only
+- **JetBrains Mono** for the session transcript
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Contact form
+
+The `/contact` form posts to a server action that validates input, drops
+honeypot submissions, rate limits by IP and delivers through
+[Resend](https://resend.com) to business@cozmobot.com. Configure it in
+`.env.local`:
+
+| Variable                   | Purpose                                              |
+| -------------------------- | ---------------------------------------------------- |
+| `RESEND_API_KEY`           | Resend API key                                       |
+| `CONTACT_FROM_EMAIL`       | From address on a Resend-verified domain             |
+| `UPSTASH_REDIS_REST_URL`   | Upstash Redis, for the 5-per-IP-per-hour limit       |
+| `UPSTASH_REDIS_REST_TOKEN` | Upstash Redis token                                  |
+
+Without the Resend variables the form still renders and validates, but asks
+visitors to email directly. Without the Upstash variables it sends unlimited
+and logs a warning. The limiter fails open by design: a lost lead costs more
+than a spam message.
+
+## Video
+
+The reel clips in `public/omnicron_video/` are web-weight re-encodes. The raw
+captures (`assets/omnicron_video/Cozmo_*.mp4`) are kept out of git.

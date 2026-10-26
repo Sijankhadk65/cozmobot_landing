@@ -8,11 +8,11 @@ import { SiteFooter } from "@/components/site/SiteFooter";
 export const metadata: Metadata = {
   title: "Company",
   description:
-    "CozmoBot builds nex-ON, the embodied OS. Our bet is that the constraint on industrial robotics is not the arm: it is the weeks of specialist programming between buying one and getting work out of it.",
+    "CozmoBot makes Orio, the companion robot for your home, and nex-ON, the embodied OS it runs on. Our bet is that people shouldn't have to program a robot to get help from it: they should be able to just talk to it.",
   openGraph: {
     title: "Company · CozmoBot",
     description:
-      "The robots exist. We make them deployable. How we work, where we are going, and who is building it.",
+      "The company building Orio. How we work, where we are going, and who is building it.",
     type: "website",
     siteName: "CozmoBot",
   },
@@ -21,46 +21,52 @@ export const metadata: Metadata = {
 const principles = [
   {
     n: "01",
-    title: "Interpretable over impressive",
-    body: "Discrete, inspectable tool calls instead of an opaque policy. If a customer asks why the robot did that, there is an answer in the log.",
+    title: "Talk, don't program",
+    body: "No app to learn and no commands to memorise. If you can say what you want, you can ask Orio for it.",
   },
   {
     n: "02",
-    title: "Dry before live",
-    body: "Anything dangerous is rehearsed with nothing energised and armed deliberately. Safety is a property of the platform, not of a demo.",
+    title: "Interpretable over impressive",
+    body: "Orio works through discrete, inspectable steps instead of an opaque policy. If you ask why it did something, there is an answer we can show you.",
   },
   {
     n: "03",
-    title: "Robots you already own",
-    body: "We meet factories where they are: existing arms, existing vendors, existing tasks. No rip-and-replace to get value.",
+    title: "Approval before features",
+    body: "Anything that sends Orio from one room to another or calls out on your behalf waits for approval before it ships. Until then, it is marked as pending.",
   },
   {
     n: "04",
     title: "Honest about maturity",
-    body: "We separate what runs on a real arm today from what is architected and unshipped, on the site and in the room.",
+    body: "We separate what runs today, what is still being built and what is pending approval, on the site and in every conversation with you.",
   },
 ];
 
+// Keyed by title, not phase: two things are happening "Now".
 const roadmap = [
   {
     phase: "Now",
-    title: "Weld OS in pilots",
-    body: "nex-ON with the welding edition deployed on collaborative arms in high-mix, low-volume shops, judged on time-to-deploy against teach-pendant and CAD/CAM routes.",
+    title: "Building Orio",
+    body: "The software underneath Orio already runs in our lab today. The wheeled body is in development, and which kinds of items it can carry is still being defined.",
   },
   {
-    phase: "Next",
-    title: "More bodies under the same brain",
-    body: "Humanoids and AMRs behind the existing motion abstraction, so a new body is an integration rather than a rebuild.",
+    phase: "Now",
+    title: "nex-ON pilots for business",
+    body: "The same platform deployed on robots businesses already own, running their own tasks.",
+  },
+  {
+    phase: "Pending approval",
+    title: "Moving, watching, calling",
+    body: "Carrying things between rooms, remote driving and the watch mode, and alerts to the contacts you choose are planned. Each ships once it is approved.",
+  },
+  {
+    phase: "From Q1 2028",
+    title: "Orio in your home",
+    body: "Deliveries begin. Pre-orders are open now; nothing is charged at pre-order, and you can cancel any time before delivery.",
   },
   {
     phase: "Then",
-    title: "Companion, MechFab and Med editions",
-    body: "Domain vocabulary, tooling and interlocks per trade on top of the shared core, each starting as a pilot.",
-  },
-  {
-    phase: "Later",
-    title: "First-party hardware",
-    body: "Purpose-built machines once the software layer is proven across editions. Near-term roadmap, not what we sell today.",
+    title: "More bodies, more editions",
+    body: "Humanoids and AMRs behind the same motion abstraction, and MechFab and Med editions on the shared core, each starting as a pilot.",
   },
 ];
 
@@ -71,13 +77,14 @@ export default function CompanyPage() {
         <div className="shell band">
           <div className="eyebrow">Company</div>
           <h1 className="mt-6 max-w-[20ch] text-[clamp(36px,5.2vw,82px)] font-medium leading-[0.99] tracking-[-0.035em]">
-            The robots exist. We make them deployable.
+            Robots you can just talk to.
           </h1>
           <p className="lede mt-6 max-w-[60ch]">
-            CozmoBot builds nex-ON, the embodied OS. Our bet is that the
-            constraint on industrial robotics is not the arm: it is the weeks
-            of specialist programming between buying an arm and getting work out
-            of it. We remove that step by letting people talk to the machine.
+            CozmoBot makes Orio, the companion robot for your home, and nex-ON,
+            the embodied OS it runs on. Our bet is that the hard part of a
+            robot was never the machine: it was the programming between owning
+            one and getting any help out of it. We remove that step by letting
+            people talk to it.
           </p>
         </div>
       </section>
@@ -111,13 +118,13 @@ export default function CompanyPage() {
         <div className="shell band-sm">
           <div className="eyebrow">02 / where we are going</div>
           <h2 className="h-sub mt-4.5 max-w-[24ch]">
-            Software first. Editions next. Hardware after that.
+            Building Orio, on software that already runs.
           </h2>
           <div className="mt-11 border border-line">
             {roadmap.map((phase) => (
               <div
-                key={phase.phase}
-                className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-x-7 gap-y-2 border-b border-line-soft px-[clamp(20px,3vw,28px)] py-6.5 last:border-b-0"
+                key={phase.title}
+                className="grid grid-cols-[repeat(auto-fit,minmax(min(280px,100%),1fr))] gap-x-7 gap-y-2 border-b border-line-soft px-[clamp(20px,3vw,28px)] py-6.5 last:border-b-0"
               >
                 <div>
                   <div className="tag">{phase.phase}</div>
@@ -132,9 +139,9 @@ export default function CompanyPage() {
             ))}
           </div>
           <p className="mt-5.5 max-w-[62ch] text-[15px] leading-[1.55] text-body text-pretty">
-            We are explicit about the line between what runs today and what is
-            architected but unshipped. Investors and customers both deserve to
-            know which is which.
+            We are explicit about the line between what runs today, what is
+            still being built and what is pending approval. Anyone putting
+            their name on an Orio deserves to know which is which.
           </p>
         </div>
       </section>
@@ -142,8 +149,9 @@ export default function CompanyPage() {
       {/* <TeamSection eyebrow="03 / team" tinted /> */}
 
       <PilotCTA
-        heading="Talk to us about a pilot."
-        secondary={{ label: "Platform brief", href: "/platform" }}
+        heading="Put your name on an Orio."
+        copy="Or, if you run robots at work, ask us about a nex-ON pilot."
+        secondary={{ label: "Pilot programme", href: "/contact?intent=pilot" }}
       />
       <SiteFooter />
     </main>

@@ -26,7 +26,7 @@ export function TeamSection({
           Built by the people running it on the shop floor.
         </h2>
 
-        <div className="mt-12 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-6">
+        <div className="mt-12 grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] gap-6">
           {team.map((member, i) => (
             <div key={i}>
               <Hatch ratio="4 / 5" label="[ portrait ]" align="end" />

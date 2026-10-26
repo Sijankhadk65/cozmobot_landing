@@ -1,36 +1,40 @@
 const faqs = [
   {
-    q: "Do you sell robots?",
-    a: "Not today. nex-ON is software: the layer between an AI brain and a robot body. We run on collaborative arms that already exist, from vendors our customers already buy. First-party hardware is on the near-term roadmap, not in front of you today.",
+    q: "When can I get one?",
+    a: "Delivery is planned from Q1 2028. Orio is in development today: the software it runs already works in our lab, and the wheeled body is being built now. Pre-ordering holds your place in the queue.",
   },
   {
-    q: "Which robots does it support right now?",
-    a: "It is live on a Fairino collaborative arm via a vendored SDK, with linear and joint motion, IK reachability checks and torch-down orientation solving. Motion is abstracted behind an interface, which is what makes the next body an integration rather than a rebuild.",
+    q: "What does it cost?",
+    a: "We haven't announced a price yet, and we won't quote one we might not hold. A pre-order costs nothing: no deposit and no card. You'll know the price before anything is due.",
   },
   {
-    q: "Is this a learned end-to-end policy?",
-    a: "No. The brain reasons, then calls discrete, inspectable tools with safety gates and dry runs between them. That is deliberately more interpretable and controllable than an opaque neural controller.",
+    q: "What can it carry?",
+    a: "We're still defining which kinds of items Orio will carry, and we'd rather not list examples until that's settled. Carrying things from one room to another is also pending approval.",
   },
   {
-    q: "How is welding made safe?",
-    a: "Welding defaults to a dry pass: the motion is identical but nothing is energised. A live arc must be deliberately armed each session and never carries over a restart. Speeds default low, and any move can be reachability-checked before the arm moves.",
+    q: "Can I change my mind?",
+    a: "Yes. You can cancel a pre-order any time before delivery by replying to any of our emails.",
   },
   {
-    q: "What does a pilot look like?",
-    a: "We deploy on a robot you already have, calibrate camera to robot, and run your task conversationally, starting dry. You judge it on time-to-deploy against your current teach-pendant or CAD/CAM route.",
+    q: "Which languages does it understand?",
+    a: "English, Hindi and German. Each conversation is locked to one language, so a television or a conversation in another language in the room can't send it off on an errand.",
   },
   {
-    q: "What infrastructure do we need?",
-    a: "Python, a standard USB depth camera, a mic and speakers, and a computer to run it on. No training pipeline, no cloud dependency for motion.",
+    q: "Is it a medical alarm?",
+    a: "No. Alerting the people you choose, when you ask or when it sees a fall, is planned and pending approval. Even then, Orio is not a monitored alarm service and does not replace one.",
+  },
+  {
+    q: "Who makes it?",
+    a: "CozmoBot, in Wiesbaden. Orio runs nex-ON, the same software we deploy on robots in industry, with an edition built for the home.",
   },
 ];
 
 export function FaqSection() {
   return (
     <section id="faq" className="border-b border-hair">
-      <div className="shell band grid grid-cols-[repeat(auto-fit,minmax(330px,1fr))] items-start gap-14">
+      <div className="shell band grid grid-cols-[repeat(auto-fit,minmax(min(330px,100%),1fr))] items-start gap-14">
         <div>
-          <div className="eyebrow">09 / questions</div>
+          <div className="eyebrow">07 / questions</div>
           <h2 className="mt-5 text-[clamp(28px,3vw,42px)] font-medium leading-[1.05] tracking-[-0.03em]">
             The ones we get asked most.
           </h2>

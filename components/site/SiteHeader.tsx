@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 
 const nav = [
-  { label: "Editions", href: "/#editions" },
-  { label: "Weld OS", href: "/omnicron" },
+  { label: "Orio", href: "/#orio" },
   { label: "Platform", href: "/platform" },
   { label: "Company", href: "/company" },
   { label: "Contact", href: "/contact" },
@@ -70,8 +69,8 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <Link href="/contact" className="btn-outline hidden lg:inline-flex">
-          Request pilot access
+        <Link href="/contact?intent=preorder" className="btn-outline hidden lg:inline-flex">
+          Pre-order Orio
         </Link>
 
         {/* Below lg the five nav items plus the CTA can't share a row without
@@ -131,11 +130,11 @@ export function SiteHeader() {
           </nav>
           <div className="px-[clamp(20px,3vw,32px)] py-8">
             <Link
-              href="/contact"
+              href="/contact?intent=preorder"
               onClick={() => setOpen(false)}
               className="btn-primary w-full"
             >
-              Request pilot access
+              Pre-order Orio
             </Link>
             <a
               href="mailto:business@cozmobot.com"

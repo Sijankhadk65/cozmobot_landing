@@ -8,21 +8,19 @@ const ADDRESS = ["Goebenstrasse 31", "65195 Wiesbaden"];
 
 const columns = [
   {
-    heading: "Product",
+    heading: "Orio",
     links: [
-      { label: "Platform", href: "/platform" },
-      { label: "Weld OS", href: "/omnicron" },
-      { label: "Editions", href: "/#editions" },
-      { label: "Capabilities", href: "/#capabilities" },
+      { label: "What it does", href: "/#what-it-does" },
+      { label: "Pre-order", href: "/contact?intent=preorder" },
+      { label: "FAQ", href: "/#faq" },
     ],
   },
   {
     heading: "Company",
     links: [
       { label: "Company", href: "/company" },
-      { label: "Positioning", href: "/#position" },
-      { label: "Maturity", href: "/#maturity" },
-      { label: "FAQ", href: "/#faq" },
+      { label: "Platform", href: "/platform" },
+      { label: "Pilot programme", href: "/contact?intent=pilot" },
     ],
   },
   {
@@ -30,7 +28,7 @@ const columns = [
     links: [
       { label: EMAIL, href: `mailto:${EMAIL}` },
       { label: PHONE.label, href: PHONE.href },
-      { label: "Request pilot access", href: "/contact" },
+      { label: "Pre-order Orio", href: "/contact?intent=preorder" },
     ],
     // Printed under the links rather than as a fourth link: it's where we
     // are, not somewhere to click.
@@ -38,7 +36,7 @@ const columns = [
   },
 ];
 
-const STANCE = "Software today · hardware on the roadmap";
+const STANCE = "Orio · delivery from Q1 2028";
 
 // The home page closes on the full sitemap; the inner routes get the one-line
 // rule so the CTA above them stays the last thing with any weight.
@@ -85,7 +83,7 @@ export function SiteFooter({
 
   return (
     <footer className="border-t border-hair">
-      <div className="shell grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-10 py-14">
+      <div className="shell grid grid-cols-[repeat(auto-fit,minmax(min(210px,100%),1fr))] gap-10 py-14">
         <div>
           <Link href="/" className="flex items-center gap-2.5 text-brandmark">
             <CozmobotMark className="block w-auto shrink-0" height={26} />
@@ -94,8 +92,8 @@ export function SiteFooter({
             </span>
           </Link>
           <p className="mt-3 max-w-[30ch] text-[14.5px] leading-[1.5] text-body">
-            nex-ON: the embodied OS. Any robot, any task, directed in plain
-            language.
+            Orio, the companion robot for your home. Built on nex-ON, our
+            embodied OS.
           </p>
         </div>
 

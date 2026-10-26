@@ -31,35 +31,35 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://cozmobot.com"),
   title: {
-    default: "CozmoBot · nex-ON, the embodied OS for any robot",
+    default: "CozmoBot · Orio, the companion robot for your home",
     // Child pages set a short title; this appends the brand.
     template: "%s · CozmoBot",
   },
   description:
-    "nex-ON is the embodied OS: a robot-agnostic deployment platform between an AI brain and a robot body. Perception, tooling and motion become modular capabilities our own frontier model composes on the fly to orchestrate the body, delivered as an edition built for your industry. Weld OS first. You direct it by talking.",
+    "Orio is the companion robot for your home. You just talk to it, and it finds things by name. Pre-orders open, delivery from Q1 2028, nothing charged today.",
   keywords: [
+    "companion robot",
+    "home robot",
+    "Orio",
     "embodied OS",
-    "robot deployment platform",
     "robot-agnostic software",
     "embodied AI",
     "natural language robotics",
-    "autonomous welding",
-    "collaborative robots",
+    "home assistant robot",
     "open-vocabulary vision",
-    "humanoid robotics",
   ],
   openGraph: {
-    title: "CozmoBot · nex-ON, the embodied OS for any robot",
+    title: "CozmoBot · Orio, the companion robot for your home",
     description:
-      "The robot-agnostic deployment platform between an AI brain and a robot body. One OS core, a purpose-built edition for every industry. Weld OS first.",
+      "A companion robot you just talk to. Pre-orders open, delivery from Q1 2028, nothing charged today.",
     type: "website",
     siteName: "CozmoBot",
   },
   twitter: {
     card: "summary_large_image",
-    title: "CozmoBot · nex-ON, the embodied OS for any robot",
+    title: "CozmoBot · Orio, the companion robot for your home",
     description:
-      "Deploy any robot to do anything. One OS core, an edition per industry. Weld OS live today.",
+      "A companion robot you just talk to. Pre-orders open, nothing charged today.",
   },
 };
 

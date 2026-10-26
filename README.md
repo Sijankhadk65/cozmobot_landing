@@ -1,7 +1,7 @@
 # CozmoBot · nex-ON site
 
-The marketing site for nex-ON, CozmoBot's embodied OS, and Weld OS (Omnicron),
-its first industry edition. Live at [cozmobot.com](https://cozmobot.com).
+The site for Orio, CozmoBot's companion robot for the home, and nex-ON, the
+embodied OS it runs on. Live at [cozmobot.com](https://cozmobot.com).
 
 Built with Next.js 16 (App Router), React 19 and Tailwind CSS v4.
 
@@ -31,24 +31,24 @@ Open [http://localhost:3000](http://localhost:3000).
 
 | Path        | Page                                                    |
 | ----------- | ------------------------------------------------------- |
-| `/`         | Home: the full argument in numbered sections, then the pilot ask |
+| `/`         | Orio: what it does, keep watch and SOS, pre-order, FAQ  |
 | `/platform` | Technical brief for the nex-ON platform                 |
-| `/omnicron` | Weld OS, the welding edition                            |
 | `/company`  | Company                                                 |
-| `/contact`  | Pilot request form                                      |
+| `/contact`  | Orio pre-order; `?intent=pilot` for the business pilot  |
+
+`/omnicron` (the old Weld OS page) permanently redirects to `/platform`.
 
 ## Layout
 
 ```
 app/                  routes, root layout, fonts, globals.css (the design system)
-components/sections/  one file per home-page section
+components/sections/  one file per home-page section (Orio*, PoweredBy, Faq)
 components/site/      header, footer, logo, shared pieces (PilotCTA, StatBar)
 components/ContactForm.tsx
 lib/actions.ts        contact form server action
 lib/rate-limit.ts     Upstash rate limiter for the form
 lib/contact-options.ts edition and robot choices shared by form and action
 assets/               images imported by pages, logo source files
-public/omnicron_video/ the three home-page reel clips and their posters
 ```
 
 ## Design system
@@ -63,8 +63,9 @@ nothing casts a shadow. Three typefaces, each with one job:
 
 ## Contact form
 
-The `/contact` form posts to a server action that validates input, drops
-honeypot submissions, rate limits by IP and delivers through
+The `/contact` form serves two asks: an Orio pre-order (the default) and a
+business pilot request (`?intent=pilot`). It posts to a server action that
+validates input, drops honeypot submissions, rate limits by IP and delivers through
 [Resend](https://resend.com) to business@cozmobot.com. Configure it in
 `.env.local`:
 
@@ -79,8 +80,3 @@ Without the Resend variables the form still renders and validates, but asks
 visitors to email directly. Without the Upstash variables it sends unlimited
 and logs a warning. The limiter fails open by design: a lost lead costs more
 than a spam message.
-
-## Video
-
-The reel clips in `public/omnicron_video/` are web-weight re-encodes. The raw
-captures (`assets/omnicron_video/Cozmo_*.mp4`) are kept out of git.

@@ -37,6 +37,18 @@ export function Hatch({
   );
 }
 
+// Marks an Orio feature that is planned but not yet approved. Dashed like the
+// roadmap chips elsewhere, so it reads as "not settled" next to solid claims.
+export function PendingTag({ className = "" }: { className?: string }) {
+  return (
+    <span
+      className={`inline-flex items-center border border-dashed border-[rgba(61,74,21,0.35)] px-2 py-1 font-brand text-[9.5px] uppercase tracking-[0.08em] text-olive ${className}`}
+    >
+      Pending approval
+    </span>
+  );
+}
+
 // The strip of headline facts that hangs off the bottom of a hero image.
 // `attached` drops its top border so it butts against the frame above.
 export function StatBar({
@@ -67,16 +79,21 @@ export function StatBar({
 
 // The closing panel every page ends on. Lime wash inside a lime hairline,
 // the only place on the site where a surface is tinted rather than ruled.
+// The Orio pre-order leads by default; the platform pages pass the pilot ask.
+const PREORDER = { label: "Pre-order Orio", href: "/contact?intent=preorder" };
+
 export function PilotCTA({
   eyebrow,
   heading,
   copy,
+  primary = PREORDER,
   secondary,
   id = "pilot",
 }: {
   eyebrow?: string;
   heading: string;
   copy?: string;
+  primary?: { label: string; href: string };
   secondary: { label: string; href: string };
   id?: string;
 }) {
@@ -92,8 +109,8 @@ export function PilotCTA({
             <p className="copy mx-auto mt-6 max-w-[54ch]">{copy}</p>
           )}
           <div className="mt-9 flex flex-wrap justify-center gap-3">
-            <Link href="/contact" className="btn-primary px-7 py-[15px]">
-              Request pilot access
+            <Link href={primary.href} className="btn-primary px-7 py-[15px]">
+              {primary.label}
             </Link>
             <Link href={secondary.href} className="btn-ghost px-7 py-[15px]">
               {secondary.label}

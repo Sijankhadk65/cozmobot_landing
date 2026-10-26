@@ -39,9 +39,9 @@ const layers = [
   {
     tag: "Layer 03 · body",
     title: "Any robot",
-    body: "Today a collaborative arm. The same orchestration is architected for welding cobots, humanoids, AMRs and mixed fleets.",
+    body: "Next comes Orio, our wheeled companion robot for the home. The same orchestration is architected for humanoids, AMRs and mixed fleets.",
     detail: [
-      "live: collaborative arm",
+      "next: Orio, wheeled",
       "roadmap: humanoid · AMR",
       "new body = integration",
     ],
@@ -60,29 +60,19 @@ const tools = [
     status: "Live",
   },
   {
-    cls: "vision",
-    name: "Seam profiling: depth-and-image scan inside an operator-drawn area of interest",
-    status: "Live",
-  },
-  {
     cls: "motion",
     name: "Linear and joint motion with separate working and positioning speeds",
     status: "Live",
   },
   {
     cls: "motion",
-    name: "Dry-run reachability check: feasibility reported before the arm moves",
+    name: "Dry-run reachability check: feasibility reported before the robot moves",
     status: "Live",
   },
   {
     cls: "motion",
     name: "Per-axis motion locks, e.g. hold height constant",
     status: "Live",
-  },
-  {
-    cls: "tooling",
-    name: "Arc welding pass with weave: triangle, sine, circular, vertical",
-    status: "Live · gated",
   },
   {
     cls: "tooling",
@@ -107,8 +97,8 @@ const tools = [
 ];
 
 const safety = [
-  "Welding defaults to a dry pass: motion identical, nothing energised.",
-  "A live arc must be deliberately armed each session and never persists across a restart.",
+  "Dangerous actions default to a dry run: motion identical, nothing energised.",
+  "A live action must be deliberately armed each session and never persists across a restart.",
   "Reachability is checked as a dry run before any move executes.",
   "Working and positioning speeds are separate, so a fast work speed cannot leak into a jog.",
   "Speeds default low; per-axis locks constrain what the robot is allowed to change.",
@@ -127,10 +117,10 @@ const stack = [
     k: "Vision",
     v: "Orbbec Gemini 336L RGB-D; Grounding DINO open-vocabulary detection, swappable",
   },
-  { k: "Geometry", v: "Depth + PCA dimensioning, RGB+depth seam profiling" },
+  { k: "Geometry", v: "Depth + PCA dimensioning" },
   {
     k: "Robotics",
-    v: "Fairino collaborative arm via vendored SDK; IK reachability, torch-down orientation solving",
+    v: "Motion abstracted behind one interface; IK reachability",
   },
   {
     k: "Calibration",
@@ -157,6 +147,12 @@ export default function PlatformPage() {
             than fixed implementations, a new robot or a new skill is a
             registration, not a rebuild.
           </p>
+          <Hatch
+            ratio="16 / 7"
+            label="[ nex-ON at work ]"
+            note="the lab: a spoken instruction, the robot acting on it, the log behind"
+            className="mt-12"
+          />
         </div>
       </section>
 
@@ -166,7 +162,7 @@ export default function PlatformPage() {
           <h2 className="h-sub mb-11 mt-4.5">
             Three layers, one contract between them.
           </h2>
-          <div className="grid-hair grid grid-cols-[repeat(auto-fit,minmax(265px,1fr))]">
+          <div className="grid-hair grid grid-cols-[repeat(auto-fit,minmax(min(265px,100%),1fr))]">
             {layers.map((layer) => (
               <div key={layer.tag} className="bg-mist px-7 pb-9 pt-8">
                 <div className="tag text-moss">{layer.tag}</div>
@@ -221,15 +217,15 @@ export default function PlatformPage() {
       </section>
 
       <section className="border-b border-hair">
-        <div className="shell band-sm grid grid-cols-[repeat(auto-fit,minmax(360px,1fr))] items-start gap-14">
+        <div className="shell band-sm grid grid-cols-[repeat(auto-fit,minmax(min(360px,100%),1fr))] items-start gap-14">
           <div>
             <div className="eyebrow">03 / safety model</div>
             <h2 className="h-sub mt-4.5">
               Dangerous by exception, never by default.
             </h2>
             <p className="mt-5 text-[17.5px] leading-[1.55] text-body text-pretty">
-              The safety model is a property of the platform, not of the welding
-              demo: it transfers to any actuated hardware we put underneath it.
+              The safety model is a property of the platform, not of any one
+              task: it transfers to any actuated hardware we put underneath it.
             </p>
             <div className="mt-8 flex flex-col gap-3.5">
               {safety.map((rule) => (
@@ -280,14 +276,14 @@ export default function PlatformPage() {
       <section className="border-b border-hair">
         <div className="shell band-sm">
           <div className="eyebrow">05 / operator runtime</div>
-          <div className="mt-4.5 grid grid-cols-[repeat(auto-fit,minmax(360px,1fr))] items-center gap-12">
+          <div className="mt-4.5 grid grid-cols-[repeat(auto-fit,minmax(min(360px,100%),1fr))] items-center gap-12">
             <div>
               <h2 className="h-sub">
                 A clean conversation, with the diagnostics behind it.
               </h2>
               <p className="mt-5 text-[17.5px] leading-[1.55] text-body text-pretty">
                 The operator sees only the exchange. Everything else (tool
-                arguments, depth profiles, IK results, arc state) lands in
+                arguments, depth readings, IK results, arming state) lands in
                 timestamped logs for the engineer.
               </p>
             </div>
@@ -302,7 +298,8 @@ export default function PlatformPage() {
 
       <PilotCTA
         heading="Put it on a robot you already own."
-        secondary={{ label: "See Weld OS", href: "/omnicron" }}
+        primary={{ label: "Request pilot access", href: "/contact?intent=pilot" }}
+        secondary={{ label: "Meet Orio", href: "/" }}
       />
       <SiteFooter />
     </main>

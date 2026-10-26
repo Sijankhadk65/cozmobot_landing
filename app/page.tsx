@@ -1,46 +1,34 @@
-import { HomeHero } from "@/components/sections/HomeHero";
-import { FactsSection } from "@/components/sections/FactsSection";
-import { EditionsSection } from "@/components/sections/EditionsSection";
-import { BottleneckSection } from "@/components/sections/BottleneckSection";
-import { AgentLoopSection } from "@/components/sections/AgentLoopSection";
-import { PlatformLayersSection } from "@/components/sections/PlatformLayersSection";
-import { CapabilitiesSection } from "@/components/sections/CapabilitiesSection";
-import { ProofSection } from "@/components/sections/ProofSection";
-import { PositioningSection } from "@/components/sections/PositioningSection";
-import { MaturitySection } from "@/components/sections/MaturitySection";
-// The team section is held back until we have real names and portraits.
-// Re-enable this import and the <TeamSection /> below to bring it back.
-// import { TeamSection } from "@/components/sections/TeamSection";
+import { OrioHero } from "@/components/sections/OrioHero";
+import { OrioJobsSection } from "@/components/sections/OrioJobsSection";
+import { OrioFeaturesSection } from "@/components/sections/OrioFeaturesSection";
+import { OrioWatchSection } from "@/components/sections/OrioWatchSection";
+import { OrioPreorderSection } from "@/components/sections/OrioPreorderSection";
+import { PoweredBySection } from "@/components/sections/PoweredBySection";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { PilotCTA } from "@/components/site/ui";
 import { SiteFooter } from "@/components/site/SiteFooter";
 
-// The home page runs the full argument in nine numbered movements: what nex-ON
-// is, the editions built on it, why deployment is the bottleneck, how the loop
-// works, the three-layer stack, what ships today, the welding proof point,
-// where we sit against everyone else, what is honestly unshipped, and the
-// questions we get asked, then the pilot ask. Who builds it is held back
-// until the real names and portraits land.
+// The home page is Orio's: what it does, the basics up close on the
+// prototype, standing in for you when you're out, how the pre-order works,
+// the software underneath and what is honestly still being built, then the
+// questions people ask before they put their name down.
+// The platform argument for industry lives on /platform.
 export default function Home() {
   return (
     <main>
-      <HomeHero />
-      <FactsSection />
-      <EditionsSection />
-      <BottleneckSection />
-      <AgentLoopSection />
-      <PlatformLayersSection />
-      <CapabilitiesSection />
-      <ProofSection />
-      <PositioningSection />
-      <MaturitySection />
-      {/* <TeamSection eyebrow="09 / team" /> */}
+      <OrioHero />
+      <OrioJobsSection />
+      <OrioFeaturesSection />
+      <OrioWatchSection />
+      <OrioPreorderSection />
+      <PoweredBySection />
       <FaqSection />
       <PilotCTA
-        eyebrow="Pilot programme · limited slots"
-        heading="Bring us a part. Talk to it."
-        copy="We deploy nex-ON on a robot you already have, on a task you already run, and you direct it in plain language on day one."
-        secondary={{ label: "Read the technical brief", href: "/platform" }}
+        eyebrow="Pre-orders open · delivery from Q1 2028"
+        heading="Put your name on one."
+        copy="Nothing is charged today, and you can cancel any time before delivery."
+        secondary={{ label: "How the platform works", href: "/platform" }}
+        id="preorder"
       />
       <SiteFooter variant="full" />
     </main>

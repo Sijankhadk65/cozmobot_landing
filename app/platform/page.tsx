@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Hatch, PilotCTA } from "@/components/site/ui";
+import { PilotCTA } from "@/components/site/ui";
 import { SiteFooter } from "@/components/site/SiteFooter";
 
 export const metadata: Metadata = {
@@ -147,12 +147,6 @@ export default function PlatformPage() {
             than fixed implementations, a new robot or a new skill is a
             registration, not a rebuild.
           </p>
-          <Hatch
-            ratio="16 / 7"
-            label="[ nex-ON at work ]"
-            note="the lab: a spoken instruction, the robot acting on it, the log behind"
-            className="mt-12"
-          />
         </div>
       </section>
 
@@ -276,7 +270,7 @@ export default function PlatformPage() {
       <section className="border-b border-hair">
         <div className="shell band-sm">
           <div className="eyebrow">05 / operator runtime</div>
-          <div className="mt-4.5 grid grid-cols-[repeat(auto-fit,minmax(min(360px,100%),1fr))] items-center gap-12">
+          <div className="mt-4.5 max-w-[62ch]">
             <div>
               <h2 className="h-sub">
                 A clean conversation, with the diagnostics behind it.
@@ -287,18 +281,16 @@ export default function PlatformPage() {
                 timestamped logs for the engineer.
               </p>
             </div>
-            <Hatch
-              ratio="16 / 10"
-              label="[ terminal / log screenshot ]"
-              note="operator view beside the timestamped diagnostic log"
-            />
           </div>
         </div>
       </section>
 
       <PilotCTA
         heading="Put it on a robot you already own."
-        primary={{ label: "Request pilot access", href: "/contact?intent=pilot" }}
+        primary={{
+          label: "Request pilot access",
+          href: "/contact?intent=pilot",
+        }}
         secondary={{ label: "Meet Orio", href: "/" }}
       />
       <SiteFooter />
